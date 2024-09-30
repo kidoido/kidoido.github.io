@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Igor Domaradzki - R6Class</title>
+<title>3. R6Class – Igor Domaradzki</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -128,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -153,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">R6Class</h1>
+<h1 class="title">3. R6Class</h1>
 </div>
 
 
@@ -307,16 +307,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">### Pobranie wartości</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span><span class="fu">getValues</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] -0.6050676 -0.9039747  0.1240012  0.3403105  0.4130595  0.6226243
- [7]  1.2055436  1.3133558  0.1977375 -0.5107198  0.3389017  0.1129249
-[13]  0.8417987  1.6678619  2.1997873  2.4929361  2.7179213  2.9630034
-[19]  4.1065334  4.6862117  4.5994747  4.7957693  4.1030938  3.3330953
-[25]  4.3206404  2.2054778  2.0024548  0.4786126  1.0265441  0.7697270
-[31]  2.1621997  0.7074628  0.1306675  0.5680881  0.2306294 -0.7529238
-[37]  0.3989136 -0.5363610 -0.3334442  0.1923730 -0.5551349 -0.8248860
-[43] -1.7647549 -1.9650922 -3.0888760 -3.3589486 -2.5995740 -2.1550601
-[49] -1.7062595 -0.5475350  0.2516343  0.5760376 -0.5595627 -1.5360291
-[55] -1.2833645 -1.6257885 -3.4128212 -3.0505110 -1.9786286 -2.8207733</code></pre>
+<pre><code> [1]   1.40299014  -0.06865385  -1.28452416  -0.41722174  -1.65432266
+ [6]  -1.54925355  -1.68270335  -0.76989575  -2.19405222  -2.00920813
+[11]  -2.91899221  -3.31505721  -2.85287333  -3.75705960  -5.59745602
+[16]  -6.24575496  -5.65556040  -8.01378794  -8.57721820  -9.36524834
+[21]  -9.83693253 -10.23744080  -9.99108469  -9.09249668  -7.00971296
+[26]  -7.28613041  -6.09962978  -4.88289655  -6.48142351  -5.22511786
+[31]  -5.11715712  -4.32611456  -1.96211906  -3.65275001  -3.45970608
+[36]  -3.42334828  -3.62828059  -3.23292068  -3.00507828  -1.59623767
+[41]  -1.22222499  -2.22116125  -1.74809932  -0.24132442   1.68444533
+[46]   1.84331901   1.69314317   3.38990614   4.85331300   5.21851366
+[51]   5.55826272   4.59783680   3.41371470   2.31213674   2.85977886
+[56]   2.58321746   2.79742814   3.62906110   6.28529414   7.21541129</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Pobranie wektora czasów</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span><span class="fu">getTimes</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -335,17 +337,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Pobranie szeregu czasowgo (klasa xts)</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(y<span class="sc">$</span><span class="fu">getTimeSeries</span>(),<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>               [,1]
-Jan 2009 -0.6050676
-Feb 2009 -0.9039747
-Mar 2009  0.1240012
-Apr 2009  0.3403105
-May 2009  0.4130595
-Jun 2009  0.6226243
-Jul 2009  1.2055436
-Aug 2009  1.3133558
-Sep 2009  0.1977375
-Oct 2009 -0.5107198</code></pre>
+<pre><code>                [,1]
+Jan 2009  1.40299014
+Feb 2009 -0.06865385
+Mar 2009 -1.28452416
+Apr 2009 -0.41722174
+May 2009 -1.65432266
+Jun 2009 -1.54925355
+Jul 2009 -1.68270335
+Aug 2009 -0.76989575
+Sep 2009 -2.19405222
+Oct 2009 -2.00920813</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Stworzenie przykładowego wykresu</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
@@ -628,18 +630,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -671,7 +662,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -679,7 +692,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

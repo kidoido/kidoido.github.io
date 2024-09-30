@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Igor Domaradzki - R Wrapped</title>
+<title>1. R Wrapped – Igor Domaradzki</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -128,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -155,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">R Wrapped</h1>
+<h1 class="title">1. R Wrapped</h1>
 </div>
 
 
@@ -173,7 +173,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><img src="RWrapped.png" class="img-fluid"></p>
-<p>Projekt wykonany na zajęcia <em>Prezentacja i wizualizacja danych</em></p>
+<p>Projekt wykonany w języku R w ramach zajęć <em>Prezentacja i wizualizacja danych</em></p>
 <section id="wprowadzenie" class="level2">
 <h2 class="anchored" data-anchor-id="wprowadzenie">Wprowadzenie</h2>
 <p>Lubię słuchać muzyki. Łącząc to z moim nauturalnym drugiem do analizy danych, od pewnego czasu dokładnie analizuję jaką muzykę słucham.</p>
@@ -194,18 +194,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(scrobbles,<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                   date  artist              track         album
-               &lt;POSIXt&gt;  &lt;char&gt;             &lt;char&gt;        &lt;char&gt;
- 1: 2024-09-15 13:54:27 Jordana     Sweet to Dream Summer's Over
- 2: 2024-09-15 13:50:44 Jordana Jump the Turnstile Summer's Over
- 3: 2024-09-15 13:48:22 Jordana   Lo on the Hi-Way Summer's Over
- 4: 2024-09-15 10:53:55 Jordana      Summer's Over Summer's Over
- 5: 2024-09-15 10:48:37 Jordana Jump the Turnstile Summer's Over
- 6: 2024-09-14 16:05:11 Jordana   Lo on the Hi-Way Summer's Over
- 7: 2024-09-14 14:53:26 Jordana      Summer's Over Summer's Over
- 8: 2024-09-14 14:53:15 Jordana     Sweet to Dream Summer's Over
- 9: 2024-09-14 08:41:04 Jordana Jump the Turnstile Summer's Over
-10: 2024-09-14 08:21:59 Jordana   Lo on the Hi-Way Summer's Over</code></pre>
+<pre><code>                   date         artist                     track
+               &lt;POSIXt&gt;         &lt;char&gt;                    &lt;char&gt;
+ 1: 2024-09-29 23:11:02      Radiohead Jigsaw Falling Into Place
+ 2: 2024-09-29 23:07:31          Coals                 ganc egal
+ 3: 2024-09-29 23:04:38       La Femme                  Sacatela
+ 4: 2024-09-29 23:02:31       Panchiko           All They Wanted
+ 5: 2024-09-29 22:58:57          Coals                  batalija
+ 6: 2024-09-29 22:56:34    Addison Rae                Diet Pepsi
+ 7: 2024-09-29 22:54:08 Snow Strippers    So What If I'm A Freak
+ 8: 2024-09-29 22:52:16        Jordana        Better in the Dark
+ 9: 2024-09-29 22:47:17    beabadoobee               take a bite
+10: 2024-09-29 22:44:42  Meek, Oh Why?         Pieśniarka i Król
+                               album
+                              &lt;char&gt;
+ 1:                      In Rainbows
+ 2:                        ganc egal
+ 3:                    Teatro Lúcido
+ 4: Ferric Oxide (Demos 1997 - 2001)
+ 5:                       Sanatorium
+ 6:                       dIeT pEpSi
+ 7:           So What If I'm A Freak
+ 8:                    Summer's Over
+ 9:                      Coming Home
+10:            Rękopisy nie płoną EP</code></pre>
 </div>
 </div>
 <p>Sortuje dane tak, aby najstarszy odsłuch był na górze. Potem zliczam, po raz który dany album/piosenka/artysta został odsłuchany. To przyda mi się później.</p>
@@ -262,7 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1. 100 gecs - money machine: 240
-2. Meek, Oh Why? - Pieśniarka i Król: 213
+2. Meek, Oh Why? - Pieśniarka i Król: 223
 3. JPEGMAFIA - 1539 N. Calvert: 202
 4. 100 gecs - hand crushed by a mallet: 184
 5. Coals - Blue (feat. Schafter): 166
@@ -307,10 +319,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 2. 100 gecs: 2428
 3. Holak: 2116
 4. JPEGMAFIA: 2096
-5. Meek, Oh Why?: 1893
-6. Charli XCX: 1888
+5. Meek, Oh Why?: 1914
+6. Charli XCX: 1902
 7. BROCKHAMPTON: 1692
-8. TV Girl: 1410
+8. TV Girl: 1413
 9. Kendrick Lamar: 1294
 10. ROSALÍA: 1018</code></pre>
 </div>
@@ -342,14 +354,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(i, <span class="st">". "</span>, scrobbles[album <span class="sc">==</span> <span class="fu">names</span>(top10_albums_sorted[i])]<span class="sc">$</span>artist[<span class="dv">2</span>], <span class="st">" - "</span>, <span class="fu">names</span>(top10_albums_sorted[i]),<span class="st">": "</span>, <span class="fu">as.numeric</span>(top10_albums_sorted[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,<span class="at">sep =</span> <span class="st">""</span>)</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1. Meek, Oh Why? - Zachód: 1109
+<pre><code>1. Meek, Oh Why? - Zachód: 1118
 2. 100 gecs - 1000 gecs: 856
 3. Travis Scott - ASTROWORLD: 652
 4. BROCKHAMPTON - GINGER: 612
 5. 100 gecs - 1000 gecs and The Tree of Clues: 609
 6. Taco Hemingway - Café Belga: 571
 7. Taco Hemingway - Pocztówka z WWA, lato '19: 556
-8. Phoebe Bridgers - Punisher: 548
+8. Phoebe Bridgers - Punisher: 549
 9. Blood Orange - Negro Swan: 541
 10. JPEGMAFIA - Veteran: 537</code></pre>
 </div>
@@ -706,7 +718,7 @@ argument.</code></pre>
 # Groups:   day [1]
     day  hour  Suma
   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
-1     2    17   936</code></pre>
+1     2    17   937</code></pre>
 </div>
 </div>
 <p>Królują godziny popołudniowe powrotu ze szkoły i pracy. Najwięcej we wtorek o godz. 17.</p>
@@ -821,18 +833,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -864,7 +865,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -872,7 +895,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
