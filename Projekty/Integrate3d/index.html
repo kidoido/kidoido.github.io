@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2. Algorytm genetyczny – Igor Domaradzki</title>
+<title>5. Całki podwójne – Igor Domaradzki</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -103,15 +137,23 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#opis-projektu" id="toc-opis-projektu" class="nav-link active" data-scroll-target="#opis-projektu">Opis projektu</a></li>
+  <li><a href="#moje-rozwiązanie" id="toc-moje-rozwiązanie" class="nav-link" data-scroll-target="#moje-rozwiązanie">Moje rozwiązanie</a></li>
+  <li><a href="#przykłady" id="toc-przykłady" class="nav-link" data-scroll-target="#przykłady">Przykłady</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">2. Algorytm genetyczny</h1>
+<h1 class="title">5. Całki podwójne</h1>
 </div>
 
 
@@ -128,14 +170,79 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Projekt wykonany w Pythonie na zajęcia <em>Credit Scoring</em>.</p>
-<p>Podstawowym zagadnieniem było zbudowanie modelu do oceny ryzyka potencjalnych klientów kredytowych za pomocą kodów udostępnionych przez wykłądowcę, pana dr Karola Przanowskiego. Dla chętnych była możliowość ich udoskonalenia wg własnej inwencji twórczej. Ja zdecydowałem się zaimplementować algorytm genetyczny do wyboru zmiennych modelu.</p>
-<p>Do wyboru w danych mieliśmy ok. 200 zmiennych, podczas gdy do modelu szukaliśmy najlepszej kombinacji kilku/kilkunastu. Funkcją celu było znalezienie modelu z jak największym indeksem Gini, mierzącym jego siłę predykcyjną.</p>
-<div class="column-page">
-<p><embed src="GA.html" width="1200" height="4640"></p>
+<p>Projekt wykonany w ramach zajęć <em>Podstawy programowania w języku R.</em></p>
+<section id="opis-projektu" class="level2">
+<h2 class="anchored" data-anchor-id="opis-projektu">Opis projektu</h2>
+<p>Zadanie w tym projekcie jest raczej proste i dotyczy obliczania całek z funkcji f:R^2 -&gt; R na przedziałach.</p>
+<p>W tym celu chcemy zdefiniować funkcję, która przyjmuje dwa główne argumenty: pierwszy reprezentujący matematyczną funkcję, która będzie całkowana oraz drugi, który reprezentuje przedział całkowania. Funkcja może przyjmować dodatkowe argumenty w zależności od wykorzystanego algorytmu (przykład podany poniżej). Funkcja powinna zwracać wartość obliczonej całki.</p>
+<p>Z technicznego punktu widzenia, chcemy zdefiowanować funkcję&nbsp;<code>integrate3d()</code>, która przyjmuje dwa argumenty:</p>
+<ul>
+<li><p><code>f</code>&nbsp;funkcja, która jest całkowana, np.,&nbsp;<code>f(x,y) {x ^ 2 + y ^ 2}</code>;</p></li>
+<li><p><code>over</code>&nbsp;lista zawierająca dwie pozycje, reprezentująca przedział całkowania, np.,&nbsp;<code>list(x = c(0,1), y = c(0, 1))</code>.</p></li>
+</ul>
+</section>
+<section id="moje-rozwiązanie" class="level2">
+<h2 class="anchored" data-anchor-id="moje-rozwiązanie">Moje rozwiązanie</h2>
+<p>Całka jest obliczana metodą prostokątów. Z racji, że w zadaniu liczymy całki podówjne można też mówić o metodzie równoległoboków.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zadanie 3 </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>integrate3d <span class="ot">&lt;-</span> <span class="cf">function</span>(f, over, <span class="at">n =</span> <span class="dv">120</span>) {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Dzielimy przestrzeń, na której całkujemy na n^2 części</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  axis_x <span class="ot">&lt;-</span> <span class="fu">seq</span>(over<span class="sc">$</span>x[<span class="dv">1</span>], over<span class="sc">$</span>x[<span class="dv">2</span>], <span class="at">length.out =</span> n)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  axis_y <span class="ot">&lt;-</span> <span class="fu">seq</span>(over<span class="sc">$</span>y[<span class="dv">1</span>], over<span class="sc">$</span>y[<span class="dv">2</span>], <span class="at">length.out =</span> n)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Liczymy wartość całki w poszczególnych punktach i dodajemy objętości kolejnych prostopadłościanów do siebie</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  integral_sum <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (xx <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(n<span class="dv">-1</span>)){</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    smaller_x <span class="ot">&lt;-</span> axis_x[xx]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    bigger_x <span class="ot">&lt;-</span> axis_x[xx<span class="sc">+</span><span class="dv">1</span>]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    avg_x <span class="ot">&lt;-</span> <span class="fu">mean</span>(smaller_x,bigger_x)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (yy <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(n<span class="dv">-1</span>)) {</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      smaller_y <span class="ot">&lt;-</span> axis_y[yy]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      bigger_y <span class="ot">&lt;-</span> axis_y[yy<span class="sc">+</span><span class="dv">1</span>]</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      avg_y <span class="ot">&lt;-</span> <span class="fu">mean</span>(smaller_y,bigger_y)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      z <span class="ot">&lt;-</span> <span class="fu">f</span>(avg_x, avg_y)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      parrallelogram_volume <span class="ot">&lt;-</span> (bigger_y <span class="sc">-</span> smaller_y)<span class="sc">*</span>(bigger_x <span class="sc">-</span> smaller_x)<span class="sc">*</span>z</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      integral_sum <span class="ot">&lt;-</span> integral_sum <span class="sc">+</span> parrallelogram_volume</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(integral_sum)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="przykłady" class="level2">
+<h2 class="anchored" data-anchor-id="przykłady">Przykłady</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Example 1</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">integrate3d</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">f =</span> <span class="cf">function</span>(x, y) {<span class="fu">cos</span>(x) <span class="sc">*</span> y},</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">over =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, pi <span class="sc">/</span> <span class="dv">2</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4990634</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Example 2</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">integrate3d</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">f =</span> <span class="cf">function</span>(x, y) { (<span class="fu">cos</span>(x) <span class="sc">+</span> <span class="dv">2</span>) <span class="sc">*</span> (<span class="fu">sin</span>(y) <span class="sc">+</span> <span class="dv">1</span>)},</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">over =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, pi), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, pi)),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 32.46768</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Example 2</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">integrate3d</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">f =</span> <span class="cf">function</span>(x, y) {<span class="dv">30</span> <span class="sc">+</span> <span class="dv">23</span><span class="sc">*</span>x <span class="sc">+</span> (<span class="dv">13</span><span class="sc">/</span><span class="dv">4</span>)<span class="sc">*</span>y <span class="sc">+</span> (<span class="fl">28.12</span>)<span class="sc">*</span>x<span class="sc">*</span>y <span class="sc">-</span> <span class="dv">144</span> <span class="sc">*</span> <span class="fu">sqrt</span>(x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> y<span class="sc">^</span><span class="dv">2</span>)},</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">over =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, (<span class="dv">5</span> <span class="sc">*</span> pi) <span class="sc">/</span> <span class="dv">2</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -12351.79</code></pre>
+</div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
