@@ -194,30 +194,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(scrobbles,<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                   date         artist                     track
-               &lt;POSIXt&gt;         &lt;char&gt;                    &lt;char&gt;
- 1: 2024-09-29 23:11:02      Radiohead Jigsaw Falling Into Place
- 2: 2024-09-29 23:07:31          Coals                 ganc egal
- 3: 2024-09-29 23:04:38       La Femme                  Sacatela
- 4: 2024-09-29 23:02:31       Panchiko           All They Wanted
- 5: 2024-09-29 22:58:57          Coals                  batalija
- 6: 2024-09-29 22:56:34    Addison Rae                Diet Pepsi
- 7: 2024-09-29 22:54:08 Snow Strippers    So What If I'm A Freak
- 8: 2024-09-29 22:52:16        Jordana        Better in the Dark
- 9: 2024-09-29 22:47:17    beabadoobee               take a bite
-10: 2024-09-29 22:44:42  Meek, Oh Why?         Pieśniarka i Król
-                               album
-                              &lt;char&gt;
- 1:                      In Rainbows
- 2:                        ganc egal
- 3:                    Teatro Lúcido
- 4: Ferric Oxide (Demos 1997 - 2001)
- 5:                       Sanatorium
- 6:                       dIeT pEpSi
- 7:           So What If I'm A Freak
- 8:                    Summer's Over
- 9:                      Coming Home
-10:            Rękopisy nie płoną EP</code></pre>
+<pre><code>                   date     artist                    track   album
+               &lt;POSIXt&gt;     &lt;char&gt;                   &lt;char&gt;  &lt;char&gt;
+ 1: 2024-10-24 18:36:52 King Krule      Half Man Half Shark The OOZ
+ 2: 2024-10-24 18:35:46 King Krule Bermondsey Bosom (Right) The OOZ
+ 3: 2024-10-24 18:30:28 King Krule                   Vidual The OOZ
+ 4: 2024-10-24 18:27:22 King Krule   A Slide In (New Drugs) The OOZ
+ 5: 2024-10-24 18:22:41 King Krule                Czech One The OOZ
+ 6: 2024-10-24 18:19:47 King Krule          Emergency Blimp The OOZ
+ 7: 2024-10-24 18:14:54 King Krule              Cadet Limbo The OOZ
+ 8: 2024-10-24 18:10:09 King Krule              Lonely Blue The OOZ
+ 9: 2024-10-24 18:07:58 King Krule                Sublunary The OOZ
+10: 2024-10-24 18:04:08 King Krule                    Logos The OOZ</code></pre>
 </div>
 </div>
 <p>Sortuje dane tak, aby najstarszy odsłuch był na górze. Potem zliczam, po raz który dany album/piosenka/artysta został odsłuchany. To przyda mi się później.</p>
@@ -273,15 +261,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">paste0</span>(i, <span class="st">". "</span>, scrobbles[track <span class="sc">==</span> <span class="fu">names</span>(top10_tracks_sorted[i])]<span class="sc">$</span>artist[<span class="dv">2</span>], <span class="st">" - "</span>, <span class="fu">names</span>(top10_tracks_sorted[i]),<span class="st">": "</span>, <span class="fu">as.numeric</span>(top10_tracks_sorted[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1. 100 gecs - money machine: 240
-2. Meek, Oh Why? - Pieśniarka i Król: 223
+<pre><code>1. Meek, Oh Why? - Pieśniarka i Król: 245
+2. 100 gecs - money machine: 242
 3. JPEGMAFIA - 1539 N. Calvert: 202
-4. 100 gecs - hand crushed by a mallet: 184
+4. 100 gecs - hand crushed by a mallet: 187
 5. Coals - Blue (feat. Schafter): 166
 6. 100 gecs - ringtone: 157
 7. 100 gecs - sympathy 4 the grinch: 148
 8. laura les - Haunted: 147
-9. ericdoa - movinglikeazombie - remix: 145
+9. ericdoa - movinglikeazombie - remix: 146
 10. QUEEF JERKY - PINEAPPLE UPSIDE DOWN: 143</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
@@ -294,7 +282,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">colorRamp</span>(<span class="fu">c</span>(<span class="st">"#050861"</span>, <span class="st">"#131ad6"</span>))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>values_barplot <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">rev</span>(top10_tracks_sorted))</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>kolor_barplot <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="fu">pal</span>((values_barplot <span class="sc">-</span> <span class="fu">min</span>(values_barplot))<span class="sc">/</span> <span class="fu">diff</span>(<span class="fu">range</span>(values_barplot))), <span class="at">max=</span><span class="dv">255</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>barplot_tracks <span class="ot">&lt;-</span> <span class="fu">barplot</span>(<span class="fu">rev</span>(top10_tracks_sorted), <span class="at">horiz =</span> T, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">yaxt =</span> <span class="st">"n"</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">250</span>), <span class="at">col =</span> kolor_barplot, <span class="at">xlab =</span> <span class="st">"Ilość odtworzeń"</span>, <span class="at">main =</span> <span class="st">"Top 10 utworów wszechczasów"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>barplot_tracks <span class="ot">&lt;-</span> <span class="fu">barplot</span>(<span class="fu">rev</span>(top10_tracks_sorted), <span class="at">horiz =</span> T, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">yaxt =</span> <span class="st">"n"</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(scrobbles<span class="sc">$</span>cum_sum)), <span class="at">col =</span> kolor_barplot, <span class="at">xlab =</span> <span class="st">"Ilość odtworzeń"</span>, <span class="at">main =</span> <span class="st">"Top 10 utworów wszechczasów"</span>)</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">as.numeric</span>(<span class="fu">rev</span>(top10_tracks_sorted)), barplot_tracks, <span class="at">labels =</span> <span class="fu">as.numeric</span>(<span class="fu">rev</span>(top10_tracks_sorted)), <span class="at">pos =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">4</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">1</span>, barplot_tracks, <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="fu">rev</span>(<span class="fu">names</span>(top10_tracks_sorted))), <span class="at">pos =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">font =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -315,14 +303,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(i, <span class="st">". "</span>, <span class="fu">names</span>(top10_artist_sorted[i]),<span class="st">": "</span>, <span class="fu">as.numeric</span>(top10_artist_sorted[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1. Taco Hemingway: 2767
-2. 100 gecs: 2428
+<pre><code>1. Taco Hemingway: 2774
+2. 100 gecs: 2450
 3. Holak: 2116
 4. JPEGMAFIA: 2096
-5. Meek, Oh Why?: 1914
-6. Charli XCX: 1902
+5. Meek, Oh Why?: 1937
+6. Charli XCX: 1767
 7. BROCKHAMPTON: 1692
-8. TV Girl: 1413
+8. TV Girl: 1417
 9. Kendrick Lamar: 1294
 10. ROSALÍA: 1018</code></pre>
 </div>
@@ -336,7 +324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>kolor_barplot <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="fu">pal</span>((values_barplot <span class="sc">-</span> <span class="fu">min</span>(values_barplot))<span class="sc">/</span> <span class="fu">diff</span>(<span class="fu">range</span>(values_barplot))), <span class="at">max=</span><span class="dv">255</span>)</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>barplot_tracks <span class="ot">&lt;-</span> <span class="fu">barplot</span>(<span class="fu">rev</span>(top10_artist_sorted), <span class="at">horiz =</span> T, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">yaxt =</span> <span class="st">"n"</span>, <span class="at">col =</span> kolor_barplot, <span class="at">xlab =</span> <span class="st">"Ilość odtworzeń"</span>, <span class="at">main =</span> <span class="st">"Top 10 artystów wszechczasów"</span>)</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">as.numeric</span>(<span class="fu">rev</span>(top10_artist_sorted)), barplot_tracks, <span class="at">labels =</span> <span class="fu">as.numeric</span>(<span class="fu">rev</span>(top10_artist_sorted)), <span class="at">pos =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">1</span>, barplot_tracks, <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="fu">rev</span>(<span class="fu">names</span>(top10_artist_sorted))), <span class="at">pos =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">font =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">1</span>, barplot_tracks, <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="fu">rev</span>(<span class="fu">names</span>(top10_artist_sorted))), <span class="at">pos =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> ((<span class="sc">-</span><span class="fl">0.2</span><span class="sc">/</span><span class="dv">3483</span>)<span class="sc">*</span>(<span class="fu">as.numeric</span>(top10_artist_sorted[<span class="dv">1</span>] <span class="sc">-</span> top10_artist_sorted[<span class="dv">10</span>]) ) <span class="sc">+</span> <span class="fl">0.8</span>), <span class="at">font =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -354,14 +342,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(i, <span class="st">". "</span>, scrobbles[album <span class="sc">==</span> <span class="fu">names</span>(top10_albums_sorted[i])]<span class="sc">$</span>artist[<span class="dv">2</span>], <span class="st">" - "</span>, <span class="fu">names</span>(top10_albums_sorted[i]),<span class="st">": "</span>, <span class="fu">as.numeric</span>(top10_albums_sorted[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,<span class="at">sep =</span> <span class="st">""</span>)</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1. Meek, Oh Why? - Zachód: 1118
-2. 100 gecs - 1000 gecs: 856
+<pre><code>1. Meek, Oh Why? - Zachód: 1127
+2. 100 gecs - 1000 gecs: 862
 3. Travis Scott - ASTROWORLD: 652
-4. BROCKHAMPTON - GINGER: 612
-5. 100 gecs - 1000 gecs and The Tree of Clues: 609
+4. 100 gecs - 1000 gecs and The Tree of Clues: 618
+5. BROCKHAMPTON - GINGER: 612
 6. Taco Hemingway - Café Belga: 571
 7. Taco Hemingway - Pocztówka z WWA, lato '19: 556
-8. Phoebe Bridgers - Punisher: 549
+8. Phoebe Bridgers - Punisher: 550
 9. Blood Orange - Negro Swan: 541
 10. JPEGMAFIA - Veteran: 537</code></pre>
 </div>
@@ -397,7 +385,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(top_track<span class="sc">$</span>date, top_track<span class="sc">$</span>cum_sum, <span class="at">type =</span> <span class="st">"s"</span>, <span class="at">col =</span> <span class="st">"gold"</span>, <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fu">min</span>(scrobbles<span class="sc">$</span>date), <span class="fu">max</span>(scrobbles<span class="sc">$</span>date)), <span class="at">xlab =</span> <span class="st">"Czas odsłuchu"</span>, <span class="at">ylab =</span> <span class="st">"Ilość odtworzeń"</span>, <span class="at">main =</span> <span class="st">"Wykres sumy odtworzeń utworów"</span>)</span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (track_name <span class="cf">in</span> <span class="fu">names</span>(count_whole_sorted)) {</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (track_name <span class="cf">in</span> <span class="fu">names</span>(count_whole_sorted[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>])) {</span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  to_draw <span class="ot">&lt;-</span> scrobbles[track <span class="sc">==</span> track_name,]</span>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(to_draw<span class="sc">$</span>date, to_draw<span class="sc">$</span>cum_sum, <span class="at">type =</span> <span class="st">"s"</span>, <span class="at">col =</span> <span class="st">"#dbd7ca"</span>)</span>
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -437,7 +425,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(top_artist<span class="sc">$</span>date, top_artist<span class="sc">$</span>cum_sum_artists, <span class="at">type =</span> <span class="st">"s"</span>, <span class="at">col =</span> <span class="st">"gold"</span>, <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fu">min</span>(scrobbles<span class="sc">$</span>date), <span class="fu">max</span>(scrobbles<span class="sc">$</span>date)), <span class="at">xlab =</span> <span class="st">"Czas odsłuchu"</span>, <span class="at">ylab =</span> <span class="st">"Ilość odtworzeń"</span>, <span class="at">main =</span> <span class="st">"Wykres sumy odtworzeń artystow"</span>)</span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (artist_name <span class="cf">in</span> <span class="fu">names</span>(artist_sorted)) {</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (artist_name <span class="cf">in</span> <span class="fu">names</span>(artist_sorted[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>])) {</span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  to_draw <span class="ot">&lt;-</span> scrobbles[artist <span class="sc">==</span> artist_name,]</span>
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(to_draw<span class="sc">$</span>date, to_draw<span class="sc">$</span>cum_sum_artists, <span class="at">type =</span> <span class="st">"s"</span>, <span class="at">col =</span> <span class="st">"#dbd7ca"</span>)</span>
 <span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -474,7 +462,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(top_album<span class="sc">$</span>date, top_album<span class="sc">$</span>cum_sum_albums, <span class="at">type =</span> <span class="st">"s"</span>, <span class="at">col =</span> <span class="st">"gold"</span>, <span class="at">lwd=</span><span class="dv">3</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fu">min</span>(scrobbles<span class="sc">$</span>date), <span class="fu">max</span>(scrobbles<span class="sc">$</span>date)), <span class="at">xlab =</span> <span class="st">"Moment odsłuchu"</span>, <span class="at">ylab =</span> <span class="st">"Ilość odtworzeń"</span>, <span class="at">main =</span> <span class="st">"Wykres sumy odtworzeń albumów"</span>)</span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (album_name <span class="cf">in</span> <span class="fu">names</span>(albums_sorted)) {</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (album_name <span class="cf">in</span> <span class="fu">names</span>(albums_sorted[<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>])) {</span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  to_draw <span class="ot">&lt;-</span> scrobbles[album <span class="sc">==</span> album_name,]</span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lines</span>(to_draw<span class="sc">$</span>date, to_draw<span class="sc">$</span>cum_sum_albums, <span class="at">type =</span> <span class="st">"s"</span>, <span class="at">col =</span> <span class="st">"#dbd7ca"</span>)</span>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -522,13 +510,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>tibble_months<span class="sc">$</span>month_name <span class="ot">&lt;-</span> <span class="fu">month</span>(tibble_months<span class="sc">$</span>month)</span>
 <span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>tibble_months<span class="sc">$</span>year  <span class="ot">&lt;-</span> <span class="fu">year</span>(tibble_months<span class="sc">$</span>month)</span>
 <span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Heatmap </span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tibble_months, <span class="fu">aes</span>(year, month_name)) <span class="sc">+</span> </span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill=</span> l_wystapien), <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#fac8d8"</span>, <span class="at">high =</span> <span class="st">"#87002b"</span>, <span class="at">name =</span> <span class="st">"Odtworzenia"</span>) <span class="sc">+</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Liczba odsłuchań danego miesiąca"</span>) <span class="sc">+</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span> <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="dv">2018</span><span class="sc">:</span><span class="dv">2024</span>)<span class="sc">+</span></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Rok"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Miesiąc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>first_year <span class="ot">&lt;-</span> tibble_months<span class="sc">$</span>year <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>current_year <span class="ot">&lt;-</span> tibble_months<span class="sc">$</span>year <span class="sc">|&gt;</span> <span class="fu">tail</span>(<span class="dv">1</span>)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Heatmap </span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tibble_months, <span class="fu">aes</span>(year, month_name)) <span class="sc">+</span> </span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill=</span> l_wystapien), <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#fac8d8"</span>, <span class="at">high =</span> <span class="st">"#87002b"</span>, <span class="at">name =</span> <span class="st">"Odtworzenia"</span>) <span class="sc">+</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Liczba odsłuchań danego miesiąca"</span>) <span class="sc">+</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span> <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span>first_year<span class="sc">:</span>current_year)<span class="sc">+</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Rok"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Miesiąc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -541,7 +531,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill=</span> l_wystapien), <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#fac8d8"</span>, <span class="at">high =</span> <span class="st">"#87002b"</span>, <span class="at">name =</span> <span class="st">"Odtworzenia"</span>) <span class="sc">+</span></span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Liczba odsłuchań danego miesiąca"</span>) <span class="sc">+</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="dv">2018</span><span class="sc">:</span><span class="dv">2024</span>)<span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span>first_year<span class="sc">:</span>current_year)<span class="sc">+</span></span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Rok"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Miesiąc"</span>) <span class="sc">+</span> </span>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> l_wystapien), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">4.5</span>) <span class="sc">+</span></span>
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -558,51 +548,73 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Jacy sąc najczęsciej słuchani artyści w każdym miesiącu?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">### najpopularniejsci artysci dla kazdego miesiaca</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>n_months <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">interval</span>(<span class="fu">mdy</span>(<span class="dv">06012018</span>), <span class="fu">today</span>()) <span class="sc">%/%</span> <span class="fu">months</span>(<span class="dv">1</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>macierz <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="dv">12</span>, <span class="dv">7</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>macierz_to_plot <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, n_months, <span class="dv">2</span>)</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>date_temp <span class="ot">&lt;-</span> <span class="fu">min</span>(scrobbles_copy<span class="sc">$</span>date)</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>date_temp <span class="ot">&lt;-</span> <span class="fu">floor_date</span>(date_temp, <span class="st">'month'</span>)</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>date_temp_next <span class="ot">&lt;-</span> date_temp <span class="sc">%m+%</span> <span class="fu">months</span>(<span class="dv">1</span>)</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>pier_mies <span class="ot">=</span> <span class="dv">6</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">76</span>) {</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  month_in_scr <span class="ot">&lt;-</span> scrobbles[scrobbles<span class="sc">$</span>date <span class="sc">&gt;</span> date_temp <span class="sc">&amp;</span> scrobbles<span class="sc">$</span>date <span class="sc">&lt;</span> date_temp_next]</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  t_month_in_scr <span class="ot">&lt;-</span> <span class="fu">table</span>(month_in_scr<span class="sc">$</span>artist)</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  t_month_in_scr <span class="ot">&lt;-</span> <span class="fu">sort</span>(t_month_in_scr, <span class="at">decreasing =</span> T)</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  naj_artysta <span class="ot">&lt;-</span> <span class="fu">names</span>(t_month_in_scr[<span class="dv">1</span>])</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  ich_odtworzenia_wtedy <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(t_month_in_scr[<span class="dv">1</span>])</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  date_temp_next <span class="ot">&lt;-</span> date_temp_next <span class="sc">%m+%</span> <span class="fu">months</span>(<span class="dv">1</span>)</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  date_temp <span class="ot">&lt;-</span> date_temp <span class="sc">%m+%</span> <span class="fu">months</span>(<span class="dv">1</span>)</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  macierz[pier_mies] <span class="ot">=</span> naj_artysta</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  macierz_to_plot[pier_mies<span class="dv">-5</span>, <span class="dv">1</span>] <span class="ot">=</span> <span class="fu">substr</span>(naj_artysta,<span class="dv">1</span>,<span class="dv">26</span>)</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>  macierz_to_plot[pier_mies<span class="dv">-5</span>, <span class="dv">2</span>] <span class="ot">=</span> ich_odtworzenia_wtedy</span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>  pier_mies <span class="ot">&lt;-</span> pier_mies <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a><span class="co">#macierz</span></span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a><span class="co">#macierz_to_plot</span></span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(macierz) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"2018"</span>, <span class="st">"2019"</span>, <span class="st">"2020"</span>, <span class="st">"2021"</span>, <span class="st">"2022"</span>, <span class="st">'2023'</span>, <span class="st">'2024'</span>)</span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(macierz) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Styczeń"</span>, <span class="st">"Luty"</span>, <span class="st">"Marzec"</span>, <span class="st">"Kwiecień"</span>, <span class="st">"Maj"</span>, <span class="st">"Czerwiec"</span>, <span class="st">"Lipiec"</span>, <span class="st">"Sierpień"</span>, <span class="st">"Wrzesień"</span>, <span class="st">"Październik"</span>, <span class="st">"Listopad"</span>, <span class="st">"Grudzień"</span>)</span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>df_barplot <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(macierz_to_plot)</span>
-<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>df_barplot<span class="sc">$</span>month_name <span class="ot">&lt;-</span> tibble_months<span class="sc">$</span>month_name</span>
-<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>df_barplot<span class="sc">$</span>year <span class="ot">&lt;-</span> tibble_months<span class="sc">$</span>year</span>
-<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_barplot)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Artysta"</span>, <span class="st">"Wystapienia_w_mies"</span>)</span>
-<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>tibble_barplot <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(df_barplot)</span>
-<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>tibble_barplot<span class="sc">$</span>Wystapienia_w_mies <span class="ot">&lt;-</span> <span class="fu">as.double</span>(tibble_barplot<span class="sc">$</span>Wystapienia_w_mies)</span>
-<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(tibble_barplot, <span class="fu">aes</span>(year, <span class="fu">as.numeric</span>(month_name))) <span class="sc">+</span> </span>
-<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill=</span> <span class="fu">as.double</span>(Wystapienia_w_mies)), <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#e5ced4"</span>, <span class="at">high =</span> <span class="st">"#451350"</span>, <span class="at">name =</span> <span class="st">"Odtworzenia </span><span class="sc">\n</span><span class="st"> w miesiącu"</span>) <span class="sc">+</span></span>
-<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Liczba odsłuchań najczęściej słuchanego artysty danego miesiąca"</span>) <span class="sc">+</span></span>
-<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="dv">2018</span><span class="sc">:</span><span class="dv">2024</span>)<span class="sc">+</span></span>
-<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Rok"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Miesiąc"</span>) <span class="sc">+</span></span>
-<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
-<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">substr</span>(Artysta, <span class="dv">1</span>, <span class="dv">14</span>)), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">1.7</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
-<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(zoo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'zoo'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:data.table':
+
+    yearmon, yearqtr</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>first_scrobble_date <span class="ot">&lt;-</span> scrobbles<span class="sc">$</span>date[<span class="dv">1</span>]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>n_months <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">interval</span>(<span class="fu">as.yearmon</span>(first_scrobble_date), <span class="fu">today</span>()) <span class="sc">%/%</span> <span class="fu">months</span>(<span class="dv">1</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(<span class="st">"package:zoo"</span>, <span class="at">unload =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#rządy to miesiące, kolumny to lata</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Pierwsszy rok, nie musial sie zaczac w styczniu</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>first_scrobble_date_month <span class="ot">&lt;-</span> <span class="fu">month</span>(first_scrobble_date)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>liczbLat <span class="ot">&lt;-</span> <span class="fu">ceiling</span>((n_months <span class="sc">-</span> first_scrobble_date_month)<span class="sc">/</span><span class="dv">12</span>) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>macierz <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">12</span>, <span class="at">ncol =</span> liczbLat)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>macierz_to_plot <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, n_months, <span class="dv">2</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>date_temp <span class="ot">&lt;-</span> <span class="fu">min</span>(scrobbles_copy<span class="sc">$</span>date)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>date_temp <span class="ot">&lt;-</span> <span class="fu">floor_date</span>(date_temp, <span class="st">'month'</span>)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>date_temp_next <span class="ot">&lt;-</span> date_temp <span class="sc">%m+%</span> <span class="fu">months</span>(<span class="dv">1</span>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>pier_mies <span class="ot">=</span> first_scrobble_date_month</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_months) {</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  month_in_scr <span class="ot">&lt;-</span> scrobbles[scrobbles<span class="sc">$</span>date <span class="sc">&gt;</span> date_temp <span class="sc">&amp;</span> scrobbles<span class="sc">$</span>date <span class="sc">&lt;</span> date_temp_next]</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  t_month_in_scr <span class="ot">&lt;-</span> <span class="fu">table</span>(month_in_scr<span class="sc">$</span>artist)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  t_month_in_scr <span class="ot">&lt;-</span> <span class="fu">sort</span>(t_month_in_scr, <span class="at">decreasing =</span> T)</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>  naj_artysta <span class="ot">&lt;-</span> <span class="fu">names</span>(t_month_in_scr[<span class="dv">1</span>])</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>  ich_odtworzenia_wtedy <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(t_month_in_scr[<span class="dv">1</span>])</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  date_temp_next <span class="ot">&lt;-</span> date_temp_next <span class="sc">%m+%</span> <span class="fu">months</span>(<span class="dv">1</span>)</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  date_temp <span class="ot">&lt;-</span> date_temp <span class="sc">%m+%</span> <span class="fu">months</span>(<span class="dv">1</span>)</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  macierz[pier_mies] <span class="ot">=</span> naj_artysta</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  macierz_to_plot[pier_mies<span class="sc">-</span>first_scrobble_date_month<span class="sc">+</span><span class="dv">1</span>, <span class="dv">1</span>] <span class="ot">=</span> <span class="fu">substr</span>(naj_artysta,<span class="dv">1</span>,<span class="dv">26</span>)</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>  macierz_to_plot[pier_mies<span class="sc">-</span>first_scrobble_date_month<span class="sc">+</span><span class="dv">1</span>, <span class="dv">2</span>] <span class="ot">=</span> ich_odtworzenia_wtedy</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>  pier_mies <span class="ot">&lt;-</span> pier_mies <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="co">#macierz</span></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a><span class="co">#macierz_to_plot</span></span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(macierz) <span class="ot">&lt;-</span> <span class="fu">year</span>(first_scrobble_date)<span class="sc">:</span><span class="fu">year</span>(<span class="fu">tail</span>(scrobbles<span class="sc">$</span>date,<span class="dv">1</span>))</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(macierz) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Styczeń"</span>, <span class="st">"Luty"</span>, <span class="st">"Marzec"</span>, <span class="st">"Kwiecień"</span>, <span class="st">"Maj"</span>, <span class="st">"Czerwiec"</span>, <span class="st">"Lipiec"</span>, <span class="st">"Sierpień"</span>, <span class="st">"Wrzesień"</span>, <span class="st">"Październik"</span>, <span class="st">"Listopad"</span>, <span class="st">"Grudzień"</span>)</span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>df_barplot <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(macierz_to_plot)</span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>df_barplot<span class="sc">$</span>month_name <span class="ot">&lt;-</span> tibble_months<span class="sc">$</span>month_name</span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>df_barplot<span class="sc">$</span>year <span class="ot">&lt;-</span> tibble_months<span class="sc">$</span>year</span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_barplot)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Artysta"</span>, <span class="st">"Wystapienia_w_mies"</span>)</span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>tibble_barplot <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(df_barplot)</span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a>tibble_barplot<span class="sc">$</span>Wystapienia_w_mies <span class="ot">&lt;-</span> <span class="fu">as.double</span>(tibble_barplot<span class="sc">$</span>Wystapienia_w_mies)</span>
+<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(tibble_barplot, <span class="fu">aes</span>(year, <span class="fu">as.numeric</span>(month_name))) <span class="sc">+</span> </span>
+<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill=</span> <span class="fu">as.double</span>(Wystapienia_w_mies)), <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#e5ced4"</span>, <span class="at">high =</span> <span class="st">"#451350"</span>, <span class="at">name =</span> <span class="st">"Odtworzenia </span><span class="sc">\n</span><span class="st"> w miesiącu"</span>) <span class="sc">+</span></span>
+<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Liczba odsłuchań najczęściej słuchanego artysty danego miesiąca"</span>) <span class="sc">+</span></span>
+<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="fu">year</span>(first_scrobble_date)<span class="sc">:</span><span class="fu">year</span>(<span class="fu">tail</span>(scrobbles<span class="sc">$</span>date,<span class="dv">1</span>)))<span class="sc">+</span></span>
+<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Rok"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Miesiąc"</span>) <span class="sc">+</span></span>
+<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
+<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">substr</span>(Artysta, <span class="dv">1</span>, <span class="dv">14</span>)), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">1.7</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -614,21 +626,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Dzięki temu wykresowi możemy zobaczyć, że do wysokiego wyniku w czerwcu 2024 przyczyniłą się również premiera nowego albumu Charli XCX pt.&nbsp;<em>“brat”</em></p>
 <p>Spójrzmy w jakich miesiącach roku, słuchałem najwięcej.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Średnia Liczba odtworzeń na miesiąc</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>srednie_wartosci <span class="ot">&lt;-</span> tibble_months <span class="sc">%&gt;%</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month_name) <span class="sc">%&gt;%</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">SredniaWartosc =</span> <span class="fu">mean</span>(l_wystapien))</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>srednie_wartosci <span class="ot">&lt;-</span> <span class="fu">setNames</span>(srednie_wartosci, <span class="fu">c</span>(<span class="st">"Miesiąc"</span>, <span class="st">"Średnia Liczba odtworzeń na miesiąc"</span>))</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>srednie_wartosci<span class="sc">$</span>Miesiąc <span class="ot">&lt;-</span> <span class="fu">factor</span>(month.name[srednie_wartosci<span class="sc">$</span>Miesiąc], <span class="at">levels =</span> month.name)</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">3</span>,<span class="dv">3</span>))</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">colorRamp</span>(<span class="fu">c</span>(<span class="st">"#37420D"</span>, <span class="st">"#9CBD26"</span>))</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>values_barplot <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">rev</span>(srednie_wartosci<span class="sc">$</span><span class="st">`</span><span class="at">Średnia Liczba odtworzeń na miesiąc</span><span class="st">`</span>))</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>kolor_barplot <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="fu">pal</span>((values_barplot <span class="sc">-</span> <span class="fu">min</span>(values_barplot))<span class="sc">/</span> <span class="fu">diff</span>(<span class="fu">range</span>(values_barplot))), <span class="at">max=</span><span class="dv">255</span>)</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>barplot_mies <span class="ot">&lt;-</span> <span class="fu">barplot</span>(<span class="fu">rev</span>(srednie_wartosci<span class="sc">$</span><span class="st">`</span><span class="at">Średnia Liczba odtworzeń na miesiąc</span><span class="st">`</span>), <span class="at">names =</span> <span class="fu">rev</span>(srednie_wartosci<span class="sc">$</span>Miesiąc), <span class="at">las =</span> <span class="dv">1</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1300</span>), <span class="at">horiz =</span> T, <span class="at">col =</span> kolor_barplot, <span class="at">xlab =</span> <span class="st">"Ilość odtworzeń"</span>, <span class="at">main =</span> <span class="st">"Średnia liczba odtworzeń w miesiącu"</span>)</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">60</span>, barplot_mies, <span class="at">labels =</span> <span class="fu">round</span>(<span class="fu">rev</span>(srednie_wartosci<span class="sc">$</span><span class="st">`</span><span class="at">Średnia Liczba odtworzeń na miesiąc</span><span class="st">`</span>)), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Średnia Liczba odtworzeń na miesiąc</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>srednie_wartosci <span class="ot">&lt;-</span> tibble_months <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month_name) <span class="sc">%&gt;%</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">SredniaWartosc =</span> <span class="fu">mean</span>(l_wystapien))</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>srednie_wartosci <span class="ot">&lt;-</span> <span class="fu">setNames</span>(srednie_wartosci, <span class="fu">c</span>(<span class="st">"Miesiąc"</span>, <span class="st">"Średnia Liczba odtworzeń na miesiąc"</span>))</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>srednie_wartosci<span class="sc">$</span>Miesiąc <span class="ot">&lt;-</span> <span class="fu">factor</span>(month.name[srednie_wartosci<span class="sc">$</span>Miesiąc], <span class="at">levels =</span> month.name)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">3</span>,<span class="dv">3</span>))</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">colorRamp</span>(<span class="fu">c</span>(<span class="st">"#37420D"</span>, <span class="st">"#9CBD26"</span>))</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>values_barplot <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">rev</span>(srednie_wartosci<span class="sc">$</span><span class="st">`</span><span class="at">Średnia Liczba odtworzeń na miesiąc</span><span class="st">`</span>))</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>kolor_barplot <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="fu">pal</span>((values_barplot <span class="sc">-</span> <span class="fu">min</span>(values_barplot))<span class="sc">/</span> <span class="fu">diff</span>(<span class="fu">range</span>(values_barplot))), <span class="at">max=</span><span class="dv">255</span>)</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>barplot_mies <span class="ot">&lt;-</span> <span class="fu">barplot</span>(<span class="fu">rev</span>(srednie_wartosci<span class="sc">$</span><span class="st">`</span><span class="at">Średnia Liczba odtworzeń na miesiąc</span><span class="st">`</span>), <span class="at">names =</span> <span class="fu">rev</span>(srednie_wartosci<span class="sc">$</span>Miesiąc), <span class="at">las =</span> <span class="dv">1</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fu">max</span>(srednie_wartosci<span class="sc">$</span><span class="st">`</span><span class="at">Średnia Liczba odtworzeń na miesiąc</span><span class="st">`</span>)), <span class="at">horiz =</span> T, <span class="at">col =</span> kolor_barplot, <span class="at">xlab =</span> <span class="st">"Ilość odtworzeń"</span>, <span class="at">main =</span> <span class="st">"Średnia liczba odtworzeń w miesiącu"</span>)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(((<span class="fu">max</span>(srednie_wartosci<span class="sc">$</span><span class="st">`</span><span class="at">Średnia Liczba odtworzeń na miesiąc</span><span class="st">`</span>))<span class="sc">/</span><span class="dv">30</span>), barplot_mies, <span class="at">labels =</span> <span class="fu">round</span>(<span class="fu">rev</span>(srednie_wartosci<span class="sc">$</span><span class="st">`</span><span class="at">Średnia Liczba odtworzeń na miesiąc</span><span class="st">`</span>)), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -639,11 +651,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Oraz sprójrzmy w jakich latach słuchałem najwięcej</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>by_year <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(l_wystapien <span class="sc">~</span> year, <span class="at">data=</span>tibble_months, sum)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>by_year <span class="ot">&lt;-</span> <span class="fu">setNames</span>(by_year, <span class="fu">c</span>(<span class="st">"Rok"</span>, <span class="st">"Liczba odtworzeń"</span>))</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>barplot_przed_usr <span class="ot">&lt;-</span> <span class="fu">barplot</span>(by_year[,<span class="dv">2</span>], <span class="at">names =</span> by_year[,<span class="dv">1</span>], <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">18000</span>), <span class="at">main =</span> <span class="st">"Liczba odtworzen w ciągu roku"</span>, <span class="at">col =</span> <span class="st">"#aa5555"</span>)</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(barplot_przed_usr, by_year[,<span class="dv">2</span>] <span class="sc">+</span> <span class="dv">650</span>, <span class="at">labels =</span> by_year[,<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>by_year <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(l_wystapien <span class="sc">~</span> year, <span class="at">data=</span>tibble_months, sum)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>by_year <span class="ot">&lt;-</span> <span class="fu">setNames</span>(by_year, <span class="fu">c</span>(<span class="st">"Rok"</span>, <span class="st">"Liczba odtworzeń"</span>))</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>barplot_przed_usr <span class="ot">&lt;-</span> <span class="fu">barplot</span>(by_year[,<span class="dv">2</span>], <span class="at">names =</span> by_year[,<span class="dv">1</span>], <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">18000</span>), <span class="at">main =</span> <span class="st">"Liczba odtworzeń w ciągu roku"</span>, <span class="at">col =</span> <span class="st">"#aa5555"</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(barplot_przed_usr, by_year[,<span class="dv">2</span>] <span class="sc">+</span> <span class="dv">650</span>, <span class="at">labels =</span> by_year[,<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -651,15 +663,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Srednia odtworzen na miesiąc podczas danego roku</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>by_year<span class="sc">$</span>l_miesiecy <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">12</span>,<span class="dv">12</span>,<span class="dv">12</span>,<span class="dv">12</span>,<span class="dv">12</span>,<span class="dv">9</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>by_year<span class="sc">$</span>na_mies <span class="ot">&lt;-</span> by_year<span class="sc">$</span><span class="st">`</span><span class="at">Liczba odtworzeń</span><span class="st">`</span> <span class="sc">/</span> by_year<span class="sc">$</span>l_miesiecy</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>by_year<span class="sc">$</span>na_mies <span class="ot">&lt;-</span> <span class="fu">round</span>(by_year<span class="sc">$</span>na_mies,<span class="dv">0</span>)</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co">#t(by_year)</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>pokaz_by_year <span class="ot">&lt;-</span> <span class="fu">t</span>(by_year[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)])</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">#pokaz_by_year</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>barplot_lata <span class="ot">&lt;-</span> <span class="fu">barplot</span>(pokaz_by_year[<span class="dv">2</span>,], <span class="at">names =</span> pokaz_by_year[<span class="dv">1</span>,], <span class="at">col =</span> <span class="st">"#aa5555"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1500</span>), <span class="at">main =</span> <span class="st">"Średnia liczba odtworzeń na miesiąc"</span>)</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(barplot_lata, pokaz_by_year[<span class="dv">2</span>,] <span class="sc">+</span> <span class="dv">50</span>, <span class="at">labels =</span> pokaz_by_year[<span class="dv">2</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Srednia odtworzen na miesiąc podczas danego roku</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>by_year<span class="sc">$</span>l_miesiecy <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>,<span class="fu">rep</span>(<span class="dv">12</span>, <span class="at">length.out =</span> <span class="fu">floor</span>((n_months <span class="sc">-</span> (<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>))<span class="sc">/</span><span class="dv">12</span>)),(n_months <span class="sc">-</span> (<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>)) <span class="sc">%%</span> <span class="dv">12</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>by_year<span class="sc">$</span>na_mies <span class="ot">&lt;-</span> by_year<span class="sc">$</span><span class="st">`</span><span class="at">Liczba odtworzeń</span><span class="st">`</span> <span class="sc">/</span> by_year<span class="sc">$</span>l_miesiecy</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>by_year<span class="sc">$</span>na_mies <span class="ot">&lt;-</span> <span class="fu">round</span>(by_year<span class="sc">$</span>na_mies,<span class="dv">0</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">#t(by_year)</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>pokaz_by_year <span class="ot">&lt;-</span> <span class="fu">t</span>(by_year[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)])</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co">#pokaz_by_year</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>barplot_lata <span class="ot">&lt;-</span> <span class="fu">barplot</span>(pokaz_by_year[<span class="dv">2</span>,], <span class="at">names =</span> pokaz_by_year[<span class="dv">1</span>,], <span class="at">col =</span> <span class="st">"#aa5555"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1500</span>), <span class="at">main =</span> <span class="st">"Średnia liczba odtworzeń na miesiąc"</span>)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(barplot_lata, pokaz_by_year[<span class="dv">2</span>,] <span class="sc">+</span> <span class="dv">50</span>, <span class="at">labels =</span> pokaz_by_year[<span class="dv">2</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -670,31 +683,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Teraz zobaczmy, w jakich godzinach dnia najczęściej słucham muzyki.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#heat map dzien/godzina</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>day_plot <span class="ot">&lt;-</span> (scrobbles_copy  <span class="sc">%&gt;%</span> </span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">group_by</span>(<span class="at">date =</span> lubridate<span class="sc">::</span><span class="fu">floor_date</span>(date, <span class="st">'hour'</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">summarize</span>(<span class="at">l_wystapien =</span> <span class="fu">sum</span>(jedynki)))</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">#day_plot$day &lt;- wday(day_plot$date, week_start = getOption("lubridate.week.start", 1))</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>day_plot<span class="sc">$</span>day <span class="ot">&lt;-</span> <span class="fu">wday</span>(day_plot<span class="sc">$</span>date <span class="sc">-</span> <span class="fu">days</span>(<span class="dv">1</span>))</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>day_plot<span class="sc">$</span>hour  <span class="ot">&lt;-</span> <span class="fu">hour</span>(day_plot<span class="sc">$</span>date)</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>day_plot_to_draw <span class="ot">&lt;-</span> day_plot <span class="sc">%&gt;%</span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(day, hour) <span class="sc">%&gt;%</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Suma =</span> <span class="fu">sum</span>(l_wystapien))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co">#heat map dzien/godzina</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>day_plot <span class="ot">&lt;-</span> (scrobbles_copy  <span class="sc">%&gt;%</span> </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">group_by</span>(<span class="at">date =</span> lubridate<span class="sc">::</span><span class="fu">floor_date</span>(date, <span class="st">'hour'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">summarize</span>(<span class="at">l_wystapien =</span> <span class="fu">sum</span>(jedynki)))</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co">#day_plot$day &lt;- wday(day_plot$date, week_start = getOption("lubridate.week.start", 1))</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>day_plot<span class="sc">$</span>day <span class="ot">&lt;-</span> <span class="fu">wday</span>(day_plot<span class="sc">$</span>date <span class="sc">-</span> <span class="fu">days</span>(<span class="dv">1</span>))</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>day_plot<span class="sc">$</span>hour  <span class="ot">&lt;-</span> <span class="fu">hour</span>(day_plot<span class="sc">$</span>date)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>day_plot_to_draw <span class="ot">&lt;-</span> day_plot <span class="sc">%&gt;%</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(day, hour) <span class="sc">%&gt;%</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Suma =</span> <span class="fu">sum</span>(l_wystapien))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'day'. You can override using the `.groups`
 argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Heatmap </span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(day_plot_to_draw, <span class="fu">aes</span>(day, hour)) <span class="sc">+</span> </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill=</span> Suma), <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#fad8e8"</span>, <span class="at">high =</span> <span class="st">"#67000b"</span>, <span class="at">name =</span> <span class="st">"Odtworzenia"</span>) <span class="sc">+</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Liczba odsłuchań o danej pory dnia"</span>)  <span class="sc">+</span> <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Poniedziałek"</span>, <span class="st">"Wtorek"</span>, <span class="st">"Środa"</span>, <span class="st">"Czwartek"</span>, <span class="st">"Piątek"</span>, <span class="st">"Sobota"</span>, <span class="st">"Niedziela"</span>)) <span class="sc">+</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">limits=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">23</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Godzina"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Dzień"</span>)</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Heatmap </span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(day_plot_to_draw, <span class="fu">aes</span>(day, hour)) <span class="sc">+</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill=</span> Suma), <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#fad8e8"</span>, <span class="at">high =</span> <span class="st">"#67000b"</span>, <span class="at">name =</span> <span class="st">"Odtworzenia"</span>) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Liczba odsłuchań o danej pory dnia"</span>)  <span class="sc">+</span> <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Poniedziałek"</span>, <span class="st">"Wtorek"</span>, <span class="st">"Środa"</span>, <span class="st">"Czwartek"</span>, <span class="st">"Piątek"</span>, <span class="st">"Sobota"</span>, <span class="st">"Niedziela"</span>)) <span class="sc">+</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">limits=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">23</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Dzień tygodnia"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Godzina"</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -702,8 +715,8 @@ argument.</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#dodanie wartości na mapę</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Suma), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#dodanie wartości na mapę</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> Suma), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -711,15 +724,8 @@ argument.</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dzien i godzina z najwieksza iloscia odsłuchań</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>day_plot_to_draw[<span class="fu">which.max</span>(day_plot_to_draw<span class="sc">$</span>Suma),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 3
-# Groups:   day [1]
-    day  hour  Suma
-  &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
-1     2    17   937</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dzien i godzina z najwieksza iloscia odsłuchań</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co">#day_plot_to_draw[which.max(day_plot_to_draw$Suma),]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Królują godziny popołudniowe powrotu ze szkoły i pracy. Najwięcej we wtorek o godz. 17.</p>
 </section>
@@ -727,26 +733,26 @@ argument.</code></pre>
 <h2 class="anchored" data-anchor-id="chmura-gatunków">Chmura gatunków</h2>
 <p>Zobaczmy jakie gatunki najczęsciej się przewijają u artysów, których słucham.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>artist_info <span class="ot">&lt;-</span> <span class="fu">get_library_info</span>(<span class="at">user =</span> <span class="st">"c00lll"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>artist_info <span class="ot">&lt;-</span> <span class="fu">get_library_info</span>(<span class="at">user =</span> <span class="st">"c00lll"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: RColorBrewer</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#wordcloud</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>artist_info<span class="sc">$</span>genres <span class="ot">&lt;-</span> <span class="fu">str_split</span>(artist_info<span class="sc">$</span>artist_tags, <span class="st">"; "</span>)</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>genres_unlisted <span class="ot">&lt;-</span> <span class="fu">unlist</span>(artist_info<span class="sc">$</span>genres)</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Utworzenie tabeli częstości gatunków</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>tabela_czestosci_gatunkow <span class="ot">&lt;-</span> <span class="fu">table</span>(genres_unlisted)</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>lista_nazw_gat <span class="ot">&lt;-</span> <span class="fu">names</span>(tabela_czestosci_gatunkow)</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co">#chmura słów</span></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(lista_nazw_gat, <span class="fu">as.numeric</span>(tabela_czestosci_gatunkow), <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#101112"</span>, <span class="st">"#384a8c"</span>, <span class="st">"#db8904"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#wordcloud</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>artist_info<span class="sc">$</span>genres <span class="ot">&lt;-</span> <span class="fu">str_split</span>(artist_info<span class="sc">$</span>artist_tags, <span class="st">"; "</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>genres_unlisted <span class="ot">&lt;-</span> <span class="fu">unlist</span>(artist_info<span class="sc">$</span>genres)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Utworzenie tabeli częstości gatunków</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>tabela_czestosci_gatunkow <span class="ot">&lt;-</span> <span class="fu">table</span>(genres_unlisted)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>lista_nazw_gat <span class="ot">&lt;-</span> <span class="fu">names</span>(tabela_czestosci_gatunkow)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="co">#chmura słów</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(lista_nazw_gat, <span class="fu">as.numeric</span>(tabela_czestosci_gatunkow), <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#101112"</span>, <span class="st">"#384a8c"</span>, <span class="st">"#db8904"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -756,15 +762,15 @@ argument.</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>najczestszy_gatunek <span class="ot">&lt;-</span> <span class="fu">names</span>(tabela_czestosci_gatunkow)[<span class="fu">which.max</span>(tabela_czestosci_gatunkow)]</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>test_cgest <span class="ot">&lt;-</span> <span class="fu">rev</span>(<span class="fu">sort</span>(tabela_czestosci_gatunkow, <span class="at">deacreasing =</span> T))</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co">#test_cgest[1]</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Lista najczęstszych gatunków wśrod artystów</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">paste0</span>(i, <span class="st">". "</span>, <span class="fu">names</span>(test_cgest[i]), <span class="st">": "</span>, <span class="fu">as.numeric</span>(test_cgest[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>najczestszy_gatunek <span class="ot">&lt;-</span> <span class="fu">names</span>(tabela_czestosci_gatunkow)[<span class="fu">which.max</span>(tabela_czestosci_gatunkow)]</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>test_cgest <span class="ot">&lt;-</span> <span class="fu">rev</span>(<span class="fu">sort</span>(tabela_czestosci_gatunkow, <span class="at">deacreasing =</span> T))</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co">#test_cgest[1]</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Lista najczęstszych gatunków wśrod artystów</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">paste0</span>(i, <span class="st">". "</span>, <span class="fu">names</span>(test_cgest[i]), <span class="st">": "</span>, <span class="fu">as.numeric</span>(test_cgest[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1. electronic: 502
 2. Hip-Hop: 431
@@ -777,14 +783,14 @@ argument.</code></pre>
 9. experimental: 161
 10. female vocalists: 160</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">&lt;-</span> <span class="fu">head</span>(test_cgest,<span class="dv">10</span>)</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">colorRamp</span>(<span class="fu">c</span>(<span class="st">"#050861"</span>, <span class="st">"#131ad6"</span>))</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>values_barplot <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">rev</span>(tc))</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>kolor_barplot <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="fu">pal</span>((values_barplot <span class="sc">-</span> <span class="fu">min</span>(values_barplot))<span class="sc">/</span> <span class="fu">diff</span>(<span class="fu">range</span>(values_barplot))), <span class="at">max=</span><span class="dv">255</span>)</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>barplot_tracks <span class="ot">&lt;-</span> <span class="fu">barplot</span>(<span class="fu">rev</span>(tc), <span class="at">horiz =</span> T, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">yaxt =</span> <span class="st">"n"</span>, <span class="at">col =</span> kolor_barplot, <span class="at">xlab =</span> <span class="st">"Ilość odtworzeń"</span>, <span class="at">main =</span> <span class="st">"Najczęstrze tagi wśród artystów"</span>)</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">as.numeric</span>(<span class="fu">rev</span>(tc)), barplot_tracks, <span class="at">labels =</span> <span class="fu">as.numeric</span>(<span class="fu">rev</span>(tc)), <span class="at">pos =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">1</span>, barplot_tracks, <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="fu">rev</span>(<span class="fu">names</span>(tc))), <span class="at">pos =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">font =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">&lt;-</span> <span class="fu">head</span>(test_cgest,<span class="dv">10</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">colorRamp</span>(<span class="fu">c</span>(<span class="st">"#050861"</span>, <span class="st">"#131ad6"</span>))</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>values_barplot <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">rev</span>(tc))</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>kolor_barplot <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="fu">pal</span>((values_barplot <span class="sc">-</span> <span class="fu">min</span>(values_barplot))<span class="sc">/</span> <span class="fu">diff</span>(<span class="fu">range</span>(values_barplot))), <span class="at">max=</span><span class="dv">255</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>barplot_tracks <span class="ot">&lt;-</span> <span class="fu">barplot</span>(<span class="fu">rev</span>(tc), <span class="at">horiz =</span> T, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">yaxt =</span> <span class="st">"n"</span>, <span class="at">col =</span> kolor_barplot, <span class="at">xlab =</span> <span class="st">"Ilość odtworzeń"</span>, <span class="at">main =</span> <span class="st">"Najczęstrze tagi wśród artystów"</span>)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">as.numeric</span>(<span class="fu">rev</span>(tc)), barplot_tracks, <span class="at">labels =</span> <span class="fu">as.numeric</span>(<span class="fu">rev</span>(tc)), <span class="at">pos =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">1</span>, barplot_tracks, <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="fu">rev</span>(<span class="fu">names</span>(tc))), <span class="at">pos =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">font =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
