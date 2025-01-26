@@ -176,7 +176,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Projekt wykonany w języku R w ramach zajęć <em>Prezentacja i wizualizacja danych</em></p>
 <section id="wprowadzenie" class="level2">
 <h2 class="anchored" data-anchor-id="wprowadzenie">Wprowadzenie</h2>
-<p>Lubię słuchać muzyki. Łącząc to z moim nauturalnym drugiem do analizy danych, od pewnego czasu dokładnie analizuję jaką muzykę słucham.</p>
+<p>Lubię słuchać muzyki. Łącząc to z moim nauturalnym drygiem do analizy danych, od pewnego czasu dokładnie analizuję jaką muzykę słucham.</p>
 <p>Nie jestem jedynym, który miał taki pomysł. Dla osób, które dokładnie chcą wiedzieć czego słuchają powstała strona &lt;last.fm&gt;. Tam, po połączeniu z kontem Spotify, można dokładnie zobaczyć co i o której zostało przesłuchane.</p>
 <p>Powstała nawet biblioteka w R <a href="https://github.com/ppatrzyk/lastfmR">autorstwa Piotra Patrzyka</a>, która pozwala załadować dane ze swojego konta na lastFM w postaci data.frame w R</p>
 <p>Dzięki tej bibliotece mogłem rozpocząć analizę.</p>
@@ -195,30 +195,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(scrobbles,<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                   date         artist                     track
-               &lt;POSIXt&gt;         &lt;char&gt;                    &lt;char&gt;
- 1: 2024-11-01 13:54:23  Magdalena Bay                     Image
- 2: 2024-11-01 13:50:11  Magdalena Bay                     Image
- 3: 2024-11-01 13:42:38  Magdalena Bay                     Image
- 4: 2024-11-01 13:39:05  Magdalena Bay                     Image
- 5: 2024-11-01 13:35:33  Magdalena Bay                     Image
- 6: 2024-11-01 13:28:45           Lisa NEW WOMAN (feat. ROSALÍA)
- 7: 2024-11-01 13:13:20  Geordie Greep                Holy, Holy
- 8: 2024-11-01 13:03:22  Magdalena Bay                     Image
- 9: 2024-11-01 12:54:28 Snow Strippers          Under Your Spell
-10: 2024-11-01 12:50:07  Magdalena Bay                     Image
-                        album
-                       &lt;char&gt;
- 1:             Imaginal Disk
- 2:             Imaginal Disk
- 3:             Imaginal Disk
- 4:             Imaginal Disk
- 5:             Imaginal Disk
- 6: NEW WOMAN (feat. ROSALÍA)
- 7:             The New Sound
- 8:             Imaginal Disk
- 9:           April Mixtape 3
-10:             Imaginal Disk</code></pre>
+<pre><code>                   date         artist               track  album
+               &lt;POSIXt&gt;         &lt;char&gt;              &lt;char&gt; &lt;char&gt;
+ 1: 2025-01-26 13:54:23 Taco Hemingway  To by bylo na tyle Marmur
+ 2: 2025-01-26 13:53:43 Taco Hemingway            Jak cień Marmur
+ 3: 2025-01-26 13:25:03 Taco Hemingway    Ściany mają uszy Marmur
+ 4: 2025-01-26 13:19:48 Taco Hemingway               Żywot Marmur
+ 5: 2025-01-26 13:16:12 Taco Hemingway          Ślepe sumy Marmur
+ 6: 2025-01-26 13:13:16 Taco Hemingway       Tsunami blond Marmur
+ 7: 2025-01-26 13:08:58 Taco Hemingway Świecące prostokąty Marmur
+ 8: 2025-01-26 13:05:32 Taco Hemingway     Świat jest wfem Marmur
+ 9: 2025-01-26 12:58:50 Taco Hemingway          Ślepe sumy Marmur
+10: 2025-01-26 12:46:34 Taco Hemingway       Tsunami blond Marmur</code></pre>
 </div>
 </div>
 <p>Sortuje dane tak, aby najstarszy odsłuch był na górze. Potem zliczam, po raz który dany album/piosenka/artysta został odsłuchany. To przyda mi się później.</p>
@@ -274,16 +262,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">paste0</span>(i, <span class="st">". "</span>, scrobbles[track <span class="sc">==</span> <span class="fu">names</span>(top10_tracks_sorted[i])]<span class="sc">$</span>artist[<span class="dv">2</span>], <span class="st">" - "</span>, <span class="fu">names</span>(top10_tracks_sorted[i]),<span class="st">": "</span>, <span class="fu">as.numeric</span>(top10_tracks_sorted[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1. Meek, Oh Why? - Pieśniarka i Król: 245
-2. 100 gecs - money machine: 242
-3. JPEGMAFIA - 1539 N. Calvert: 202
-4. 100 gecs - hand crushed by a mallet: 187
-5. Coals - Blue (feat. Schafter): 166
-6. 100 gecs - ringtone: 157
-7. 100 gecs - sympathy 4 the grinch: 148
-8. laura les - Haunted: 147
-9. ericdoa - movinglikeazombie - remix: 146
-10. QUEEF JERKY - PINEAPPLE UPSIDE DOWN: 143</code></pre>
+<pre><code>1. 100 gecs - money machine: 248
+2. Meek, Oh Why? - Pieśniarka i Król: 246
+3. JPEGMAFIA - 1539 N. Calvert: 206
+4. 100 gecs - hand crushed by a mallet: 189
+5. King Krule - Czech One: 181
+6. Coals - Blue (feat. Schafter): 166
+7. 100 gecs - ringtone: 158
+8. 100 gecs - sympathy 4 the grinch: 150
+9. laura les - Haunted: 149
+10. ericdoa - movinglikeazombie - remix: 146</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(top10_tracks_sorted)[i] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(scrobbles[track <span class="sc">==</span> <span class="fu">names</span>(top10_tracks_sorted[i])]<span class="sc">$</span>artist[<span class="dv">2</span>], <span class="st">" - "</span>, <span class="fu">names</span>(top10_tracks_sorted[i]))</span>
@@ -316,16 +304,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(i, <span class="st">". "</span>, <span class="fu">names</span>(top10_artist_sorted[i]),<span class="st">": "</span>, <span class="fu">as.numeric</span>(top10_artist_sorted[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1. Taco Hemingway: 2774
-2. 100 gecs: 2450
-3. Holak: 2116
-4. JPEGMAFIA: 2104
-5. Meek, Oh Why?: 1939
-6. Charli XCX: 1768
-7. BROCKHAMPTON: 1692
-8. TV Girl: 1417
-9. Kendrick Lamar: 1294
-10. ROSALÍA: 1043</code></pre>
+<pre><code>1. Taco Hemingway: 2940
+2. 100 gecs: 2508
+3. JPEGMAFIA: 2123
+4. Holak: 2116
+5. Meek, Oh Why?: 1951
+6. Charli XCX: 1877
+7. BROCKHAMPTON: 1704
+8. TV Girl: 1454
+9. Kendrick Lamar: 1387
+10. ROSALÍA: 1052</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -355,16 +343,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(i, <span class="st">". "</span>, scrobbles[album <span class="sc">==</span> <span class="fu">names</span>(top10_albums_sorted[i])]<span class="sc">$</span>artist[<span class="dv">2</span>], <span class="st">" - "</span>, <span class="fu">names</span>(top10_albums_sorted[i]),<span class="st">": "</span>, <span class="fu">as.numeric</span>(top10_albums_sorted[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,<span class="at">sep =</span> <span class="st">""</span>)</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1. Meek, Oh Why? - Zachód: 1129
-2. 100 gecs - 1000 gecs: 862
+<pre><code>1. Meek, Oh Why? - Zachód: 1131
+2. 100 gecs - 1000 gecs: 879
 3. Travis Scott - ASTROWORLD: 652
-4. 100 gecs - 1000 gecs and The Tree of Clues: 618
-5. BROCKHAMPTON - GINGER: 612
+4. 100 gecs - 1000 gecs and The Tree of Clues: 638
+5. BROCKHAMPTON - GINGER: 614
 6. Taco Hemingway - Café Belga: 571
-7. Taco Hemingway - Pocztówka z WWA, lato '19: 556
-8. Phoebe Bridgers - Punisher: 550
-9. Blood Orange - Negro Swan: 541
-10. JPEGMAFIA - Veteran: 537</code></pre>
+7. Phoebe Bridgers - Punisher: 557
+8. Taco Hemingway - Pocztówka z WWA, lato '19: 556
+9. King Krule - The OOZ: 554
+10. Blood Orange - Negro Swan: 542</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(top10_albums_sorted)[i] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(scrobbles[album <span class="sc">==</span> <span class="fu">names</span>(top10_albums_sorted[i])]<span class="sc">$</span>artist[<span class="dv">2</span>], <span class="st">" - "</span>, <span class="fu">names</span>(top10_albums_sorted[i]))</span>
@@ -582,57 +570,68 @@ Attaching package: 'zoo'</code></pre>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#rządy to miesiące, kolumny to lata</span></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Pierwsszy rok, nie musial sie zaczac w styczniu</span></span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>first_scrobble_date_month <span class="ot">&lt;-</span> <span class="fu">month</span>(first_scrobble_date)</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>liczbLat <span class="ot">&lt;-</span> <span class="fu">ceiling</span>((n_months <span class="sc">-</span> first_scrobble_date_month)<span class="sc">/</span><span class="dv">12</span>) <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>macierz <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">12</span>, <span class="at">ncol =</span> liczbLat)</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>macierz_to_plot <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, n_months, <span class="dv">2</span>)</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>date_temp <span class="ot">&lt;-</span> <span class="fu">min</span>(scrobbles_copy<span class="sc">$</span>date)</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>date_temp <span class="ot">&lt;-</span> <span class="fu">floor_date</span>(date_temp, <span class="st">'month'</span>)</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>date_temp_next <span class="ot">&lt;-</span> date_temp <span class="sc">%m+%</span> <span class="fu">months</span>(<span class="dv">1</span>)</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>pier_mies <span class="ot">=</span> first_scrobble_date_month</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_months) {</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  month_in_scr <span class="ot">&lt;-</span> scrobbles[scrobbles<span class="sc">$</span>date <span class="sc">&gt;</span> date_temp <span class="sc">&amp;</span> scrobbles<span class="sc">$</span>date <span class="sc">&lt;</span> date_temp_next]</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  t_month_in_scr <span class="ot">&lt;-</span> <span class="fu">table</span>(month_in_scr<span class="sc">$</span>artist)</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  t_month_in_scr <span class="ot">&lt;-</span> <span class="fu">sort</span>(t_month_in_scr, <span class="at">decreasing =</span> T)</span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>  naj_artysta <span class="ot">&lt;-</span> <span class="fu">names</span>(t_month_in_scr[<span class="dv">1</span>])</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(naj_artysta)) {</span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>    naj_artysta <span class="ot">=</span> <span class="st">"No data for this month"</span></span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>    ich_odtworzenia_wtedy <span class="ot">=</span> <span class="dv">0</span></span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  ich_odtworzenia_wtedy <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(t_month_in_scr[<span class="dv">1</span>])</span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>  date_temp_next <span class="ot">&lt;-</span> date_temp_next <span class="sc">%m+%</span> <span class="fu">months</span>(<span class="dv">1</span>)</span>
-<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>  date_temp <span class="ot">&lt;-</span> date_temp <span class="sc">%m+%</span> <span class="fu">months</span>(<span class="dv">1</span>)</span>
-<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>  macierz[pier_mies] <span class="ot">=</span> naj_artysta</span>
-<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>  macierz_to_plot[pier_mies<span class="sc">-</span>first_scrobble_date_month<span class="sc">+</span><span class="dv">1</span>, <span class="dv">1</span>] <span class="ot">=</span> <span class="fu">substr</span>(naj_artysta,<span class="dv">1</span>,<span class="dv">26</span>)</span>
-<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>  macierz_to_plot[pier_mies<span class="sc">-</span>first_scrobble_date_month<span class="sc">+</span><span class="dv">1</span>, <span class="dv">2</span>] <span class="ot">=</span> ich_odtworzenia_wtedy</span>
-<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>  pier_mies <span class="ot">&lt;-</span> pier_mies <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a><span class="co">#macierz</span></span>
-<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a><span class="co">#macierz_to_plot</span></span>
-<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(macierz) <span class="ot">&lt;-</span> <span class="fu">year</span>(first_scrobble_date)<span class="sc">:</span><span class="fu">year</span>(<span class="fu">tail</span>(scrobbles<span class="sc">$</span>date,<span class="dv">1</span>))</span>
-<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(macierz) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Styczeń"</span>, <span class="st">"Luty"</span>, <span class="st">"Marzec"</span>, <span class="st">"Kwiecień"</span>, <span class="st">"Maj"</span>, <span class="st">"Czerwiec"</span>, <span class="st">"Lipiec"</span>, <span class="st">"Sierpień"</span>, <span class="st">"Wrzesień"</span>, <span class="st">"Październik"</span>, <span class="st">"Listopad"</span>, <span class="st">"Grudzień"</span>)</span>
-<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>df_barplot <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(macierz_to_plot)</span>
-<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a><span class="do">## To add, if len(df_barplot) != len(tibble_months), go by row in tibble months and ad missing months</span></span>
-<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>df_barplot<span class="sc">$</span>month_name <span class="ot">&lt;-</span> tibble_months<span class="sc">$</span>month_name</span>
-<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a>df_barplot<span class="sc">$</span>year <span class="ot">&lt;-</span> tibble_months<span class="sc">$</span>year</span>
-<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_barplot)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Artysta"</span>, <span class="st">"Wystapienia_w_mies"</span>)</span>
-<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a>tibble_barplot <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(df_barplot)</span>
-<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a>tibble_barplot<span class="sc">$</span>Wystapienia_w_mies <span class="ot">&lt;-</span> <span class="fu">as.double</span>(tibble_barplot<span class="sc">$</span>Wystapienia_w_mies)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> ((n_months <span class="sc">-</span> (<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>)) <span class="sc">%%</span> <span class="dv">12</span> <span class="sc">!=</span> <span class="dv">0</span>) {</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>liczbLat <span class="ot">&lt;-</span> <span class="fu">ceiling</span>((n_months <span class="sc">-</span> (<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>))<span class="sc">/</span><span class="dv">12</span>) <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>liczbLat <span class="ot">&lt;-</span> <span class="fu">ceiling</span>((n_months <span class="sc">-</span> (<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>))<span class="sc">/</span><span class="dv">12</span>)  </span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>macierz <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">12</span>, <span class="at">ncol =</span> liczbLat)</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>macierz_to_plot <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, n_months, <span class="dv">2</span>)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>date_temp <span class="ot">&lt;-</span> <span class="fu">min</span>(scrobbles_copy<span class="sc">$</span>date)</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>date_temp <span class="ot">&lt;-</span> <span class="fu">floor_date</span>(date_temp, <span class="st">'month'</span>)</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>date_temp_next <span class="ot">&lt;-</span> date_temp <span class="sc">%m+%</span> <span class="fu">months</span>(<span class="dv">1</span>)</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>pier_mies <span class="ot">=</span> first_scrobble_date_month</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_months) {</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  month_in_scr <span class="ot">&lt;-</span> scrobbles[scrobbles<span class="sc">$</span>date <span class="sc">&gt;</span> date_temp <span class="sc">&amp;</span> scrobbles<span class="sc">$</span>date <span class="sc">&lt;</span> date_temp_next]</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  t_month_in_scr <span class="ot">&lt;-</span> <span class="fu">table</span>(month_in_scr<span class="sc">$</span>artist)</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>  t_month_in_scr <span class="ot">&lt;-</span> <span class="fu">sort</span>(t_month_in_scr, <span class="at">decreasing =</span> T)</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>  naj_artysta <span class="ot">&lt;-</span> <span class="fu">names</span>(t_month_in_scr[<span class="dv">1</span>])</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(naj_artysta)) {</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>    naj_artysta <span class="ot">=</span> <span class="st">"No data for this month"</span></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>    ich_odtworzenia_wtedy <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>  ich_odtworzenia_wtedy <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(t_month_in_scr[<span class="dv">1</span>])</span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>  date_temp_next <span class="ot">&lt;-</span> date_temp_next <span class="sc">%m+%</span> <span class="fu">months</span>(<span class="dv">1</span>)</span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>  date_temp <span class="ot">&lt;-</span> date_temp <span class="sc">%m+%</span> <span class="fu">months</span>(<span class="dv">1</span>)</span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>  macierz[pier_mies] <span class="ot">=</span> naj_artysta</span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>  macierz_to_plot[pier_mies<span class="sc">-</span>first_scrobble_date_month<span class="sc">+</span><span class="dv">1</span>, <span class="dv">1</span>] <span class="ot">=</span> <span class="fu">substr</span>(naj_artysta,<span class="dv">1</span>,<span class="dv">26</span>)</span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>  macierz_to_plot[pier_mies<span class="sc">-</span>first_scrobble_date_month<span class="sc">+</span><span class="dv">1</span>, <span class="dv">2</span>] <span class="ot">=</span> ich_odtworzenia_wtedy</span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>  pier_mies <span class="ot">&lt;-</span> pier_mies <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a><span class="co">#macierz</span></span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a><span class="co">#macierz_to_plot</span></span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a>macierz <span class="ot">&lt;-</span> <span class="fu">matrix</span>(macierz, <span class="at">nrow =</span> <span class="dv">12</span>, <span class="at">ncol =</span> <span class="fu">ceiling</span>(<span class="fu">length</span>(macierz)<span class="sc">/</span><span class="dv">12</span>))</span>
+<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">year</span>(scrobbles<span class="sc">$</span>date) <span class="sc">%&gt;%</span> <span class="fu">unique</span>() <span class="sc">%&gt;%</span> <span class="fu">length</span>() <span class="sc">!=</span> <span class="dv">1</span>){</span>
+<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(macierz) <span class="ot">&lt;-</span> <span class="fu">year</span>(first_scrobble_date)<span class="sc">:</span><span class="fu">year</span>(<span class="fu">tail</span>(scrobbles<span class="sc">$</span>date,<span class="dv">1</span>))</span>
+<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(macierz) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Styczeń"</span>, <span class="st">"Luty"</span>, <span class="st">"Marzec"</span>, <span class="st">"Kwiecień"</span>, <span class="st">"Maj"</span>, <span class="st">"Czerwiec"</span>, <span class="st">"Lipiec"</span>, <span class="st">"Sierpień"</span>, <span class="st">"Wrzesień"</span>, <span class="st">"Październik"</span>, <span class="st">"Listopad"</span>, <span class="st">"Grudzień"</span>)</span>
+<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(tibble_barplot, <span class="fu">aes</span>(year, <span class="fu">as.numeric</span>(month_name))) <span class="sc">+</span> </span>
-<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill=</span> <span class="fu">as.double</span>(Wystapienia_w_mies)), <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#e5ced4"</span>, <span class="at">high =</span> <span class="st">"#451350"</span>, <span class="at">name =</span> <span class="st">"Odtworzenia </span><span class="sc">\n</span><span class="st"> w miesiącu"</span>) <span class="sc">+</span></span>
-<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Liczba odsłuchań najczęściej słuchanego artysty danego miesiąca"</span>) <span class="sc">+</span></span>
-<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="fu">year</span>(first_scrobble_date)<span class="sc">:</span><span class="fu">year</span>(<span class="fu">tail</span>(scrobbles<span class="sc">$</span>date,<span class="dv">1</span>)))<span class="sc">+</span></span>
-<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Rok"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Miesiąc"</span>) <span class="sc">+</span></span>
-<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
-<span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">substr</span>(Artysta, <span class="dv">1</span>, <span class="dv">14</span>)), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">1.7</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
-<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a>df_barplot <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(macierz_to_plot)</span>
+<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a><span class="do">## To add, if len(df_barplot) != len(tibble_months), go by row in tibble months and ad missing months</span></span>
+<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a>df_barplot<span class="sc">$</span>month_name <span class="ot">&lt;-</span> <span class="fu">c</span>(tibble_months<span class="sc">$</span>month_name)</span>
+<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a>df_barplot<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">c</span>(tibble_months<span class="sc">$</span>year)</span>
+<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df_barplot)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Artysta"</span>, <span class="st">"Wystapienia_w_mies"</span>)</span>
+<span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a>tibble_barplot <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(df_barplot)</span>
+<span id="cb27-58"><a href="#cb27-58" aria-hidden="true" tabindex="-1"></a>tibble_barplot<span class="sc">$</span>Wystapienia_w_mies <span class="ot">&lt;-</span> <span class="fu">as.double</span>(tibble_barplot<span class="sc">$</span>Wystapienia_w_mies)</span>
+<span id="cb27-59"><a href="#cb27-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-60"><a href="#cb27-60" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(tibble_barplot, <span class="fu">aes</span>(year, <span class="fu">as.numeric</span>(month_name))) <span class="sc">+</span> </span>
+<span id="cb27-61"><a href="#cb27-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill=</span> <span class="fu">as.double</span>(Wystapienia_w_mies)), <span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb27-62"><a href="#cb27-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"#e5ced4"</span>, <span class="at">high =</span> <span class="st">"#451350"</span>, <span class="at">name =</span> <span class="st">"Odtworzenia </span><span class="sc">\n</span><span class="st"> w miesiącu"</span>) <span class="sc">+</span></span>
+<span id="cb27-63"><a href="#cb27-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Liczba odsłuchań najczęściej słuchanego artysty danego miesiąca"</span>) <span class="sc">+</span></span>
+<span id="cb27-64"><a href="#cb27-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="fu">year</span>(first_scrobble_date)<span class="sc">:</span><span class="fu">year</span>(<span class="fu">tail</span>(scrobbles<span class="sc">$</span>date,<span class="dv">1</span>)))<span class="sc">+</span></span>
+<span id="cb27-65"><a href="#cb27-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Rok"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Miesiąc"</span>) <span class="sc">+</span></span>
+<span id="cb27-66"><a href="#cb27-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
+<span id="cb27-67"><a href="#cb27-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">substr</span>(Artysta, <span class="dv">1</span>, <span class="dv">14</span>)), <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">size =</span> <span class="fl">2.5</span>)</span>
+<span id="cb27-68"><a href="#cb27-68" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -683,15 +682,21 @@ Attaching package: 'zoo'</code></pre>
 </div>
 </div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Srednia odtworzen na miesiąc podczas danego roku</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>by_year<span class="sc">$</span>l_miesiecy <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>,<span class="fu">rep</span>(<span class="dv">12</span>, <span class="at">length.out =</span> <span class="fu">floor</span>((n_months <span class="sc">-</span> (<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>))<span class="sc">/</span><span class="dv">12</span>)),(n_months <span class="sc">-</span> (<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>)) <span class="sc">%%</span> <span class="dv">12</span>)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>by_year<span class="sc">$</span>na_mies <span class="ot">&lt;-</span> by_year<span class="sc">$</span><span class="st">`</span><span class="at">Liczba odtworzeń</span><span class="st">`</span> <span class="sc">/</span> by_year<span class="sc">$</span>l_miesiecy</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>by_year<span class="sc">$</span>na_mies <span class="ot">&lt;-</span> <span class="fu">round</span>(by_year<span class="sc">$</span>na_mies,<span class="dv">0</span>)</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">#t(by_year)</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>pokaz_by_year <span class="ot">&lt;-</span> <span class="fu">t</span>(by_year[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)])</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co">#pokaz_by_year</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>barplot_lata <span class="ot">&lt;-</span> <span class="fu">barplot</span>(pokaz_by_year[<span class="dv">2</span>,], <span class="at">names =</span> pokaz_by_year[<span class="dv">1</span>,], <span class="at">col =</span> <span class="st">"#aa5555"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1500</span>), <span class="at">main =</span> <span class="st">"Średnia liczba odtworzeń na miesiąc"</span>)</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(barplot_lata, pokaz_by_year[<span class="dv">2</span>,] <span class="sc">+</span> <span class="dv">50</span>, <span class="at">labels =</span> pokaz_by_year[<span class="dv">2</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> ((n_months <span class="sc">-</span> (<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>)) <span class="sc">%%</span> <span class="dv">12</span> <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>by_year<span class="sc">$</span>l_miesiecy <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>,<span class="fu">rep</span>(<span class="dv">12</span>, <span class="at">length.out =</span> <span class="fu">floor</span>((n_months <span class="sc">-</span> (<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>))<span class="sc">/</span><span class="dv">12</span>)),(n_months <span class="sc">-</span> (<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>)) <span class="sc">%%</span> <span class="dv">12</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  by_year<span class="sc">$</span>l_miesiecy <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>,<span class="fu">rep</span>(<span class="dv">12</span>, <span class="at">length.out =</span> <span class="fu">floor</span>((n_months <span class="sc">-</span> (<span class="dv">12</span> <span class="sc">-</span> first_scrobble_date_month <span class="sc">+</span> <span class="dv">1</span>))<span class="sc">/</span><span class="dv">12</span>)))</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>by_year<span class="sc">$</span>na_mies <span class="ot">&lt;-</span> by_year<span class="sc">$</span><span class="st">`</span><span class="at">Liczba odtworzeń</span><span class="st">`</span> <span class="sc">/</span> by_year<span class="sc">$</span>l_miesiecy</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>by_year<span class="sc">$</span>na_mies <span class="ot">&lt;-</span> <span class="fu">round</span>(by_year<span class="sc">$</span>na_mies,<span class="dv">0</span>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="co">#t(by_year)</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>pokaz_by_year <span class="ot">&lt;-</span> <span class="fu">t</span>(by_year[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)])</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="co">#pokaz_by_year</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>barplot_lata <span class="ot">&lt;-</span> <span class="fu">barplot</span>(pokaz_by_year[<span class="dv">2</span>,], <span class="at">names =</span> pokaz_by_year[<span class="dv">1</span>,], <span class="at">col =</span> <span class="st">"#aa5555"</span>, <span class="at">main =</span> <span class="st">"Średnia liczba odtworzeń na miesiąc"</span>)</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(barplot_lata, pokaz_by_year[<span class="dv">2</span>,] <span class="sc">+</span> <span class="dv">50</span>, <span class="at">labels =</span> pokaz_by_year[<span class="dv">2</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

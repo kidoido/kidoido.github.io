@@ -307,16 +307,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">### Pobranie wartości</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span><span class="fu">getValues</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  0.26021284  1.16199304  2.47939770  2.00716160  0.76597009 -0.15854317
- [7] -0.52916720  0.03421263  0.97040936  0.16622558 -0.84301308 -0.14358727
-[13]  1.46782773  1.45841425  1.33027973  2.33636610  1.75482072  0.86506666
-[19]  0.99074161  1.61091188  2.46843299  2.51689921  2.54398136  1.43614021
-[25]  1.59882988  1.39159448  0.59898084  0.38483126  0.84189485  2.53269847
-[31]  2.64367853  2.28546706  2.87011557  2.84004309  3.33906710  4.44595122
-[37]  5.41109358  6.20815419  5.24568069  4.29348128  2.48834882  2.91033389
-[43]  2.93590334  3.98008689  5.94854331  6.31558505  5.69791876  3.50427461
-[49]  4.64032692  5.59156407  6.20492238  5.49778449  4.94889682  5.78327106
-[55]  7.33757551  7.19740614  6.09388790  8.32681736  9.48018873  9.87088540</code></pre>
+<pre><code> [1] -0.4004158 -0.1464699  0.5697770  0.9273129  1.5467260  1.3019914
+ [7]  2.1319444  2.9888629  3.2780462  5.6698048  5.9607790  6.8478343
+[13]  7.6947583  8.9250505  9.3828810  9.4411049 10.4106703 10.7064674
+[19] 12.3499752 11.9259576 10.2680458  9.7002716  9.7599335  9.9923179
+[25]  9.6725437 11.9000449 12.4049016 12.0414593 13.2302291 13.7205238
+[31] 13.8181545 14.2422154 14.7448933 14.9114974 14.4924713 13.6663545
+[37] 14.5394635 14.7764142 15.9843739 17.2854236 17.8598740 18.6574981
+[43] 17.7787312 16.9996325 18.9021628 17.5582208 17.4091574 17.0185798
+[49] 16.4052086 14.7453082 15.6266253 15.6163974 16.0178596 15.8789952
+[55] 17.9425657 18.0088123 18.3193223 16.9575993 17.7384474 17.5760583</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Pobranie wektora czasów</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span><span class="fu">getTimes</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -335,17 +335,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Pobranie szeregu czasowgo (klasa xts)</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(y<span class="sc">$</span><span class="fu">getTimeSeries</span>(),<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                [,1]
-Jan 2009  0.26021284
-Feb 2009  1.16199304
-Mar 2009  2.47939770
-Apr 2009  2.00716160
-May 2009  0.76597009
-Jun 2009 -0.15854317
-Jul 2009 -0.52916720
-Aug 2009  0.03421263
-Sep 2009  0.97040936
-Oct 2009  0.16622558</code></pre>
+<pre><code>               [,1]
+Jan 2009 -0.4004158
+Feb 2009 -0.1464699
+Mar 2009  0.5697770
+Apr 2009  0.9273129
+May 2009  1.5467260
+Jun 2009  1.3019914
+Jul 2009  2.1319444
+Aug 2009  2.9888629
+Sep 2009  3.2780462
+Oct 2009  5.6698048</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Stworzenie przykładowego wykresu</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
