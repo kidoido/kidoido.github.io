@@ -195,18 +195,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(scrobbles,<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                   date         artist               track  album
-               &lt;POSIXt&gt;         &lt;char&gt;              &lt;char&gt; &lt;char&gt;
- 1: 2025-01-26 13:54:23 Taco Hemingway  To by bylo na tyle Marmur
- 2: 2025-01-26 13:53:43 Taco Hemingway            Jak cień Marmur
- 3: 2025-01-26 13:25:03 Taco Hemingway    Ściany mają uszy Marmur
- 4: 2025-01-26 13:19:48 Taco Hemingway               Żywot Marmur
- 5: 2025-01-26 13:16:12 Taco Hemingway          Ślepe sumy Marmur
- 6: 2025-01-26 13:13:16 Taco Hemingway       Tsunami blond Marmur
- 7: 2025-01-26 13:08:58 Taco Hemingway Świecące prostokąty Marmur
- 8: 2025-01-26 13:05:32 Taco Hemingway     Świat jest wfem Marmur
- 9: 2025-01-26 12:58:50 Taco Hemingway          Ślepe sumy Marmur
-10: 2025-01-26 12:46:34 Taco Hemingway       Tsunami blond Marmur</code></pre>
+<pre><code>                   date          artist                    track
+               &lt;POSIXt&gt;          &lt;char&gt;                   &lt;char&gt;
+ 1: 2025-01-27 15:45:42 The Lemon Twigs How Can I Love Her More?
+ 2: 2025-01-27 15:36:27      black midi          Welcome to Hell
+ 3: 2025-01-27 15:27:31 LCD Soundsystem       Dance Yrself Clean
+ 4: 2025-01-27 15:10:30     Troye Sivan                     Rush
+ 5: 2025-01-27 14:54:34      Charli XCX              Vroom Vroom
+ 6: 2025-01-27 14:50:00         Beyoncé       SUMMER RENAISSANCE
+ 7: 2025-01-27 14:44:57         Beyoncé               PURE/HONEY
+ 8: 2025-01-27 12:21:06         Beyoncé    AMERICA HAS A PROBLEM
+ 9: 2025-01-27 12:17:45         Beyoncé      ALL UP IN YOUR MIND
+10: 2025-01-27 11:05:26         Beyoncé                BODYGUARD
+                           album
+                          &lt;char&gt;
+ 1:       A Dream Is All We Know
+ 2:                     Hellfire
+ 3:            This Is Happening
+ 4: Something to Give Each Other
+ 5:               Vroom Vroom EP
+ 6:                  RENAISSANCE
+ 7:                  RENAISSANCE
+ 8:                  RENAISSANCE
+ 9:                  RENAISSANCE
+10:                COWBOY CARTER</code></pre>
 </div>
 </div>
 <p>Sortuje dane tak, aby najstarszy odsłuch był na górze. Potem zliczam, po raz który dany album/piosenka/artysta został odsłuchany. To przyda mi się później.</p>
@@ -304,12 +316,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(i, <span class="st">". "</span>, <span class="fu">names</span>(top10_artist_sorted[i]),<span class="st">": "</span>, <span class="fu">as.numeric</span>(top10_artist_sorted[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1. Taco Hemingway: 2940
+<pre><code>1. Taco Hemingway: 2961
 2. 100 gecs: 2508
 3. JPEGMAFIA: 2123
 4. Holak: 2116
-5. Meek, Oh Why?: 1951
-6. Charli XCX: 1877
+5. Meek, Oh Why?: 1950
+6. Charli XCX: 1878
 7. BROCKHAMPTON: 1704
 8. TV Girl: 1454
 9. Kendrick Lamar: 1387
@@ -343,7 +355,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(i, <span class="st">". "</span>, scrobbles[album <span class="sc">==</span> <span class="fu">names</span>(top10_albums_sorted[i])]<span class="sc">$</span>artist[<span class="dv">2</span>], <span class="st">" - "</span>, <span class="fu">names</span>(top10_albums_sorted[i]),<span class="st">": "</span>, <span class="fu">as.numeric</span>(top10_albums_sorted[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,<span class="at">sep =</span> <span class="st">""</span>)</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1. Meek, Oh Why? - Zachód: 1131
+<pre><code>1. Meek, Oh Why? - Zachód: 1130
 2. 100 gecs - 1000 gecs: 879
 3. Travis Scott - ASTROWORLD: 652
 4. 100 gecs - 1000 gecs and The Tree of Clues: 638
@@ -640,7 +652,7 @@ Attaching package: 'zoo'</code></pre>
 </div>
 </div>
 </div>
-<p>Dzięki temu wykresowi możemy zobaczyć, że do wysokiego wyniku w czerwcu 2024 przyczyniłą się również premiera nowego albumu Charli XCX pt.&nbsp;<em>“brat”</em></p>
+<p>Dzięki temu wykresowi możemy zobaczyć, że do wysokiego wyniku w czerwcu 2024 przyczyniła się premiera nowego albumu Charli XCX pt.&nbsp;<em>“brat”</em></p>
 <p>Spójrzmy w jakich miesiącach roku, słuchałem najwięcej.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Średnia Liczba odtworzeń na miesiąc</span></span>
@@ -749,7 +761,14 @@ argument.</code></pre>
 </div>
 </div>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dzien i godzina z najwieksza iloscia odsłuchań</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co">#day_plot_to_draw[which.max(day_plot_to_draw$Suma),]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>day_plot_to_draw[<span class="fu">which.max</span>(day_plot_to_draw<span class="sc">$</span>Suma),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+# Groups:   day [1]
+    day  hour  Suma
+  &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+1     2    17   972</code></pre>
+</div>
 </div>
 <p>Królują godziny popołudniowe powrotu ze szkoły i pracy. Najwięcej we wtorek o godz. 17.</p>
 </section>
@@ -757,26 +776,26 @@ argument.</code></pre>
 <h2 class="anchored" data-anchor-id="chmura-gatunków">Chmura gatunków</h2>
 <p>Zobaczmy jakie gatunki najczęsciej się przewijają u artysów, których słucham.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>artist_info <span class="ot">&lt;-</span> <span class="fu">get_library_info</span>(<span class="at">user =</span> user)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>artist_info <span class="ot">&lt;-</span> <span class="fu">get_library_info</span>(<span class="at">user =</span> user)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wordcloud)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: RColorBrewer</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#wordcloud</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>artist_info<span class="sc">$</span>genres <span class="ot">&lt;-</span> <span class="fu">str_split</span>(artist_info<span class="sc">$</span>artist_tags, <span class="st">"; "</span>)</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>genres_unlisted <span class="ot">&lt;-</span> <span class="fu">unlist</span>(artist_info<span class="sc">$</span>genres)</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Utworzenie tabeli częstości gatunków</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>tabela_czestosci_gatunkow <span class="ot">&lt;-</span> <span class="fu">table</span>(genres_unlisted)</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>lista_nazw_gat <span class="ot">&lt;-</span> <span class="fu">names</span>(tabela_czestosci_gatunkow)</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="co">#chmura słów</span></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(lista_nazw_gat, <span class="fu">as.numeric</span>(tabela_czestosci_gatunkow), <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#101112"</span>, <span class="st">"#384a8c"</span>, <span class="st">"#db8904"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#wordcloud</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>artist_info<span class="sc">$</span>genres <span class="ot">&lt;-</span> <span class="fu">str_split</span>(artist_info<span class="sc">$</span>artist_tags, <span class="st">"; "</span>)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>genres_unlisted <span class="ot">&lt;-</span> <span class="fu">unlist</span>(artist_info<span class="sc">$</span>genres)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Utworzenie tabeli częstości gatunków</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>tabela_czestosci_gatunkow <span class="ot">&lt;-</span> <span class="fu">table</span>(genres_unlisted)</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>lista_nazw_gat <span class="ot">&lt;-</span> <span class="fu">names</span>(tabela_czestosci_gatunkow)</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="co">#chmura słów</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(lista_nazw_gat, <span class="fu">as.numeric</span>(tabela_czestosci_gatunkow), <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#101112"</span>, <span class="st">"#384a8c"</span>, <span class="st">"#db8904"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -786,15 +805,15 @@ argument.</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>najczestszy_gatunek <span class="ot">&lt;-</span> <span class="fu">names</span>(tabela_czestosci_gatunkow)[<span class="fu">which.max</span>(tabela_czestosci_gatunkow)]</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>test_cgest <span class="ot">&lt;-</span> <span class="fu">rev</span>(<span class="fu">sort</span>(tabela_czestosci_gatunkow, <span class="at">deacreasing =</span> T))</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co">#test_cgest[1]</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Lista najczęstszych gatunków wśrod artystów</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">paste0</span>(i, <span class="st">". "</span>, <span class="fu">names</span>(test_cgest[i]), <span class="st">": "</span>, <span class="fu">as.numeric</span>(test_cgest[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>najczestszy_gatunek <span class="ot">&lt;-</span> <span class="fu">names</span>(tabela_czestosci_gatunkow)[<span class="fu">which.max</span>(tabela_czestosci_gatunkow)]</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>test_cgest <span class="ot">&lt;-</span> <span class="fu">rev</span>(<span class="fu">sort</span>(tabela_czestosci_gatunkow, <span class="at">deacreasing =</span> T))</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co">#test_cgest[1]</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Lista najczęstszych gatunków wśrod artystów</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">paste0</span>(i, <span class="st">". "</span>, <span class="fu">names</span>(test_cgest[i]), <span class="st">": "</span>, <span class="fu">as.numeric</span>(test_cgest[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1. electronic: 345
 2. Hip-Hop: 321
@@ -807,14 +826,14 @@ argument.</code></pre>
 9. hyperpop: 111
 10. female vocalists: 110</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">&lt;-</span> <span class="fu">head</span>(test_cgest,<span class="dv">10</span>)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">colorRamp</span>(<span class="fu">c</span>(<span class="st">"#050861"</span>, <span class="st">"#131ad6"</span>))</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>values_barplot <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">rev</span>(tc))</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>kolor_barplot <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="fu">pal</span>((values_barplot <span class="sc">-</span> <span class="fu">min</span>(values_barplot))<span class="sc">/</span> <span class="fu">diff</span>(<span class="fu">range</span>(values_barplot))), <span class="at">max=</span><span class="dv">255</span>)</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>barplot_tracks <span class="ot">&lt;-</span> <span class="fu">barplot</span>(<span class="fu">rev</span>(tc), <span class="at">horiz =</span> T, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">yaxt =</span> <span class="st">"n"</span>, <span class="at">col =</span> kolor_barplot, <span class="at">xlab =</span> <span class="st">"Ilość odtworzeń"</span>, <span class="at">main =</span> <span class="st">"Najczęstrze tagi wśród artystów"</span>)</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">as.numeric</span>(<span class="fu">rev</span>(tc)), barplot_tracks, <span class="at">labels =</span> <span class="fu">as.numeric</span>(<span class="fu">rev</span>(tc)), <span class="at">pos =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">1</span>, barplot_tracks, <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="fu">rev</span>(<span class="fu">names</span>(tc))), <span class="at">pos =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">font =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">&lt;-</span> <span class="fu">head</span>(test_cgest,<span class="dv">10</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">colorRamp</span>(<span class="fu">c</span>(<span class="st">"#050861"</span>, <span class="st">"#131ad6"</span>))</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>values_barplot <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">rev</span>(tc))</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>kolor_barplot <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="fu">pal</span>((values_barplot <span class="sc">-</span> <span class="fu">min</span>(values_barplot))<span class="sc">/</span> <span class="fu">diff</span>(<span class="fu">range</span>(values_barplot))), <span class="at">max=</span><span class="dv">255</span>)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>barplot_tracks <span class="ot">&lt;-</span> <span class="fu">barplot</span>(<span class="fu">rev</span>(tc), <span class="at">horiz =</span> T, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">yaxt =</span> <span class="st">"n"</span>, <span class="at">col =</span> kolor_barplot, <span class="at">xlab =</span> <span class="st">"Ilość odtworzeń"</span>, <span class="at">main =</span> <span class="st">"Najczęstrze tagi wśród artystów"</span>)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">as.numeric</span>(<span class="fu">rev</span>(tc)), barplot_tracks, <span class="at">labels =</span> <span class="fu">as.numeric</span>(<span class="fu">rev</span>(tc)), <span class="at">pos =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">1</span>, barplot_tracks, <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="fu">rev</span>(<span class="fu">names</span>(tc))), <span class="at">pos =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">font =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

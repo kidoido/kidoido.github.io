@@ -307,16 +307,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">### Pobranie wartości</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span><span class="fu">getValues</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] -0.4004158 -0.1464699  0.5697770  0.9273129  1.5467260  1.3019914
- [7]  2.1319444  2.9888629  3.2780462  5.6698048  5.9607790  6.8478343
-[13]  7.6947583  8.9250505  9.3828810  9.4411049 10.4106703 10.7064674
-[19] 12.3499752 11.9259576 10.2680458  9.7002716  9.7599335  9.9923179
-[25]  9.6725437 11.9000449 12.4049016 12.0414593 13.2302291 13.7205238
-[31] 13.8181545 14.2422154 14.7448933 14.9114974 14.4924713 13.6663545
-[37] 14.5394635 14.7764142 15.9843739 17.2854236 17.8598740 18.6574981
-[43] 17.7787312 16.9996325 18.9021628 17.5582208 17.4091574 17.0185798
-[49] 16.4052086 14.7453082 15.6266253 15.6163974 16.0178596 15.8789952
-[55] 17.9425657 18.0088123 18.3193223 16.9575993 17.7384474 17.5760583</code></pre>
+<pre><code> [1] -0.329470907 -1.168658223 -1.516029780 -0.753497611 -1.487262789
+ [6] -1.552278517 -1.463741430 -2.149745519 -1.923805748 -2.719100475
+[11] -4.107370958 -4.236770680 -3.899349725 -3.953300180 -4.238896488
+[16] -4.957564522 -4.025807277 -3.317557196 -2.385158365 -2.830177063
+[21] -2.346006029 -0.882431477  0.859310047  2.570370165  1.205272120
+[26] -0.114634734 -0.369911102 -0.875652293 -0.295390980 -0.810403620
+[31] -0.022187390  0.520352780 -0.168861167  0.177803486  0.764886040
+[36]  0.531106315  0.005937241 -0.296349775  0.862430029  1.419660322
+[41]  1.189166944  1.020930711  2.036104790  1.929723408  3.208895322
+[46]  4.260753830  4.700919125  3.628746644  1.563058475  0.871690483
+[51] -1.123067914 -1.032495291 -1.274097607 -1.576109171 -1.146048349
+[56] -1.153347832 -2.175976097 -3.195613331 -2.176601617 -2.224632281</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Pobranie wektora czasów</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span><span class="fu">getTimes</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -336,16 +338,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(y<span class="sc">$</span><span class="fu">getTimeSeries</span>(),<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               [,1]
-Jan 2009 -0.4004158
-Feb 2009 -0.1464699
-Mar 2009  0.5697770
-Apr 2009  0.9273129
-May 2009  1.5467260
-Jun 2009  1.3019914
-Jul 2009  2.1319444
-Aug 2009  2.9888629
-Sep 2009  3.2780462
-Oct 2009  5.6698048</code></pre>
+Jan 2009 -0.3294709
+Feb 2009 -1.1686582
+Mar 2009 -1.5160298
+Apr 2009 -0.7534976
+May 2009 -1.4872628
+Jun 2009 -1.5522785
+Jul 2009 -1.4637414
+Aug 2009 -2.1497455
+Sep 2009 -1.9238057
+Oct 2009 -2.7191005</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Stworzenie przykładowego wykresu</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
