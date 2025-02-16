@@ -144,7 +144,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#time-series-forecasting" id="toc-time-series-forecasting" class="nav-link active" data-scroll-target="#time-series-forecasting">Time series forecasting</a>
   <ul class="collapse">
-  <li><a href="#starcjonarność-szeregu" id="toc-starcjonarność-szeregu" class="nav-link" data-scroll-target="#starcjonarność-szeregu">Starcjonarność szeregu</a></li>
+  <li><a href="#stacjonarność-szeregu" id="toc-stacjonarność-szeregu" class="nav-link" data-scroll-target="#stacjonarność-szeregu">Stacjonarność szeregu</a></li>
   <li><a href="#prognozowanie" id="toc-prognozowanie" class="nav-link" data-scroll-target="#prognozowanie">Prognozowanie</a></li>
   </ul></li>
   </ul>
@@ -223,8 +223,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #   M1 &lt;dbl&gt;, M2 &lt;dbl&gt;, M3 &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<section id="starcjonarność-szeregu" class="level3">
-<h3 class="anchored" data-anchor-id="starcjonarność-szeregu">Starcjonarność szeregu</h3>
+<section id="stacjonarność-szeregu" class="level3">
+<h3 class="anchored" data-anchor-id="stacjonarność-szeregu">Stacjonarność szeregu</h3>
 <p>Zobaczymy jak dane prezentują się na wykresie.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modifying the date vector to convert it later to a POSIX format</span></span>
@@ -287,8 +287,8 @@ Multiple R-squared:  0.126, Adjusted R-squared:  0.1029
 F-statistic: 6.088 on 10 and 454 DF,  p-value: 1.016e-08</code></pre>
 </div>
 </div>
-<p>Hipoteza zerowa testu Dickey-Fuller mówi o tym że szereg czasowy jest niestacjonarny. W teście p-value wynosi około 0,8 a to oznacza że nie ma podstaw do odrzucenia hipotezy zerowej.</p>
-<p>Aby usunąć trend, i przekształcić szereg w stacjonarny, muszę zróżnicować dane. Robię to obliczając procentowe zmiany szeregu czasowego za pomocą funkcji <code>ts_pc()</code>.</p>
+<p>Hipoteza zerowa testu Dickey-Fuller mówi o tym, że szereg czasowy jest niestacjonarny. W teście p-value wynosi około 0,8 a to oznacza że nie ma podstaw do odrzucenia hipotezy zerowej.</p>
+<p>Aby usunąć trend i przekształcić szereg w stacjonarny, muszę zróżnicować dane. Robię to obliczając procentowe zmiany szeregu czasowego za pomocą funkcji <code>ts_pc()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_plot</span>(<span class="fu">ts_pc</span>(M3), </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Swiss Monetary aggregate M3 over time"</span>,</span>
@@ -302,7 +302,7 @@ F-statistic: 6.088 on 10 and 454 DF,  p-value: 1.016e-08</code></pre>
 </div>
 </div>
 </div>
-<p>Wizualnie nie widzę większego trendu ale sprawdźmy to za pomocą testu ADF.</p>
+<p>Wizualnie nie widzę większego trendu, ale sprawdźmy to za pomocą testu ADF.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>unitRootTest <span class="ot">&lt;-</span> <span class="fu">CADFtest</span>(<span class="fu">ts_pc</span>(M3), <span class="at">type =</span> <span class="st">"drift"</span>, <span class="at">max.lag.y=</span><span class="dv">10</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(unitRootTest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -355,8 +355,8 @@ F-statistic: 4.536 on 10 and 454 DF,  p-value: 3.868e-06</code></pre>
 </div>
 </div>
 </div>
-<p>Tak, sezonowość występuje. Widzimy to przez znaczące autokorelację na dwunastym i dwudziestym czwartym opóźnieniu.</p>
-<p>Aby usunąć autokorelację zastosuje bibliotekę <code>seasonal</code>.</p>
+<p>Tak, sezonowość występuje. Widzimy to po znaczącej autokorelacji na dwunastym i dwudziestym czwartym opóźnieniu.</p>
+<p>Aby usunąć sezonowość, zastosuję bibliotekę <code>seasonal</code>.</p>
 <p>Zobaczymy jak wygląda wykres wskaźnika po usunięciu sezonowości.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>M3seas <span class="ot">&lt;-</span> <span class="fu">final</span>(<span class="fu">seas</span>(<span class="fu">ts_ts</span>(M3)))</span>
@@ -537,7 +537,7 @@ data:  Model$residuals
 X-squared = 41.554, df = 23, p-value = 0.01023</code></pre>
 </div>
 </div>
-<p>P value wynosi 0,01 więc odrzucamy hipotezę zerową. Wśród reszty występuje autokorelacja.</p>
+<p>P value wynosi 0,01, więc odrzucamy hipotezę zerową. Wśród reszty występuje autokorelacja.</p>
 <p>Sprawdźmy jak wypada drugi model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARMA (5,5)</span></span>
@@ -585,7 +585,7 @@ Q* = 20.226, df = 14, p-value = 0.1232
 Model df: 10.   Total lags used: 24</code></pre>
 </div>
 </div>
-<p>O ile na jednym z opóźnie występuje istotna statystyczne autokorelacja, to rozkład reszcie zdecydowanie bliższy składali normalnemu niż niż wcześniej.</p>
+<p>O ile na jednym z opóźnień występuje istotna statystycznie autokorelacja, to rozkład reszt jest zdecydowanie bliższy rozkładowi normalnemu niż wcześniej.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>box <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(Model5_5<span class="sc">$</span>residuals, <span class="at">lag=</span><span class="dv">24</span>, <span class="at">fitdf=</span><span class="dv">1</span>, <span class="at">type=</span><span class="st">"Lj"</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>box </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -597,7 +597,7 @@ data:  Model5_5$residuals
 X-squared = 20.226, df = 23, p-value = 0.6282</code></pre>
 </div>
 </div>
-<p>I rzeczywiście. Nie odrzucamy hipotezę zerowej, co świadczy o braku autokorelacji reszt modelu. Tak więc, do dalszej prognozy użyje modelu ARMA(5,5).</p>
+<p>I rzeczywiście, nie odrzucamy hipotezy zerowej, co świadczy o braku autokorelacji reszt modelu. Tak więc do dalszej prognozy użyję modelu ARMA(5,5).</p>
 <p>I to ten model wrzucam dalej do funkcji <code>forecast</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>horizon <span class="ot">=</span> <span class="dv">28</span> <span class="co"># to Jan 1 2027</span></span>
@@ -636,7 +636,7 @@ X-squared = 20.226, df = 23, p-value = 0.6282</code></pre>
 <span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>HistYoY   <span class="ot">=</span> <span class="fu">ts_span</span>(temp2, <span class="cn">NULL</span>, histEnd)</span>
 <span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>FcstYoY   <span class="ot">=</span> <span class="fu">ts_span</span>(temp2, histEnd, <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Tu wizualizuję swoją predykcję. Moim celem też jest wyraźne zaznaczenie przedziałów ufności na wykresie.</p>
+<p>Tutaj wizualizuję swoją prognozę. Moim celem jest również zaznaczenie przedziałów ufności na wykresie.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># User defined function that takes different vectors of predicted month-on-month growth, and converts them </span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to absolute values using the historical M3 data</span></span>
