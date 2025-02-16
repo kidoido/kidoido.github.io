@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2. Time Series forecasting – Igor Domaradzki</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Igor Domaradzki</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#time-series-forecasting" id="toc-time-series-forecasting" class="nav-link active" data-scroll-target="#time-series-forecasting">Time series forecasting</a>
+  <ul class="collapse">
+  <li><a href="#starcjonarność-szeregu" id="toc-starcjonarność-szeregu" class="nav-link" data-scroll-target="#starcjonarność-szeregu">Starcjonarność szeregu</a></li>
+  <li><a href="#prognozowanie" id="toc-prognozowanie" class="nav-link" data-scroll-target="#prognozowanie">Prognozowanie</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">2. Time Series forecasting</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Projekt wykonany w języku R w ramach zajęć <em>Applied</em> <em>Macroeconometrics</em>.</p>
+<p><img src="forecastM3.png" class="img-fluid"></p>
+<section id="time-series-forecasting" class="level2">
+<h2 class="anchored" data-anchor-id="time-series-forecasting">Time series forecasting</h2>
+<p>Podczas mojej wymiany studenckiej w Neuchâtel miałem przyjemność uczestniczyć w zajęciach z makroekonometrii stosowanej, prowadzonych przez prof. Daniela Kaufmana. Na zajęciach uczyliśmy się prognozowania makroekonomicznych szeregów czasowych, a jednym z elementów zaliczenia było przygotowanie prognozy wskaźnika wyznaczonego przez profesora. Moim zadaniem było opracowanie prognozy wartości wskaźnika podaży pieniądza M3 dla Szwajcarii.</p>
+<p>Oto mój kod, który zastosowałem do wykonania prognozy.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xts)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tsbox)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CADFtest)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(seasonal)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nameMin <span class="ot">&lt;-</span> <span class="cf">function</span>(Matx){</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This is a useful function that returns the column and row names of a matrix</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># for the minimum value of the matrix</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  ind <span class="ot">&lt;-</span> <span class="fu">which</span>(Matx <span class="sc">==</span> <span class="fu">min</span>(Matx), <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  cname <span class="ot">&lt;-</span> <span class="fu">colnames</span>(Matx)[[ind[<span class="dv">2</span>]]]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  rname <span class="ot">&lt;-</span> <span class="fu">rownames</span>(Matx)[[ind[<span class="dv">1</span>]]]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(rname, cname))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Historyczne wartości wskaźnika M3 pobrałem ze <a href="https://data.snb.ch/en/topics/snb/chart/snbmonagglech?zoomType=full">strony Szwajcarskiego Banku Centralnego</a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"snb-chart-data-snbmonagglech-en-all-20241021_0900.xlsx"</span>, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">skip =</span> <span class="dv">15</span>) <span class="co"># First 15 lines of the file are the information about the data</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's inspect the data</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 9
+  ...1    `Currency in circulation` `Sight deposits` Deposits in transaction a…¹
+  &lt;chr&gt;                       &lt;dbl&gt;            &lt;dbl&gt;                       &lt;dbl&gt;
+1 1984-12                      23.7             44.4                        27.3
+2 1985-01                      22.2             41.6                        28.0
+3 1985-02                      22.2             38.6                        28.4
+4 1985-03                      22.3             39.6                        28.3
+5 1985-04                      22.0             40.0                        28.4
+# ℹ abbreviated name: ¹​`Deposits in transaction accounts`
+# ℹ 5 more variables: `Savings deposits` &lt;dbl&gt;, `Time deposits` &lt;dbl&gt;,
+#   M1 &lt;dbl&gt;, M2 &lt;dbl&gt;, M3 &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<section id="starcjonarność-szeregu" class="level3">
+<h3 class="anchored" data-anchor-id="starcjonarność-szeregu">Starcjonarność szeregu</h3>
+<p>Zobaczymy jak dane prezentują się na wykresie.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modifying the date vector to convert it later to a POSIX format</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>M3 <span class="ot">&lt;-</span> <span class="fu">xts</span>(<span class="at">x =</span> data<span class="sc">$</span>M3,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">order.by=</span> <span class="fu">as.Date</span>(<span class="fu">sapply</span>(data[,<span class="dv">1</span>], paste0, <span class="st">"-01"</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_plot</span>(M3, </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Swiss Monetary aggregate M3 over time"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"in billions of CHF"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"CHF billions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Wizualnie można zauważyć, że poziom M3 nie jest stacjonarny i wykazuje trend rosnący.<br>
+Sprawdźmy to również matematycznie.</p>
+<p>Do tego użyję testu Augmented Dickey-Fuller (ADF), który służy do sprawdzania, czy szereg czasowy jest stacjonarny.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>unitRootTest <span class="ot">&lt;-</span> <span class="fu">CADFtest</span>(M3, <span class="at">type =</span> <span class="st">"trend"</span>, <span class="at">max.lag.y=</span><span class="dv">10</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(unitRootTest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Augmented DF test 
+                                             ADF test
+t-test statistic:                          -1.4983573
+p-value:                                    0.8291424
+Max lag of the diff. dependent variable:   10.0000000
+
+Call:
+dynlm(formula = formula(model), start = obs.1, end = obs.T)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-14.6944  -2.3640   0.2272   2.3451  15.3185 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  1.522721   0.614911   2.476 0.013638 *  
+trnd         0.010613   0.006340   1.674 0.094817 .  
+L(y, 1)     -0.004497   0.003001  -1.498 0.829142    
+L(d(y), 1)   0.109869   0.046814   2.347 0.019357 *  
+L(d(y), 2)  -0.009863   0.046899  -0.210 0.833526    
+L(d(y), 3)   0.215642   0.046840   4.604 5.39e-06 ***
+L(d(y), 4)   0.042155   0.047272   0.892 0.373000    
+L(d(y), 5)  -0.049811   0.047393  -1.051 0.293816    
+L(d(y), 6)   0.097265   0.047411   2.052 0.040790 *  
+L(d(y), 7)  -0.174298   0.047666  -3.657 0.000285 ***
+L(d(y), 8)   0.041753   0.047302   0.883 0.377876    
+L(d(y), 9)   0.104568   0.047378   2.207 0.027807 *  
+L(d(y), 10)  0.030430   0.047362   0.642 0.520873    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.908 on 454 degrees of freedom
+Multiple R-squared:  0.126, Adjusted R-squared:  0.1029 
+F-statistic: 6.088 on 10 and 454 DF,  p-value: 1.016e-08</code></pre>
+</div>
+</div>
+<p>Hipoteza zerowa testu Dickey-Fuller mówi o tym że szereg czasowy jest niestacjonarny. W teście p-value wynosi około 0,8 a to oznacza że nie ma podstaw do odrzucenia hipotezy zerowej.</p>
+<p>Aby usunąć trend, i przekształcić szereg w stacjonarny, muszę zróżnicować dane. Robię to obliczając procentowe zmiany szeregu czasowego za pomocą funkcji <code>ts_pc()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_plot</span>(<span class="fu">ts_pc</span>(M3), </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Swiss Monetary aggregate M3 over time"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"month to month percentage change"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Wizualnie nie widzę większego trendu ale sprawdźmy to za pomocą testu ADF.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>unitRootTest <span class="ot">&lt;-</span> <span class="fu">CADFtest</span>(<span class="fu">ts_pc</span>(M3), <span class="at">type =</span> <span class="st">"drift"</span>, <span class="at">max.lag.y=</span><span class="dv">10</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(unitRootTest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Augmented DF test 
+                                                ADF test
+t-test statistic:                          -5.1349687627
+p-value:                                    0.0000140977
+Max lag of the diff. dependent variable:   10.0000000000
+
+Call:
+dynlm(formula = formula(model), start = obs.1, end = obs.T)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.31049 -0.40007  0.00915  0.33484  1.86934 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.19675    0.04853   4.054 5.92e-05 ***
+L(y, 1)     -0.61773    0.12030  -5.135 1.41e-05 ***
+L(d(y), 1)  -0.22043    0.11685  -1.886  0.05987 .  
+L(d(y), 2)  -0.25948    0.11201  -2.317  0.02097 *  
+L(d(y), 3)  -0.08458    0.10568  -0.800  0.42393    
+L(d(y), 4)  -0.10319    0.09877  -1.045  0.29669    
+L(d(y), 5)  -0.17109    0.09360  -1.828  0.06823 .  
+L(d(y), 6)  -0.05818    0.08609  -0.676  0.49950    
+L(d(y), 7)  -0.19022    0.07908  -2.405  0.01655 *  
+L(d(y), 8)  -0.20980    0.07231  -2.902  0.00389 ** 
+L(d(y), 9)  -0.12590    0.06040  -2.084  0.03768 *  
+L(d(y), 10) -0.10073    0.04639  -2.172  0.03040 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.6302 on 454 degrees of freedom
+  (1 observation deleted due to missingness)
+Multiple R-squared:  0.4839,    Adjusted R-squared:  0.4714 
+F-statistic: 4.536 on 10 and 454 DF,  p-value: 3.868e-06</code></pre>
+</div>
+</div>
+<p>P-value jest bardzo małe, szereg jest stacjonarny wokół stałej średniej. To na nim mogę teraz wykonać analizę. Przy interpretacji wyników trzeba pamiętać o powrotnej transformacji szeregu do oryginalnej formy.</p>
+<p>Teraz sprawdźmy czy występuje sezonowość. Jeśli tak to trzeba będzie ją usunąć.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">as.numeric</span>(<span class="fu">na.omit</span>(<span class="fu">ts_pc</span>(M3))), <span class="at">lag.max =</span> <span class="dv">24</span>, <span class="at">plot =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Tak, sezonowość występuje. Widzimy to przez znaczące autokorelację na dwunastym i dwudziestym czwartym opóźnieniu.</p>
+<p>Aby usunąć autokorelację zastosuje bibliotekę <code>seasonal</code>.</p>
+<p>Zobaczymy jak wygląda wykres wskaźnika po usunięciu sezonowości.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>M3seas <span class="ot">&lt;-</span> <span class="fu">final</span>(<span class="fu">seas</span>(<span class="fu">ts_ts</span>(M3)))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The data is not stationary</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_plot</span>(M3seas, </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Swiss Monetary aggregate M3 over time"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"seasonally adjusted, in billions of CHF"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"CHF billions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Sprawdźmy czy na pewno szereg czasowy zróżnicowany zmianami procentowymi z miesiąca na miesiąc nadal jest stacjonarny.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>M3seas_pc <span class="ot">&lt;-</span> <span class="fu">ts_pc</span>(M3seas)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_plot</span>(M3seas_pc, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Swiss Monetary aggregate M3 over time"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Seasonly adjusted, month to month percentage change"</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The month on month growth rate is stationary </span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>unitRootTest <span class="ot">&lt;-</span> <span class="fu">CADFtest</span>(M3seas_pc, <span class="at">type =</span> <span class="st">"drift"</span>, <span class="at">max.lag.y=</span><span class="dv">10</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(unitRootTest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Augmented DF test 
+                                                ADF test
+t-test statistic:                          -4.1864117563
+p-value:                                    0.0007741003
+Max lag of the diff. dependent variable:   10.0000000000
+
+Call:
+dynlm(formula = formula(model), start = obs.1, end = obs.T)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.38265 -0.26569 -0.03447  0.25565  1.45380 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.12018    0.03632   3.309 0.001012 ** 
+L(y, 1)     -0.37936    0.09062  -4.186 0.000774 ***
+L(d(y), 1)  -0.52249    0.09366  -5.578 4.18e-08 ***
+L(d(y), 2)  -0.51053    0.09435  -5.411 1.02e-07 ***
+L(d(y), 3)  -0.34446    0.09478  -3.634 0.000311 ***
+L(d(y), 4)  -0.21890    0.09283  -2.358 0.018794 *  
+L(d(y), 5)  -0.16850    0.09058  -1.860 0.063479 .  
+L(d(y), 6)  -0.09920    0.08707  -1.139 0.255209    
+L(d(y), 7)  -0.16145    0.08254  -1.956 0.051075 .  
+L(d(y), 8)  -0.09718    0.07541  -1.289 0.198122    
+L(d(y), 9)  -0.09096    0.06300  -1.444 0.149500    
+L(d(y), 10)  0.01368    0.04691   0.292 0.770646    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4687 on 454 degrees of freedom
+  (1 observation deleted due to missingness)
+Multiple R-squared:  0.4696,    Adjusted R-squared:  0.4568 
+F-statistic:  4.81 on 10 and 454 DF,  p-value: 1.364e-06</code></pre>
+</div>
+</div>
+<p>Szereg czasowy po usunięciu sezonowości nadal jest stacjonarny.</p>
+</section>
+<section id="prognozowanie" class="level3">
+<h3 class="anchored" data-anchor-id="prognozowanie">Prognozowanie</h3>
+<p>Teraz możemy przejść do prognozowania. Do tego użyje modelu ARMA.</p>
+<p>Modele ARMA to modele szeregów czasowych łączące składnik autoregresyjny (AR), który opisuje zależność wartości od jej wcześniejszych obserwacji, oraz składnik średniej ruchomej (MA), uwzględniający wpływ losowych szoków z przeszłości, co pozwala na modelowanie i prognozowanie stacjonarnych szeregów czasowych.</p>
+<p>Pytaniem jest jaka kombinacja składników autoregresyjnych oraz składników średniej ruchomej jest optymalna w modelu. W tym celu, jako że dane są na małą skalę, zbuduje pewną kombinacje możliwych modeli, i porównam ich wydajność za pomocą kryteriów informacji AIC i BIC.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>maxP <span class="ot">=</span> <span class="dv">6</span>   <span class="co"># Maksymalna liczba opóźnień AR</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>maxQ <span class="ot">=</span> <span class="dv">6</span>   <span class="co"># Maksymalna liczba opóźnień MA</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Obiekty do przechowywania kryteriów dla każdej możliwej struktury opóźnień</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>AIC <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">nrow=</span>maxP<span class="sc">+</span><span class="dv">1</span>, <span class="at">ncol=</span>maxQ<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>BIC <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">nrow=</span>maxP<span class="sc">+</span><span class="dv">1</span>, <span class="at">ncol=</span>maxQ<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(AIC) <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>maxQ</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(BIC) <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>maxQ</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(AIC) <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>maxP</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(BIC) <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>maxP</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (p <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>maxP) {</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (q <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>maxQ) {</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Estymacja odpowiadającego modelu</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    temp <span class="ot">=</span> <span class="fu">Arima</span>(M3seas_pc, <span class="at">order =</span> <span class="fu">c</span>(p, <span class="dv">0</span>, q), <span class="at">include.constant=</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Zapisanie wartości kryteriów informacyjnych</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    AIC[p<span class="sc">+</span><span class="dv">1</span>, q<span class="sc">+</span><span class="dv">1</span>] <span class="ot">=</span> temp<span class="sc">$</span>aic</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    BIC[p<span class="sc">+</span><span class="dv">1</span>, q<span class="sc">+</span><span class="dv">1</span>] <span class="ot">=</span> temp<span class="sc">$</span>bic</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Znalezienie rzędu opóźnień o najmniejszej wartości kryterium informacyjnego </span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="co"># (nameMin() to funkcja użytkownika, która pozwala znaleźć nazwę kolumn i wierszy </span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co"># odpowiadających minimalnej wartości w macierzy)</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>minCritAIC <span class="ot">=</span> <span class="fu">nameMin</span>(AIC)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>minCritBIC <span class="ot">=</span> <span class="fu">nameMin</span>(BIC)</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Optymalny rząd opóźnień według AIC i BIC (p, q)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Optymalny rząd opóźnień według AIC i BIC (p, q)"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>minCritAIC <span class="co"># 5 5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "5" "5"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>minCritBIC <span class="co"># 1 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1" "1"</code></pre>
+</div>
+</div>
+<p>Najlepsze modele to 1 1 oraz 5 5. Porównajmy je teraz.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARMA(1,1)</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>Model <span class="ot">&lt;-</span> <span class="fu">Arima</span>(M3seas_pc, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">include.constant=</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(Model)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>sum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: M3seas_pc 
+ARIMA(1,0,1) with non-zero mean 
+
+Coefficients:
+         ar1      ma1    mean
+      0.9444  -0.8404  0.3208
+s.e.  0.0270   0.0431  0.0600
+
+sigma^2 = 0.2198:  log likelihood = -314.18
+AIC=636.37   AICc=636.45   BIC=653.04
+
+Training set error measures:
+                       ME      RMSE       MAE      MPE     MAPE      MASE
+Training set -0.001517333 0.4673958 0.3575627 58.35058 199.3537 0.6488185
+                    ACF1
+Training set -0.01533273</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(Model) <span class="co"># The lag 12 months is significant</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(1,0,1) with non-zero mean
+Q* = 41.554, df = 22, p-value = 0.007075
+
+Model df: 2.   Total lags used: 24</code></pre>
+</div>
+</div>
+<p>Zauważam że Autoregresja 12 rzędu ma znaczącą autokorelację. Rozkład reszt odbiega też od postaci normalnej. Sprawdźmy czy w resztach modelu występuje autokorelacja. Robię to z pomocą testu Ljung-Box. Hipoteza zerowa stanowi, że wśród reszt nie ma autokorelacji.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>box <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(Model<span class="sc">$</span>residuals, <span class="at">lag=</span><span class="dv">24</span>, <span class="at">fitdf=</span><span class="dv">1</span>, <span class="at">type=</span><span class="st">"Lj"</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>box <span class="co"># P value is 0.01</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Box-Ljung test
+
+data:  Model$residuals
+X-squared = 41.554, df = 23, p-value = 0.01023</code></pre>
+</div>
+</div>
+<p>P value wynosi 0,01 więc odrzucamy hipotezę zerową. Wśród reszty występuje autokorelacja.</p>
+<p>Sprawdźmy jak wypada drugi model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARMA (5,5)</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>Model5_5 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(M3seas_pc, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="at">include.constant=</span> <span class="cn">TRUE</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(Model5_5)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>sum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: M3seas_pc 
+ARIMA(5,0,5) with non-zero mean 
+
+Coefficients:
+         ar1     ar2      ar3      ar4     ar5      ma1      ma2     ma3
+      0.1861  0.3803  -0.3290  -0.2260  0.7795  -0.0859  -0.3415  0.4768
+s.e.  0.0555  0.0450   0.0424   0.0418  0.0388   0.0594   0.0430  0.0267
+         ma4      ma5   mean
+      0.3836  -0.8179  0.320
+s.e.  0.0393   0.0523  0.059
+
+sigma^2 = 0.2053:  log likelihood = -296.88
+AIC=617.77   AICc=618.44   BIC=667.78
+
+Training set error measures:
+                       ME      RMSE       MAE      MPE     MAPE      MASE
+Training set -0.001012154 0.4478029 0.3407682 44.87703 178.0506 0.6183438
+                    ACF1
+Training set 0.002370316</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(Model5_5) <span class="co"># There is no significance on the 12th leg</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(5,0,5) with non-zero mean
+Q* = 20.226, df = 14, p-value = 0.1232
+
+Model df: 10.   Total lags used: 24</code></pre>
+</div>
+</div>
+<p>O ile na jednym z opóźnie występuje istotna statystyczne autokorelacja, to rozkład reszcie zdecydowanie bliższy składali normalnemu niż niż wcześniej.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>box <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(Model5_5<span class="sc">$</span>residuals, <span class="at">lag=</span><span class="dv">24</span>, <span class="at">fitdf=</span><span class="dv">1</span>, <span class="at">type=</span><span class="st">"Lj"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>box </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Box-Ljung test
+
+data:  Model5_5$residuals
+X-squared = 20.226, df = 23, p-value = 0.6282</code></pre>
+</div>
+</div>
+<p>I rzeczywiście. Nie odrzucamy hipotezę zerowej, co świadczy o braku autokorelacji reszt modelu. Tak więc, do dalszej prognozy użyje modelu ARMA(5,5).</p>
+<p>I to ten model wrzucam dalej do funkcji <code>forecast</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>horizon <span class="ot">=</span> <span class="dv">28</span> <span class="co"># to Jan 1 2027</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>Forecast <span class="ot">=</span> <span class="fu">forecast</span>(Model5_5, <span class="at">h =</span> horizon, <span class="at">level =</span> <span class="fu">c</span>(<span class="dv">50</span>,<span class="dv">80</span>,<span class="dv">95</span>))</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(Forecast)<span class="sc">+</span><span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Rezultat to przewidywane miesięczne zmiany procentowe dla przyszłych 28 obserwacji.</p>
+<p>Teraz przeprowadzam transformację z powrotem do wartości nominalnych.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Concatenating the historical data with the forecast</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>temp1 <span class="ot">=</span> <span class="fu">ts_bind</span>(Forecast<span class="sc">$</span>x, Forecast<span class="sc">$</span>mean)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># I want to keep the original structire of the time series but remove the data</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>temp2<span class="ot">=</span>temp1</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>temp2[]<span class="ot">=</span><span class="cn">NA</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Let the first value be the the first value from historical data</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>temp2[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">as.numeric</span>(M3seas[<span class="dv">1</span>])</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Let every next value be defined as:</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="co"># value for period t = value for period t-1 * (1 + percentage growth from t-1 to t)</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (observation <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(temp1)){</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  temp2[observation] <span class="ot">&lt;-</span> temp2[observation<span class="dv">-1</span>] <span class="sc">*</span> (<span class="dv">1</span><span class="sc">+</span>temp1[observation]<span class="sc">/</span><span class="dv">100</span>)</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="co"># We have a plot for the month on month growth rate, but I would prefer to show the forecast in absolute values</span></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>fcstStart <span class="ot">=</span> <span class="fu">ts_summary</span>(Forecast<span class="sc">$</span>mean)<span class="sc">$</span>start</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>histEnd   <span class="ot">=</span> <span class="fu">ts_summary</span>(Forecast<span class="sc">$</span>x)<span class="sc">$</span>end</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>HistYoY   <span class="ot">=</span> <span class="fu">ts_span</span>(temp2, <span class="cn">NULL</span>, histEnd)</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>FcstYoY   <span class="ot">=</span> <span class="fu">ts_span</span>(temp2, histEnd, <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Tu wizualizuję swoją predykcję. Moim celem też jest wyraźne zaznaczenie przedziałów ufności na wykresie.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># User defined function that takes different vectors of predicted month-on-month growth, and converts them </span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to absolute values using the historical M3 data</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># In the code it's used for drawing the different confidence intervals</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>ts_forecast_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(data){</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># First value of the drawing is the last value from historical data, so wo dont have a gap with the drawiwing</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  templower <span class="ot">=</span> <span class="fu">ts_span</span>(temp1, histEnd, <span class="cn">NULL</span>)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  templower[] <span class="ot">=</span> <span class="cn">NA</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Using the formula from earlier</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  templower[<span class="dv">1</span>] <span class="ot">=</span> M3seas[<span class="fu">length</span>(M3seas)]</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (observation <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(templower)){</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    templower[observation] <span class="ot">&lt;-</span> templower[observation<span class="dv">-1</span>] <span class="sc">*</span> (<span class="dv">1</span><span class="sc">+</span>data[observation]<span class="sc">/</span><span class="dv">100</span>)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  templower <span class="co"># function returns times series of absolute values for the forecast</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>plot_index <span class="ot">&lt;-</span> <span class="fu">index</span>(FcstYoY)</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the forecast</span></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">index</span>(HistYoY), HistYoY, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2026</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">1400</span>), </span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Billions of CHF"</span>, <span class="at">xlab =</span> <span class="st">"Year"</span>, </span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Swiss M3 money supply forecast"</span>)</span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>])), <span class="fu">c</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>lower[,<span class="dv">3</span>])[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>upper[,<span class="dv">3</span>])[<span class="sc">-</span><span class="dv">29</span>])),</span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">0</span>) <span class="co"># 95%</span></span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>])), <span class="fu">c</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>lower[,<span class="dv">2</span>])[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>upper[,<span class="dv">2</span>])[<span class="sc">-</span><span class="dv">29</span>])),</span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">4</span>), <span class="at">lty =</span> <span class="dv">0</span>) <span class="co"># 80%</span></span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>])), <span class="fu">c</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>lower[,<span class="dv">1</span>])[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>upper[,<span class="dv">1</span>])[<span class="sc">-</span><span class="dv">29</span>])),</span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">7</span>), <span class="at">lty =</span> <span class="dv">0</span>) <span class="co"># 50%</span></span>
+<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">2019</span>, <span class="dv">1400</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"95% confidence"</span>, <span class="st">"80% confidence"</span>, <span class="st">"50% confidence"</span>, <span class="st">"Forecast mean"</span>),</span>
+<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">1</span>), <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">4</span>), <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">7</span>), <span class="st">"black"</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">12</span>,<span class="dv">12</span>,<span class="dv">2</span>))</span>
+<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">index</span>(FcstYoY), FcstYoY, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -173,7 +173,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><img src="RWrapped.png" class="img-fluid"></p>
-<p>Projekt wykonany w języku R w ramach zajęć <em>Prezentacja i wizualizacja danych</em></p>
+<p>Projekt wykonany w języku R w ramach zajęć <em>Prezentacja i wizualizacja danych.</em></p>
 <section id="wprowadzenie" class="level2">
 <h2 class="anchored" data-anchor-id="wprowadzenie">Wprowadzenie</h2>
 <p>Lubię słuchać muzyki. Łącząc to z moim nauturalnym drygiem do analizy danych, od pewnego czasu dokładnie analizuję jaką muzykę słucham.</p>
@@ -184,8 +184,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#remotes::install_github("ppatrzyk/lastfmR")</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lastfmR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(remotes)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ppatrzyk/lastfmR"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lastfmR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Podstawową funkcją tej biblioteki jest <code>get_scrobbles</code>.</p>
 <div class="cell">
@@ -195,30 +196,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(scrobbles,<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                   date          artist                    track
-               &lt;POSIXt&gt;          &lt;char&gt;                   &lt;char&gt;
- 1: 2025-01-27 15:45:42 The Lemon Twigs How Can I Love Her More?
- 2: 2025-01-27 15:36:27      black midi          Welcome to Hell
- 3: 2025-01-27 15:27:31 LCD Soundsystem       Dance Yrself Clean
- 4: 2025-01-27 15:10:30     Troye Sivan                     Rush
- 5: 2025-01-27 14:54:34      Charli XCX              Vroom Vroom
- 6: 2025-01-27 14:50:00         Beyoncé       SUMMER RENAISSANCE
- 7: 2025-01-27 14:44:57         Beyoncé               PURE/HONEY
- 8: 2025-01-27 12:21:06         Beyoncé    AMERICA HAS A PROBLEM
- 9: 2025-01-27 12:17:45         Beyoncé      ALL UP IN YOUR MIND
-10: 2025-01-27 11:05:26         Beyoncé                BODYGUARD
-                           album
-                          &lt;char&gt;
- 1:       A Dream Is All We Know
- 2:                     Hellfire
- 3:            This Is Happening
- 4: Something to Give Each Other
- 5:               Vroom Vroom EP
- 6:                  RENAISSANCE
- 7:                  RENAISSANCE
- 8:                  RENAISSANCE
- 9:                  RENAISSANCE
-10:                COWBOY CARTER</code></pre>
+<pre><code>                   date                  artist                         track
+               &lt;POSIXt&gt;                  &lt;char&gt;                        &lt;char&gt;
+ 1: 2025-02-16 22:32:27              black midi               Welcome to Hell
+ 2: 2025-02-16 22:29:19              black midi                   Eat Men Eat
+ 3: 2025-02-16 21:25:22              black midi                  27 Questions
+ 4: 2025-02-16 21:16:28 Black Country, New Road                    Sunglasses
+ 5: 2025-02-16 21:13:29              black midi                   The Defence
+ 6: 2025-02-16 20:27:01              ROLE MODEL Sally, When The Wine Runs Out
+ 7: 2025-02-16 20:24:03              black midi                   The Defence
+ 8: 2025-02-16 19:31:28              black midi                   The Defence
+ 9: 2025-02-16 19:27:14              black midi            Dangerous Liaisons
+10: 2025-02-16 19:16:23              black midi    The Race Is About To Begin
+                                   album
+                                  &lt;char&gt;
+ 1:                             Hellfire
+ 2:                             Hellfire
+ 3:                             Hellfire
+ 4:                           Sunglasses
+ 5:                             Hellfire
+ 6: Kansas Anymore (The Longest Goodbye)
+ 7:                             Hellfire
+ 8:                             Hellfire
+ 9:                             Hellfire
+10:                             Hellfire</code></pre>
 </div>
 </div>
 <p>Sortuje dane tak, aby najstarszy odsłuch był na górze. Potem zliczam, po raz który dany album/piosenka/artysta został odsłuchany. To przyda mi się później.</p>
@@ -274,16 +275,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">paste0</span>(i, <span class="st">". "</span>, scrobbles[track <span class="sc">==</span> <span class="fu">names</span>(top10_tracks_sorted[i])]<span class="sc">$</span>artist[<span class="dv">2</span>], <span class="st">" - "</span>, <span class="fu">names</span>(top10_tracks_sorted[i]),<span class="st">": "</span>, <span class="fu">as.numeric</span>(top10_tracks_sorted[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>))</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1. 100 gecs - money machine: 248
+<pre><code>1. 100 gecs - money machine: 249
 2. Meek, Oh Why? - Pieśniarka i Król: 246
 3. JPEGMAFIA - 1539 N. Calvert: 206
-4. 100 gecs - hand crushed by a mallet: 189
-5. King Krule - Czech One: 181
+4. King Krule - Czech One: 190
+5. 100 gecs - hand crushed by a mallet: 189
 6. Coals - Blue (feat. Schafter): 166
 7. 100 gecs - ringtone: 158
 8. 100 gecs - sympathy 4 the grinch: 150
 9. laura les - Haunted: 149
-10. ericdoa - movinglikeazombie - remix: 146</code></pre>
+10. TV Girl - Blue Hair: 146</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(top10_tracks_sorted)[i] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(scrobbles[track <span class="sc">==</span> <span class="fu">names</span>(top10_tracks_sorted[i])]<span class="sc">$</span>artist[<span class="dv">2</span>], <span class="st">" - "</span>, <span class="fu">names</span>(top10_tracks_sorted[i]))</span>
@@ -316,16 +317,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(i, <span class="st">". "</span>, <span class="fu">names</span>(top10_artist_sorted[i]),<span class="st">": "</span>, <span class="fu">as.numeric</span>(top10_artist_sorted[i]), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1. Taco Hemingway: 2961
-2. 100 gecs: 2508
-3. JPEGMAFIA: 2123
-4. Holak: 2116
+<pre><code>1. Taco Hemingway: 3024
+2. 100 gecs: 2510
+3. JPEGMAFIA: 2133
+4. Holak: 2117
 5. Meek, Oh Why?: 1950
-6. Charli XCX: 1878
-7. BROCKHAMPTON: 1704
-8. TV Girl: 1454
-9. Kendrick Lamar: 1387
-10. ROSALÍA: 1052</code></pre>
+6. Charli XCX: 1891
+7. BROCKHAMPTON: 1705
+8. TV Girl: 1469
+9. Kendrick Lamar: 1388
+10. ROSALÍA: 1062</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -356,15 +357,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1. Meek, Oh Why? - Zachód: 1130
-2. 100 gecs - 1000 gecs: 879
+2. 100 gecs - 1000 gecs: 880
 3. Travis Scott - ASTROWORLD: 652
 4. 100 gecs - 1000 gecs and The Tree of Clues: 638
 5. BROCKHAMPTON - GINGER: 614
-6. Taco Hemingway - Café Belga: 571
-7. Phoebe Bridgers - Punisher: 557
-8. Taco Hemingway - Pocztówka z WWA, lato '19: 556
-9. King Krule - The OOZ: 554
-10. Blood Orange - Negro Swan: 542</code></pre>
+6. Taco Hemingway - Marmur: 585
+7. Taco Hemingway - Café Belga: 571
+8. King Krule - The OOZ: 571
+9. Phoebe Bridgers - Punisher: 558
+10. Taco Hemingway - Pocztówka z WWA, lato '19: 556</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(top10_albums_sorted)[i] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(scrobbles[album <span class="sc">==</span> <span class="fu">names</span>(top10_albums_sorted[i])]<span class="sc">$</span>artist[<span class="dv">2</span>], <span class="st">" - "</span>, <span class="fu">names</span>(top10_albums_sorted[i]))</span>
@@ -767,7 +768,7 @@ argument.</code></pre>
 # Groups:   day [1]
     day  hour  Suma
   &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
-1     2    17   972</code></pre>
+1     2    17   975</code></pre>
 </div>
 </div>
 <p>Królują godziny popołudniowe powrotu ze szkoły i pracy. Najwięcej we wtorek o godz. 17.</p>
