@@ -189,14 +189,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(seasonal)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nameMin <span class="ot">&lt;-</span> <span class="cf">function</span>(Matx){</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This is a useful function that returns the column and row names of a matrix</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># for the minimum value of the matrix</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  ind <span class="ot">&lt;-</span> <span class="fu">which</span>(Matx <span class="sc">==</span> <span class="fu">min</span>(Matx), <span class="at">arr.ind =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  cname <span class="ot">&lt;-</span> <span class="fu">colnames</span>(Matx)[[ind[<span class="dv">2</span>]]]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  rname <span class="ot">&lt;-</span> <span class="fu">rownames</span>(Matx)[[ind[<span class="dv">1</span>]]]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(rname, cname))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Historyczne wartości wskaźnika M3 pobrałem ze <a href="https://data.snb.ch/en/topics/snb/chart/snbmonagglech?zoomType=full">strony Szwajcarskiego Banku Centralnego</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"snb-chart-data-snbmonagglech-en-all-20241021_0900.xlsx"</span>, </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">skip =</span> <span class="dv">15</span>) <span class="co"># First 15 lines of the file are the information about the data</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's inspect the data</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"snb-chart-data-snbmonagglech-en-all-20241021_0900.xlsx"</span>, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">skip =</span> <span class="dv">15</span>) <span class="co"># First 15 lines of the file are the information about the data</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's inspect the data</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 9
   ...1    `Currency in circulation` `Sight deposits` Deposits in transaction a…¹
@@ -215,19 +227,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="stacjonarność-szeregu">Stacjonarność szeregu</h3>
 <p>Zobaczymy jak dane prezentują się na wykresie.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modifying the date vector to convert it later to a POSIX format</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>M3 <span class="ot">&lt;-</span> <span class="fu">xts</span>(<span class="at">x =</span> data<span class="sc">$</span>M3,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">order.by=</span> <span class="fu">as.Date</span>(<span class="fu">sapply</span>(data[,<span class="dv">1</span>], paste0, <span class="st">"-01"</span>))</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_plot</span>(M3, </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Swiss Monetary aggregate M3 over time"</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"in billions of CHF"</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"CHF billions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Modifying the date vector to convert it later to a POSIX format</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>M3 <span class="ot">&lt;-</span> <span class="fu">xts</span>(<span class="at">x =</span> data<span class="sc">$</span>M3,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">order.by=</span> <span class="fu">as.Date</span>(<span class="fu">sapply</span>(data[,<span class="dv">1</span>], paste0, <span class="st">"-01"</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_plot</span>(M3, </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Swiss Monetary aggregate M3 over time"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"in billions of CHF"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"CHF billions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -236,8 +248,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Sprawdźmy to również matematycznie.</p>
 <p>Do tego użyję testu Augmented Dickey-Fuller (ADF), który służy do sprawdzania, czy szereg czasowy jest stacjonarny.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>unitRootTest <span class="ot">&lt;-</span> <span class="fu">CADFtest</span>(M3, <span class="at">type =</span> <span class="st">"trend"</span>, <span class="at">max.lag.y=</span><span class="dv">10</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(unitRootTest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>unitRootTest <span class="ot">&lt;-</span> <span class="fu">CADFtest</span>(M3, <span class="at">type =</span> <span class="st">"trend"</span>, <span class="at">max.lag.y=</span><span class="dv">10</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(unitRootTest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Augmented DF test 
                                              ADF test
@@ -278,22 +290,22 @@ F-statistic: 6.088 on 10 and 454 DF,  p-value: 1.016e-08</code></pre>
 <p>Hipoteza zerowa testu Dickey-Fuller mówi o tym, że szereg czasowy jest niestacjonarny. W teście p-value wynosi około 0,8 a to oznacza że nie ma podstaw do odrzucenia hipotezy zerowej.</p>
 <p>Aby usunąć trend i przekształcić szereg w stacjonarny, muszę zróżnicować dane. Robię to obliczając procentowe zmiany szeregu czasowego za pomocą funkcji <code>ts_pc()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_plot</span>(<span class="fu">ts_pc</span>(M3), </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Swiss Monetary aggregate M3 over time"</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"month to month percentage change"</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_plot</span>(<span class="fu">ts_pc</span>(M3), </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Swiss Monetary aggregate M3 over time"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"month to month percentage change"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Wizualnie nie widzę większego trendu, ale sprawdźmy to za pomocą testu ADF.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>unitRootTest <span class="ot">&lt;-</span> <span class="fu">CADFtest</span>(<span class="fu">ts_pc</span>(M3), <span class="at">type =</span> <span class="st">"drift"</span>, <span class="at">max.lag.y=</span><span class="dv">10</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(unitRootTest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>unitRootTest <span class="ot">&lt;-</span> <span class="fu">CADFtest</span>(<span class="fu">ts_pc</span>(M3), <span class="at">type =</span> <span class="st">"drift"</span>, <span class="at">max.lag.y=</span><span class="dv">10</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(unitRootTest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Augmented DF test 
                                                 ADF test
@@ -334,26 +346,7 @@ F-statistic: 4.536 on 10 and 454 DF,  p-value: 3.868e-06</code></pre>
 <p>P-value jest bardzo małe, szereg jest stacjonarny wokół stałej średniej. To na nim mogę teraz wykonać analizę. Przy interpretacji wyników trzeba pamiętać o powrotnej transformacji szeregu do oryginalnej formy.</p>
 <p>Teraz sprawdźmy czy występuje sezonowość. Jeśli tak to trzeba będzie ją usunąć.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">as.numeric</span>(<span class="fu">na.omit</span>(<span class="fu">ts_pc</span>(M3))), <span class="at">lag.max =</span> <span class="dv">24</span>, <span class="at">plot =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Tak, sezonowość występuje. Widzimy to po znaczącej autokorelacji na dwunastym i dwudziestym czwartym opóźnieniu.</p>
-<p>Aby usunąć sezonowość, zastosuję bibliotekę <code>seasonal</code>.</p>
-<p>Zobaczymy jak wygląda wykres wskaźnika po usunięciu sezonowości.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>M3seas <span class="ot">&lt;-</span> <span class="fu">final</span>(<span class="fu">seas</span>(<span class="fu">ts_ts</span>(M3)))</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The data is not stationary</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_plot</span>(M3seas, </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Swiss Monetary aggregate M3 over time"</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"seasonally adjusted, in billions of CHF"</span>,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"CHF billions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">as.numeric</span>(<span class="fu">na.omit</span>(<span class="fu">ts_pc</span>(M3))), <span class="at">lag.max =</span> <span class="dv">24</span>, <span class="at">plot =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -362,13 +355,17 @@ F-statistic: 4.536 on 10 and 454 DF,  p-value: 3.868e-06</code></pre>
 </div>
 </div>
 </div>
-<p>Sprawdźmy czy na pewno szereg czasowy zróżnicowany zmianami procentowymi z miesiąca na miesiąc nadal jest stacjonarny.</p>
+<p>Tak, sezonowość występuje. Widzimy to po znaczącej autokorelacji na dwunastym i dwudziestym czwartym opóźnieniu.</p>
+<p>Aby usunąć sezonowość, zastosuję bibliotekę <code>seasonal</code>.</p>
+<p>Zobaczymy jak wygląda wykres wskaźnika po usunięciu sezonowości.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>M3seas_pc <span class="ot">&lt;-</span> <span class="fu">ts_pc</span>(M3seas)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_plot</span>(M3seas_pc, </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Swiss Monetary aggregate M3 over time"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Seasonly adjusted, month to month percentage change"</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>M3seas <span class="ot">&lt;-</span> <span class="fu">final</span>(<span class="fu">seas</span>(<span class="fu">ts_ts</span>(M3)))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The data is not stationary</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_plot</span>(M3seas, </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Swiss Monetary aggregate M3 over time"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"seasonally adjusted, in billions of CHF"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"CHF billions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -377,11 +374,26 @@ F-statistic: 4.536 on 10 and 454 DF,  p-value: 3.868e-06</code></pre>
 </div>
 </div>
 </div>
+<p>Sprawdźmy czy na pewno szereg czasowy zróżnicowany zmianami procentowymi z miesiąca na miesiąc nadal jest stacjonarny.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The month on month growth rate is stationary </span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>unitRootTest <span class="ot">&lt;-</span> <span class="fu">CADFtest</span>(M3seas_pc, <span class="at">type =</span> <span class="st">"drift"</span>, <span class="at">max.lag.y=</span><span class="dv">10</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(unitRootTest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>M3seas_pc <span class="ot">&lt;-</span> <span class="fu">ts_pc</span>(M3seas)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ts_plot</span>(M3seas_pc, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Swiss Monetary aggregate M3 over time"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">subtitle =</span> <span class="st">"Seasonly adjusted, month to month percentage change"</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The month on month growth rate is stationary </span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>unitRootTest <span class="ot">&lt;-</span> <span class="fu">CADFtest</span>(M3seas_pc, <span class="at">type =</span> <span class="st">"drift"</span>, <span class="at">max.lag.y=</span><span class="dv">10</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(unitRootTest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Augmented DF test 
                                                 ADF test
@@ -427,64 +439,54 @@ F-statistic:  4.81 on 10 and 454 DF,  p-value: 1.364e-06</code></pre>
 <p>Modele ARMA to modele szeregów czasowych łączące składnik autoregresyjny (AR), który opisuje zależność wartości od jej wcześniejszych obserwacji, oraz składnik średniej ruchomej (MA), uwzględniający wpływ losowych szoków z przeszłości, co pozwala na modelowanie i prognozowanie stacjonarnych szeregów czasowych.</p>
 <p>Pytaniem jest jaka kombinacja składników autoregresyjnych oraz składników średniej ruchomej jest optymalna w modelu. W tym celu, jako że dane są na małą skalę, zbuduje pewną kombinacje możliwych modeli, i porównam ich wydajność za pomocą kryteriów informacji AIC i BIC.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>maxP <span class="ot">=</span> <span class="dv">6</span>   <span class="co"># Maksymalna liczba opóźnień AR</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>maxQ <span class="ot">=</span> <span class="dv">6</span>   <span class="co"># Maksymalna liczba opóźnień MA</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Obiekty do przechowywania kryteriów dla każdej możliwej struktury opóźnień</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>AIC <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">nrow=</span>maxP<span class="sc">+</span><span class="dv">1</span>, <span class="at">ncol=</span>maxQ<span class="sc">+</span><span class="dv">1</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>BIC <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">nrow=</span>maxP<span class="sc">+</span><span class="dv">1</span>, <span class="at">ncol=</span>maxQ<span class="sc">+</span><span class="dv">1</span>)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(AIC) <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>maxQ</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(BIC) <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>maxQ</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(AIC) <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>maxP</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(BIC) <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>maxP</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (p <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>maxP) {</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (q <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>maxQ) {</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Estymacja odpowiadającego modelu</span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    temp <span class="ot">=</span> <span class="fu">Arima</span>(M3seas_pc, <span class="at">order =</span> <span class="fu">c</span>(p, <span class="dv">0</span>, q), <span class="at">include.constant=</span> <span class="cn">TRUE</span>)</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Zapisanie wartości kryteriów informacyjnych</span></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    AIC[p<span class="sc">+</span><span class="dv">1</span>, q<span class="sc">+</span><span class="dv">1</span>] <span class="ot">=</span> temp<span class="sc">$</span>aic</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    BIC[p<span class="sc">+</span><span class="dv">1</span>, q<span class="sc">+</span><span class="dv">1</span>] <span class="ot">=</span> temp<span class="sc">$</span>bic</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Szukam modelu z najmniejszą wartością dla kryterium informacji.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>AIC</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>maxP <span class="ot">=</span> <span class="dv">6</span>   <span class="co"># Maksymalna liczba opóźnień AR</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>maxQ <span class="ot">=</span> <span class="dv">6</span>   <span class="co"># Maksymalna liczba opóźnień MA</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Obiekty do przechowywania kryteriów dla każdej możliwej struktury opóźnień</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>AIC <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">nrow=</span>maxP<span class="sc">+</span><span class="dv">1</span>, <span class="at">ncol=</span>maxQ<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>BIC <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">data=</span><span class="cn">NA</span>, <span class="at">nrow=</span>maxP<span class="sc">+</span><span class="dv">1</span>, <span class="at">ncol=</span>maxQ<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(AIC) <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>maxQ</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(BIC) <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>maxQ</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(AIC) <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>maxP</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(BIC) <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>maxP</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (p <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>maxP) {</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (q <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>maxQ) {</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Estymacja odpowiadającego modelu</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    temp <span class="ot">=</span> <span class="fu">Arima</span>(M3seas_pc, <span class="at">order =</span> <span class="fu">c</span>(p, <span class="dv">0</span>, q), <span class="at">include.constant=</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Zapisanie wartości kryteriów informacyjnych</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    AIC[p<span class="sc">+</span><span class="dv">1</span>, q<span class="sc">+</span><span class="dv">1</span>] <span class="ot">=</span> temp<span class="sc">$</span>aic</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    BIC[p<span class="sc">+</span><span class="dv">1</span>, q<span class="sc">+</span><span class="dv">1</span>] <span class="ot">=</span> temp<span class="sc">$</span>bic</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Znalezienie rzędu opóźnień o najmniejszej wartości kryterium informacyjnego </span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="co"># (nameMin() to funkcja użytkownika, która pozwala znaleźć nazwę kolumn i wierszy </span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co"># odpowiadających minimalnej wartości w macierzy)</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>minCritAIC <span class="ot">=</span> <span class="fu">nameMin</span>(AIC)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>minCritBIC <span class="ot">=</span> <span class="fu">nameMin</span>(BIC)</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Optymalny rząd opóźnień według AIC i BIC (p, q)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         0        1        2        3        4        5        6
-0 678.6017 668.3649 669.0846 660.0338 647.6331 648.3763 644.2565
-1 666.6294 636.3683 638.1433 635.0882 636.8612 636.7496 644.8954
-2 665.1816 638.1987 639.9939 637.0009 637.5174 635.8337 637.7898
-3 648.6618 634.1922 636.1897 637.9341 629.8655 631.0898 632.9613
-4 639.6590 636.1950 636.8638 630.4075 631.4514 633.5779 633.0437
-5 639.1741 637.4469 638.0488 630.2042 631.7726 617.7698 619.7642
-6 637.6899 637.6001 634.4529 631.3581 624.8577 629.4724 621.7233</code></pre>
+<pre><code>[1] "Optymalny rząd opóźnień według AIC i BIC (p, q)"</code></pre>
 </div>
-</div>
-<p>Dla AIC będzie to 5 5</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>BIC</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>minCritAIC <span class="co"># 5 5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         0        1        2        3        4        5        6
-0 686.9368 680.8674 685.7546 680.8713 672.6382 677.5489 677.5967
-1 679.1319 653.0384 658.9809 660.0933 666.0339 670.0898 682.4031
-2 681.8517 659.0363 664.9990 666.1735 670.8575 673.3414 679.4650
-3 669.4993 659.1973 665.3623 671.2742 667.3731 672.7649 678.8040
-4 664.6641 665.3676 670.2040 667.9152 673.1265 679.4205 683.0539
-5 668.3467 670.7870 675.5565 671.8793 677.6152 667.7800 673.9419
-6 671.0300 675.1078 676.1281 677.2008 674.8678 683.6501 680.0685</code></pre>
+<pre><code>[1] "5" "5"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>minCritBIC <span class="co"># 1 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1" "1"</code></pre>
 </div>
 </div>
-<p>A dla BIC jest to 1 1</p>
-<p>Tak, więc najlepsze modele to 1 1 oraz 5 5. Porównajmy je teraz.</p>
+<p>Najlepsze modele to 1 1 oraz 5 5. Porównajmy je teraz.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARMA(1,1)</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>Model <span class="ot">&lt;-</span> <span class="fu">Arima</span>(M3seas_pc, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">include.constant=</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(Model)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>sum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARMA(1,1)</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>Model <span class="ot">&lt;-</span> <span class="fu">Arima</span>(M3seas_pc, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">include.constant=</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(Model)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>sum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: M3seas_pc 
 ARIMA(1,0,1) with non-zero mean 
@@ -505,11 +507,11 @@ Training set -0.01533273</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(Model) <span class="co"># The lag 12 months is significant</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(Model) <span class="co"># The lag 12 months is significant</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -525,8 +527,8 @@ Model df: 2.   Total lags used: 24</code></pre>
 </div>
 <p>Zauważam że Autoregresja 12 rzędu ma znaczącą autokorelację. Rozkład reszt odbiega też od postaci normalnej. Sprawdźmy czy w resztach modelu występuje autokorelacja. Robię to z pomocą testu Ljung-Box. Hipoteza zerowa stanowi, że wśród reszt nie ma autokorelacji.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>box <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(Model<span class="sc">$</span>residuals, <span class="at">lag=</span><span class="dv">24</span>, <span class="at">fitdf=</span><span class="dv">1</span>, <span class="at">type=</span><span class="st">"Lj"</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>box <span class="co"># P value is 0.01</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>box <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(Model<span class="sc">$</span>residuals, <span class="at">lag=</span><span class="dv">24</span>, <span class="at">fitdf=</span><span class="dv">1</span>, <span class="at">type=</span><span class="st">"Lj"</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>box <span class="co"># P value is 0.01</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Box-Ljung test
@@ -538,10 +540,10 @@ X-squared = 41.554, df = 23, p-value = 0.01023</code></pre>
 <p>P value wynosi 0,01, więc odrzucamy hipotezę zerową. Wśród reszty występuje autokorelacja.</p>
 <p>Sprawdźmy jak wypada drugi model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARMA (5,5)</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>Model5_5 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(M3seas_pc, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="at">include.constant=</span> <span class="cn">TRUE</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(Model5_5)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>sum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ARMA (5,5)</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>Model5_5 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(M3seas_pc, <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="at">include.constant=</span> <span class="cn">TRUE</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(Model5_5)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>sum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: M3seas_pc 
 ARIMA(5,0,5) with non-zero mean 
@@ -565,11 +567,11 @@ Training set 0.002370316</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(Model5_5) <span class="co"># There is no significance on the 12th leg</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">checkresiduals</span>(Model5_5) <span class="co"># There is no significance on the 12th leg</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -585,8 +587,8 @@ Model df: 10.   Total lags used: 24</code></pre>
 </div>
 <p>O ile na jednym z opóźnień występuje istotna statystycznie autokorelacja, to rozkład reszt jest zdecydowanie bliższy rozkładowi normalnemu niż wcześniej.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>box <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(Model5_5<span class="sc">$</span>residuals, <span class="at">lag=</span><span class="dv">24</span>, <span class="at">fitdf=</span><span class="dv">1</span>, <span class="at">type=</span><span class="st">"Lj"</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>box </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>box <span class="ot">&lt;-</span> <span class="fu">Box.test</span>(Model5_5<span class="sc">$</span>residuals, <span class="at">lag=</span><span class="dv">24</span>, <span class="at">fitdf=</span><span class="dv">1</span>, <span class="at">type=</span><span class="st">"Lj"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>box </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Box-Ljung test
@@ -598,13 +600,13 @@ X-squared = 20.226, df = 23, p-value = 0.6282</code></pre>
 <p>I rzeczywiście, nie odrzucamy hipotezy zerowej, co świadczy o braku autokorelacji reszt modelu. Tak więc do dalszej prognozy użyję modelu ARMA(5,5).</p>
 <p>I to ten model wrzucam dalej do funkcji <code>forecast</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>horizon <span class="ot">=</span> <span class="dv">28</span> <span class="co"># to Jan 1 2027</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>Forecast <span class="ot">=</span> <span class="fu">forecast</span>(Model5_5, <span class="at">h =</span> horizon, <span class="at">level =</span> <span class="fu">c</span>(<span class="dv">50</span>,<span class="dv">80</span>,<span class="dv">95</span>))</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(Forecast)<span class="sc">+</span><span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>horizon <span class="ot">=</span> <span class="dv">28</span> <span class="co"># to Jan 1 2027</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>Forecast <span class="ot">=</span> <span class="fu">forecast</span>(Model5_5, <span class="at">h =</span> horizon, <span class="at">level =</span> <span class="fu">c</span>(<span class="dv">50</span>,<span class="dv">80</span>,<span class="dv">95</span>))</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(Forecast)<span class="sc">+</span><span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -612,66 +614,66 @@ X-squared = 20.226, df = 23, p-value = 0.6282</code></pre>
 <p>Rezultat to przewidywane miesięczne zmiany procentowe dla przyszłych 28 obserwacji.</p>
 <p>Teraz przeprowadzam transformację z powrotem do wartości nominalnych.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Concatenating the historical data with the forecast</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>temp1 <span class="ot">=</span> <span class="fu">ts_bind</span>(Forecast<span class="sc">$</span>x, Forecast<span class="sc">$</span>mean)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># I want to keep the original structire of the time series but remove the data</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>temp2<span class="ot">=</span>temp1</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>temp2[]<span class="ot">=</span><span class="cn">NA</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Let the first value be the the first value from historical data</span></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>temp2[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">as.numeric</span>(M3seas[<span class="dv">1</span>])</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Let every next value be defined as:</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="co"># value for period t = value for period t-1 * (1 + percentage growth from t-1 to t)</span></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (observation <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(temp1)){</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  temp2[observation] <span class="ot">&lt;-</span> temp2[observation<span class="dv">-1</span>] <span class="sc">*</span> (<span class="dv">1</span><span class="sc">+</span>temp1[observation]<span class="sc">/</span><span class="dv">100</span>)</span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="co"># We have a plot for the month on month growth rate, but I would prefer to show the forecast in absolute values</span></span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>fcstStart <span class="ot">=</span> <span class="fu">ts_summary</span>(Forecast<span class="sc">$</span>mean)<span class="sc">$</span>start</span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>histEnd   <span class="ot">=</span> <span class="fu">ts_summary</span>(Forecast<span class="sc">$</span>x)<span class="sc">$</span>end</span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>HistYoY   <span class="ot">=</span> <span class="fu">ts_span</span>(temp2, <span class="cn">NULL</span>, histEnd)</span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>FcstYoY   <span class="ot">=</span> <span class="fu">ts_span</span>(temp2, histEnd, <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Concatenating the historical data with the forecast</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>temp1 <span class="ot">=</span> <span class="fu">ts_bind</span>(Forecast<span class="sc">$</span>x, Forecast<span class="sc">$</span>mean)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># I want to keep the original structire of the time series but remove the data</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>temp2<span class="ot">=</span>temp1</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>temp2[]<span class="ot">=</span><span class="cn">NA</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Let the first value be the the first value from historical data</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>temp2[<span class="dv">1</span>] <span class="ot">=</span> <span class="fu">as.numeric</span>(M3seas[<span class="dv">1</span>])</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Let every next value be defined as:</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="co"># value for period t = value for period t-1 * (1 + percentage growth from t-1 to t)</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (observation <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(temp1)){</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  temp2[observation] <span class="ot">&lt;-</span> temp2[observation<span class="dv">-1</span>] <span class="sc">*</span> (<span class="dv">1</span><span class="sc">+</span>temp1[observation]<span class="sc">/</span><span class="dv">100</span>)</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="co"># We have a plot for the month on month growth rate, but I would prefer to show the forecast in absolute values</span></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>fcstStart <span class="ot">=</span> <span class="fu">ts_summary</span>(Forecast<span class="sc">$</span>mean)<span class="sc">$</span>start</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>histEnd   <span class="ot">=</span> <span class="fu">ts_summary</span>(Forecast<span class="sc">$</span>x)<span class="sc">$</span>end</span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>HistYoY   <span class="ot">=</span> <span class="fu">ts_span</span>(temp2, <span class="cn">NULL</span>, histEnd)</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>FcstYoY   <span class="ot">=</span> <span class="fu">ts_span</span>(temp2, histEnd, <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Tutaj wizualizuję swoją prognozę. Moim celem jest również zaznaczenie przedziałów ufności na wykresie.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># User defined function that takes different vectors of predicted month-on-month growth, and converts them </span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to absolute values using the historical M3 data</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># In the code it's used for drawing the different confidence intervals</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>ts_forecast_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(data){</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># First value of the drawing is the last value from historical data, so wo dont have a gap with the drawiwing</span></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  templower <span class="ot">=</span> <span class="fu">ts_span</span>(temp1, histEnd, <span class="cn">NULL</span>)</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  templower[] <span class="ot">=</span> <span class="cn">NA</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Using the formula from earlier</span></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  templower[<span class="dv">1</span>] <span class="ot">=</span> M3seas[<span class="fu">length</span>(M3seas)]</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (observation <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(templower)){</span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    templower[observation] <span class="ot">&lt;-</span> templower[observation<span class="dv">-1</span>] <span class="sc">*</span> (<span class="dv">1</span><span class="sc">+</span>data[observation]<span class="sc">/</span><span class="dv">100</span>)</span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  templower <span class="co"># function returns times series of absolute values for the forecast</span></span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>plot_index <span class="ot">&lt;-</span> <span class="fu">index</span>(FcstYoY)</span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the forecast</span></span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">index</span>(HistYoY), HistYoY, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2026</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">1400</span>), </span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Billions of CHF"</span>, <span class="at">xlab =</span> <span class="st">"Year"</span>, </span>
-<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Swiss M3 money supply forecast"</span>)</span>
-<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>])), <span class="fu">c</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>lower[,<span class="dv">3</span>])[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>upper[,<span class="dv">3</span>])[<span class="sc">-</span><span class="dv">29</span>])),</span>
-<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">0</span>) <span class="co"># 95%</span></span>
-<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>])), <span class="fu">c</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>lower[,<span class="dv">2</span>])[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>upper[,<span class="dv">2</span>])[<span class="sc">-</span><span class="dv">29</span>])),</span>
-<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">4</span>), <span class="at">lty =</span> <span class="dv">0</span>) <span class="co"># 80%</span></span>
-<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>])), <span class="fu">c</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>lower[,<span class="dv">1</span>])[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>upper[,<span class="dv">1</span>])[<span class="sc">-</span><span class="dv">29</span>])),</span>
-<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">7</span>), <span class="at">lty =</span> <span class="dv">0</span>) <span class="co"># 50%</span></span>
-<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">2019</span>, <span class="dv">1400</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"95% confidence"</span>, <span class="st">"80% confidence"</span>, <span class="st">"50% confidence"</span>, <span class="st">"Forecast mean"</span>),</span>
-<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">1</span>), <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">4</span>), <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">7</span>), <span class="st">"black"</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">12</span>,<span class="dv">12</span>,<span class="dv">2</span>))</span>
-<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">index</span>(FcstYoY), FcstYoY, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># User defined function that takes different vectors of predicted month-on-month growth, and converts them </span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># to absolute values using the historical M3 data</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># In the code it's used for drawing the different confidence intervals</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>ts_forecast_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(data){</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># First value of the drawing is the last value from historical data, so wo dont have a gap with the drawiwing</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  templower <span class="ot">=</span> <span class="fu">ts_span</span>(temp1, histEnd, <span class="cn">NULL</span>)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  templower[] <span class="ot">=</span> <span class="cn">NA</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Using the formula from earlier</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  templower[<span class="dv">1</span>] <span class="ot">=</span> M3seas[<span class="fu">length</span>(M3seas)]</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (observation <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(templower)){</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    templower[observation] <span class="ot">&lt;-</span> templower[observation<span class="dv">-1</span>] <span class="sc">*</span> (<span class="dv">1</span><span class="sc">+</span>data[observation]<span class="sc">/</span><span class="dv">100</span>)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  templower <span class="co"># function returns times series of absolute values for the forecast</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>plot_index <span class="ot">&lt;-</span> <span class="fu">index</span>(FcstYoY)</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the forecast</span></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">index</span>(HistYoY), HistYoY, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2026</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">1400</span>), </span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Billions of CHF"</span>, <span class="at">xlab =</span> <span class="st">"Year"</span>, </span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Swiss M3 money supply forecast"</span>)</span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>])), <span class="fu">c</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>lower[,<span class="dv">3</span>])[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>upper[,<span class="dv">3</span>])[<span class="sc">-</span><span class="dv">29</span>])),</span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">0</span>) <span class="co"># 95%</span></span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>])), <span class="fu">c</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>lower[,<span class="dv">2</span>])[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>upper[,<span class="dv">2</span>])[<span class="sc">-</span><span class="dv">29</span>])),</span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">4</span>), <span class="at">lty =</span> <span class="dv">0</span>) <span class="co"># 80%</span></span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(plot_index[<span class="sc">-</span><span class="dv">29</span>])), <span class="fu">c</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>lower[,<span class="dv">1</span>])[<span class="sc">-</span><span class="dv">29</span>], <span class="fu">rev</span>(<span class="fu">ts_forecast_plot</span>(Forecast<span class="sc">$</span>upper[,<span class="dv">1</span>])[<span class="sc">-</span><span class="dv">29</span>])),</span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">7</span>), <span class="at">lty =</span> <span class="dv">0</span>) <span class="co"># 50%</span></span>
+<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">2019</span>, <span class="dv">1400</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"95% confidence"</span>, <span class="st">"80% confidence"</span>, <span class="st">"50% confidence"</span>, <span class="st">"Forecast mean"</span>),</span>
+<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">1</span>), <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">4</span>), <span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,.<span class="dv">7</span>), <span class="st">"black"</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">12</span>,<span class="dv">12</span>,<span class="dv">12</span>,<span class="dv">2</span>))</span>
+<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">index</span>(FcstYoY), FcstYoY, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>

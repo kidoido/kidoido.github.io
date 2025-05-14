@@ -307,16 +307,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">### Pobranie wartości</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span><span class="fu">getValues</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  0.5958184  0.7283350  1.6148567  2.3675752  3.8117877  3.0573473
- [7]  2.4194316  2.7594636  4.0467412  4.5870737  5.7228233  5.9468889
-[13]  6.7103840  7.5134587  7.8297997  6.9118039  6.2076667  8.4933361
-[19] 10.3175517 11.1799284 11.6166719 12.2548534 13.0134448 11.9743358
-[25] 14.2764276 15.9233565 15.0910664 13.6872611 11.7574707 10.9783996
-[31] 10.1559006 11.6220877 10.5079325 10.8368327 10.6265344 11.0491448
-[37] 11.1159665 12.2193477 12.4706004 12.5796851 11.8198672 14.3752434
-[43] 14.7913979 14.5781914 14.2230759 14.5969215 14.6938186 14.0651436
-[49] 16.2210910 17.1955407 18.0237729 16.7276651 16.7092446 16.6379080
-[55] 18.1229867 17.7317993 17.8579280 17.5399122 18.1458052 17.5532165</code></pre>
+<pre><code> [1] -0.65733543 -0.33538011 -1.09134668 -1.94091724 -2.00705670 -1.28318827
+ [7] -1.35171975 -1.51318832 -1.23038351 -0.54120045 -2.49967112 -1.44343157
+[13] -0.68880358  0.54233397 -0.21297517 -0.03305012 -0.19967893  0.66728044
+[19]  1.52184009  2.24762280  3.10983339  4.55662838  3.31713160  3.39463430
+[25]  3.37843152  4.02316594  3.11728145  2.44555315  2.66708593  2.57213674
+[31]  3.26337892  2.48292945  2.26283400  2.40969359  1.57119550  0.55933523
+[37]  0.61755578 -0.06387965 -0.67774208 -0.39746067 -0.99177600 -1.89797466
+[43]  0.13630377 -0.07512248  0.11799700  0.08561967  1.02144364  0.65381897
+[49]  1.72480417  2.50936214  0.91826779  2.14748159  2.81264153  2.39825696
+[55]  5.19908709  6.84011035  6.60029144  7.33224439  6.26388741  7.23308922</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Pobranie wektora czasów</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span><span class="fu">getTimes</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -335,17 +335,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Pobranie szeregu czasowgo (klasa xts)</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(y<span class="sc">$</span><span class="fu">getTimeSeries</span>(),<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>              [,1]
-Jan 2009 0.5958184
-Feb 2009 0.7283350
-Mar 2009 1.6148567
-Apr 2009 2.3675752
-May 2009 3.8117877
-Jun 2009 3.0573473
-Jul 2009 2.4194316
-Aug 2009 2.7594636
-Sep 2009 4.0467412
-Oct 2009 4.5870737</code></pre>
+<pre><code>               [,1]
+Jan 2009 -0.6573354
+Feb 2009 -0.3353801
+Mar 2009 -1.0913467
+Apr 2009 -1.9409172
+May 2009 -2.0070567
+Jun 2009 -1.2831883
+Jul 2009 -1.3517198
+Aug 2009 -1.5131883
+Sep 2009 -1.2303835
+Oct 2009 -0.5412005</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Stworzenie przykładowego wykresu</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
