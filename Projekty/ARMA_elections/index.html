@@ -179,7 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="wybory.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-<p>Projekt wykonany w Pythonie na zajęcia <em>Programming</em>.</p>
+<p>Projekt wykonany w Pythonie na zajęcia <em>Uczenie maszynowe w Pythonie</em>.</p>
 <p>Zadanie zaliczeniowe polega na prognozie wyników pierwszej tury wyborów prezydenckich.</p>
 <p>Niemały kłopot sprawiło mi wybranie odpowiedniej metody do rozwiązania tego problemu. Rozważałem użycie MLPRegressor, Random Forest czy regresji liniowej. Problemem jednak była trudność w zdobyciu dużej ilości danych. Po prostu nie mieliśmy w III RP wystarczająco dużej liczby wyborów. Chciałem, aby moim zbiorem danych było zestawienie sondaży, a zmienną objaśnianą – wynik w wyborach. Pomyślałem, że można by znaleźć jakiś zbiór danych w internecie o takiej strukturze. Jednak ku mojemu zaskoczeniu, żadnego takiego nie znalazłem.</p>
 <p>Zdecydowałem się więc zastosować podejście bardziej ekonometryczne niż deep learningowe. W poniższym rozwiązaniu zastosowałem model ARMA, który miałem przyjemność poznać na zajęciach “Applied Macroeconometrics” podczas mojej półrocznej wymiany studenckiej na szwajcarskim Université de Neuchâtel.</p>
@@ -192,7 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Obliczenie predykcji</li>
 <li>Normalizacja wyników</li>
 </ul>
-<div id="096c3fe2" class="cell" data-execution_count="1">
+<div id="02e04666" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
@@ -206,7 +206,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="pobranie-danych-z-internetu" class="level3">
 <h3 class="anchored" data-anchor-id="pobranie-danych-z-internetu">Pobranie danych z Internetu</h3>
-<div id="441dbec7" class="cell" data-execution_count="2">
+<div id="42bb67b9" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Na poniższej stronie znajduje się tabela ze wszystkimi sondażami</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://ewybory.eu/wybory-prezydenckie-2025-polska/sondaze-prezydenckie/'</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -222,25 +222,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Błąd."</span>, e)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                                        Unnamed: 0 Senyszyn Zandberg Biejat  \
-0    IBRiS / Rzeczpospolita N=1073Termin: 11-12.05      1.0      4.1    5.5   
-1  IBRiS / Polskie Radio 24 N=1067Termin: 10-11.05      0.9      5.4    6.3   
-2          IBRiS / Polityka N=2000Termin: 07-10.05      1.2      5.6    5.8   
-3                       OGB N=1000Termin: 07-10.05      1.6      4.8    3.8   
-4          Pollster / SE.pl N=1077Termin: 07-08.05      1.4      7.2    5.5   
-
-   Trzaskowski  Hołownia  Nawrocki Jakubiak  Mentzen Braun Stanowski  
-0         32.3       7.9      25.2      0.9     11.2   2.5       2.4  
-1         31.7       8.6      23.6      1.1     12.6   2.6       1.6  
-2         33.7       7.1      21.6      1.1     11.8   3.4       1.2  
-3         36.5       4.2      30.4        —     12.3   3.7       1.2  
-4         32.3       8.4      22.7      0.9     13.6   5.3       2.0  </code></pre>
+<pre><code>                      Unnamed: 0  Trzaskowski  Nawrocki  N/Z  B/U  Przewaga
+0       Opinia24 N=?18.05 (pub.)         46.0      44.0   10    —      12.0
+1        Opinia24 N=100214-15.05         48.0      45.0    7    —       3.0
+2           IBRiS N=100013-15.05         50.2      37.6  5.4  6.8      12.6
+3  United Surveys N=100013-15.05         56.2      43.8    —    —      12.4
+4        Opinia24 N=100312-14.05         48.5      44.4  7.1    —       4.1</code></pre>
 </div>
 </div>
-<div id="38905348" class="cell" data-execution_count="3">
+<div id="91f67e0f" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(columns <span class="op">=</span> <span class="st">"Unnamed: 0"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
@@ -248,148 +241,93 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">Senyszyn</th>
-<th data-quarto-table-cell-role="th">Zandberg</th>
-<th data-quarto-table-cell-role="th">Biejat</th>
 <th data-quarto-table-cell-role="th">Trzaskowski</th>
-<th data-quarto-table-cell-role="th">Hołownia</th>
 <th data-quarto-table-cell-role="th">Nawrocki</th>
-<th data-quarto-table-cell-role="th">Jakubiak</th>
-<th data-quarto-table-cell-role="th">Mentzen</th>
-<th data-quarto-table-cell-role="th">Braun</th>
-<th data-quarto-table-cell-role="th">Stanowski</th>
+<th data-quarto-table-cell-role="th">N/Z</th>
+<th data-quarto-table-cell-role="th">B/U</th>
+<th data-quarto-table-cell-role="th">Przewaga</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>1.0</td>
-<td>4.1</td>
-<td>5.5</td>
-<td>32.3</td>
-<td>7.9</td>
-<td>25.2</td>
-<td>0.9</td>
-<td>11.2</td>
-<td>2.5</td>
-<td>2.4</td>
+<td>46.0</td>
+<td>44.0</td>
+<td>10</td>
+<td>—</td>
+<td>12.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>0.9</td>
-<td>5.4</td>
-<td>6.3</td>
-<td>31.7</td>
-<td>8.6</td>
-<td>23.6</td>
-<td>1.1</td>
-<td>12.6</td>
-<td>2.6</td>
-<td>1.6</td>
+<td>48.0</td>
+<td>45.0</td>
+<td>7</td>
+<td>—</td>
+<td>3.0</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
-<td>1.2</td>
-<td>5.6</td>
-<td>5.8</td>
-<td>33.7</td>
-<td>7.1</td>
-<td>21.6</td>
-<td>1.1</td>
-<td>11.8</td>
-<td>3.4</td>
-<td>1.2</td>
+<td>50.2</td>
+<td>37.6</td>
+<td>5.4</td>
+<td>6.8</td>
+<td>12.6</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>1.6</td>
-<td>4.8</td>
-<td>3.8</td>
-<td>36.5</td>
-<td>4.2</td>
-<td>30.4</td>
+<td>56.2</td>
+<td>43.8</td>
 <td>—</td>
-<td>12.3</td>
-<td>3.7</td>
-<td>1.2</td>
+<td>—</td>
+<td>12.4</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
-<td>1.4</td>
-<td>7.2</td>
-<td>5.5</td>
-<td>32.3</td>
-<td>8.4</td>
-<td>22.7</td>
-<td>0.9</td>
-<td>13.6</td>
-<td>5.3</td>
-<td>2.0</td>
+<td>48.5</td>
+<td>44.4</td>
+<td>7.1</td>
+<td>—</td>
+<td>4.1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
+<td>53.9</td>
+<td>38.4</td>
+<td>7.7</td>
 <td>—</td>
-<td>3.7</td>
-<td>6.1</td>
-<td>33.2</td>
-<td>7.5</td>
-<td>23.2</td>
-<td>1.2</td>
-<td>13.6</td>
-<td>3.5</td>
-<td>1.6</td>
+<td>15.5</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6</td>
-<td>2</td>
-<td>5</td>
-<td>6</td>
-<td>31.0</td>
-<td>5.0</td>
-<td>25.0</td>
-<td>3</td>
-<td>14.0</td>
-<td>4</td>
-<td>1</td>
+<td>55.6</td>
+<td>36.6</td>
+<td>3.1</td>
+<td>4.7</td>
+<td>19.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
-<td>1</td>
-<td>5</td>
-<td>6</td>
-<td>30.0</td>
-<td>7.0</td>
-<td>25.0</td>
+<td>54.5</td>
+<td>37.7</td>
+<td>7.8</td>
 <td>—</td>
-<td>13.0</td>
-<td>4</td>
-<td>—</td>
+<td>16.8</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">8</td>
+<td>57.7</td>
+<td>39.1</td>
+<td>3.2</td>
 <td>—</td>
-<td>4.3</td>
-<td>5.6</td>
-<td>31.6</td>
-<td>8.0</td>
-<td>24.7</td>
-<td>1.5</td>
-<td>12.8</td>
-<td>2.0</td>
-<td>2.5</td>
+<td>18.6</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">9</td>
-<td>1</td>
-<td>6</td>
-<td>4</td>
-<td>33.0</td>
-<td>7.0</td>
-<td>25.0</td>
-<td>1</td>
-<td>15.0</td>
-<td>4</td>
-<td>2</td>
+<td>55.0</td>
+<td>45.0</td>
+<td>—</td>
+<td>—</td>
+<td>10.0</td>
 </tr>
 </tbody>
 </table>
@@ -398,12 +336,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Zauważam, że dla niektórych wartości mamy - oznaczające 0%, zamieńy na wartości numeryczne</p>
-<div id="56a3cc3d" class="cell" data-execution_count="4">
+<div id="400a6b2b" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zamiana myślników (—) na 0 i konwersja na float</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.replace({<span class="st">'—'</span>: <span class="dv">0</span>, <span class="st">'&lt;0.5'</span>: <span class="fl">0.25</span>})</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.astype(<span class="bu">float</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 
 
@@ -411,148 +349,93 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">Senyszyn</th>
-<th data-quarto-table-cell-role="th">Zandberg</th>
-<th data-quarto-table-cell-role="th">Biejat</th>
 <th data-quarto-table-cell-role="th">Trzaskowski</th>
-<th data-quarto-table-cell-role="th">Hołownia</th>
 <th data-quarto-table-cell-role="th">Nawrocki</th>
-<th data-quarto-table-cell-role="th">Jakubiak</th>
-<th data-quarto-table-cell-role="th">Mentzen</th>
-<th data-quarto-table-cell-role="th">Braun</th>
-<th data-quarto-table-cell-role="th">Stanowski</th>
+<th data-quarto-table-cell-role="th">N/Z</th>
+<th data-quarto-table-cell-role="th">B/U</th>
+<th data-quarto-table-cell-role="th">Przewaga</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>1.0</td>
-<td>4.1</td>
-<td>5.5</td>
-<td>32.3</td>
-<td>7.9</td>
-<td>25.2</td>
-<td>0.9</td>
-<td>11.2</td>
-<td>2.5</td>
-<td>2.4</td>
+<td>46.0</td>
+<td>44.0</td>
+<td>10.0</td>
+<td>0.0</td>
+<td>12.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>0.9</td>
-<td>5.4</td>
-<td>6.3</td>
-<td>31.7</td>
-<td>8.6</td>
-<td>23.6</td>
-<td>1.1</td>
-<td>12.6</td>
-<td>2.6</td>
-<td>1.6</td>
+<td>48.0</td>
+<td>45.0</td>
+<td>7.0</td>
+<td>0.0</td>
+<td>3.0</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
-<td>1.2</td>
-<td>5.6</td>
-<td>5.8</td>
-<td>33.7</td>
-<td>7.1</td>
-<td>21.6</td>
-<td>1.1</td>
-<td>11.8</td>
-<td>3.4</td>
-<td>1.2</td>
+<td>50.2</td>
+<td>37.6</td>
+<td>5.4</td>
+<td>6.8</td>
+<td>12.6</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>1.6</td>
-<td>4.8</td>
-<td>3.8</td>
-<td>36.5</td>
-<td>4.2</td>
-<td>30.4</td>
+<td>56.2</td>
+<td>43.8</td>
 <td>0.0</td>
-<td>12.3</td>
-<td>3.7</td>
-<td>1.2</td>
+<td>0.0</td>
+<td>12.4</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
-<td>1.4</td>
-<td>7.2</td>
-<td>5.5</td>
-<td>32.3</td>
-<td>8.4</td>
-<td>22.7</td>
-<td>0.9</td>
-<td>13.6</td>
-<td>5.3</td>
-<td>2.0</td>
+<td>48.5</td>
+<td>44.4</td>
+<td>7.1</td>
+<td>0.0</td>
+<td>4.1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
+<td>53.9</td>
+<td>38.4</td>
+<td>7.7</td>
 <td>0.0</td>
-<td>3.7</td>
-<td>6.1</td>
-<td>33.2</td>
-<td>7.5</td>
-<td>23.2</td>
-<td>1.2</td>
-<td>13.6</td>
-<td>3.5</td>
-<td>1.6</td>
+<td>15.5</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6</td>
-<td>2.0</td>
-<td>5.0</td>
-<td>6.0</td>
-<td>31.0</td>
-<td>5.0</td>
-<td>25.0</td>
-<td>3.0</td>
-<td>14.0</td>
-<td>4.0</td>
-<td>1.0</td>
+<td>55.6</td>
+<td>36.6</td>
+<td>3.1</td>
+<td>4.7</td>
+<td>19.0</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
-<td>1.0</td>
-<td>5.0</td>
-<td>6.0</td>
-<td>30.0</td>
-<td>7.0</td>
-<td>25.0</td>
+<td>54.5</td>
+<td>37.7</td>
+<td>7.8</td>
 <td>0.0</td>
-<td>13.0</td>
-<td>4.0</td>
-<td>0.0</td>
+<td>16.8</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">8</td>
+<td>57.7</td>
+<td>39.1</td>
+<td>3.2</td>
 <td>0.0</td>
-<td>4.3</td>
-<td>5.6</td>
-<td>31.6</td>
-<td>8.0</td>
-<td>24.7</td>
-<td>1.5</td>
-<td>12.8</td>
-<td>2.0</td>
-<td>2.5</td>
+<td>18.6</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">9</td>
-<td>1.0</td>
-<td>6.0</td>
-<td>4.0</td>
-<td>33.0</td>
-<td>7.0</td>
-<td>25.0</td>
-<td>1.0</td>
-<td>15.0</td>
-<td>4.0</td>
-<td>2.0</td>
+<td>55.0</td>
+<td>45.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>10.0</td>
 </tr>
 </tbody>
 </table>
@@ -561,7 +444,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Warunkiem zostosowania modelu ARMA jest stacjonarność szeregu czasowego (czyli średnia wartośc nie powinna być zmienna w czasie). Niektóre szeregi wyników sondażowych kandydatów są stacjonarne, a niektóre nie. Można to sprawdzić za pomocą testu ADF. Jeśli p-value &lt; 0.05 to odrzucamy hipoteze zerową o niestacjonarności szeregu. Gdy szereg jest niestacjonarny to trzeba go zróznicować i na szeregu różnic dokonać analizy ARMA.</p>
-<div id="6b8287ee" class="cell" data-execution_count="5">
+<div id="7e44854d" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Na podstawie eksperymentów na danych historycznych wybrałem hiperparametry ARMA(2,2) </span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="dv">2</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="dv">2</span></span>
@@ -591,25 +474,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        out[column] <span class="op">=</span> forecast <span class="op">+</span> ostatnia_wartosc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Zobaczmy wyniki.</p>
-<div id="cd4c5cab" class="cell" data-execution_count="6">
+<div id="f074d35d" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> pd.Series(out)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y_pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
-<pre><code>Senyszyn        1.237410
-Zandberg        5.473271
-Biejat          5.141262
-Trzaskowski    33.082830
-Hołownia        7.204286
-Nawrocki       24.943083
-Jakubiak        1.126697
-Mentzen        12.228740
-Braun           3.841833
-Stanowski       1.593435
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>Trzaskowski    52.368442
+Nawrocki       41.953213
+N/Z             5.710688
+B/U             1.354499
+Przewaga        9.586754
 dtype: float64</code></pre>
 </div>
 </div>
 <p>A co z kandydatami nieuwzględnionymi w sondażach na ewyboru.eu? Pozwolę sobie dopisać ich do powyższego wektora “z palca”. Według ewybory.wu ich szanse prezentują się następująco:</p>
-<div id="ad2e748b" class="cell" data-execution_count="7">
+<div id="a41508dd" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># W procentacj</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>out[<span class="st">"Maciak"</span>] <span class="op">=</span> <span class="fl">0.2</span> <span class="co"># 0.2%</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>out[<span class="st">"Bartosiewicz"</span>] <span class="op">=</span> <span class="fl">0.2</span></span>
@@ -617,17 +495,12 @@ dtype: float64</code></pre>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> pd.Series(out)</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>y_pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="18">
-<pre><code>Senyszyn         1.237410
-Zandberg         5.473271
-Biejat           5.141262
-Trzaskowski     33.082830
-Hołownia         7.204286
-Nawrocki        24.943083
-Jakubiak         1.126697
-Mentzen         12.228740
-Braun            3.841833
-Stanowski        1.593435
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>Trzaskowski     52.368442
+Nawrocki        41.953213
+N/Z              5.710688
+B/U              1.354499
+Przewaga         9.586754
 Maciak           0.200000
 Bartosiewicz     0.200000
 Woch             0.100000
@@ -635,55 +508,45 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>Wyniki nie sumują się do 100%, teraz znormalizuje dane, aby tak było.</p>
-<div id="f196d3f9" class="cell" data-execution_count="8">
+<div id="f2fb7d5b" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">sum</span>(y_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="19">
-<pre><code>96.37284731808231</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>111.4735952621613</code></pre>
 </div>
 </div>
-<div id="f2a1a9d9" class="cell" data-execution_count="9">
+<div id="578f3a7c" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ograniczenie do przedziału [0, 100], gdyby jakiaś predykcja była poniżej 0 </span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> np.clip(y_pred, <span class="dv">0</span>, <span class="dv">100</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalizacja tak, by suma = 100%</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>y_pred_normalized <span class="op">=</span> <span class="dv">100</span> <span class="op">*</span> y_pred <span class="op">/</span> y_pred.<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="f7f377ed" class="cell" data-execution_count="10">
+<div id="7a1d1443" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>y_pred_normalized</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="21">
-<pre><code>Senyszyn         1.283982
-Zandberg         5.679266
-Biejat           5.334762
-Trzaskowski     34.327958
-Hołownia         7.475432
-Nawrocki        25.881858
-Jakubiak         1.169103
-Mentzen         12.688989
-Braun            3.986427
-Stanowski        1.653406
-Maciak           0.207527
-Bartosiewicz     0.207527
-Woch             0.103764
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>Trzaskowski     46.978337
+Nawrocki        37.635113
+N/Z              5.122906
+B/U              1.215085
+Przewaga         8.600022
+Maciak           0.179415
+Bartosiewicz     0.179415
+Woch             0.089707
 dtype: float64</code></pre>
 </div>
 </div>
-<div id="67c0fd28" class="cell" data-execution_count="11">
+<div id="74450ba1" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Formatownie, na stornie PKW procenty są do dwóch miejsc po przecinku</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>procenty <span class="op">=</span> y_pred_normalized.sort_values(ascending<span class="op">=</span><span class="va">False</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(procenty)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Trzaskowski     34.33%
-Nawrocki        25.88%
-Mentzen         12.69%
-Hołownia         7.48%
-Zandberg         5.68%
-Biejat           5.33%
-Braun            3.99%
-Stanowski        1.65%
-Senyszyn         1.28%
-Jakubiak         1.17%
-Maciak           0.21%
-Bartosiewicz     0.21%
-Woch             0.10%
+<pre><code>Trzaskowski     46.98%
+Nawrocki        37.64%
+Przewaga         8.60%
+N/Z              5.12%
+B/U              1.22%
+Maciak           0.18%
+Bartosiewicz     0.18%
+Woch             0.09%
 dtype: object</code></pre>
 </div>
 </div>
