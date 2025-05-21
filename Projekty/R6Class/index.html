@@ -307,16 +307,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">### Pobranie wartości</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span><span class="fu">getValues</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] -0.65383425 -0.43970906 -1.20885372  0.04957082 -0.02709532  1.54070163
- [7]  1.99477401  2.62881929  2.73619171  0.43292454  0.84497413  0.43329045
-[13]  0.12233745 -0.64967806 -0.50499256 -0.20109886  0.45365247 -0.33282041
-[19]  1.27457181  1.34398555  1.54965933  2.35367423  1.78164942  1.10485360
-[25]  0.74347951  0.27787175 -0.19198305  0.41326374  2.46797319  2.27322171
-[31]  3.29497223  3.25435417  2.38068742  2.77139713  3.11013119  3.45025025
-[37]  4.47346384  6.27355044  6.29270784  7.04697885  6.40789170  6.22540464
-[43]  6.18505511  4.23592169  3.95116900  6.21953312  6.93732830  8.12893713
-[49]  8.26616210  9.46386486  9.90840814 11.57504096 11.23090448 10.73052339
-[55] 10.06279688  9.62715607  9.58474393 10.53281600 10.79071988 11.48118850</code></pre>
+<pre><code> [1]  2.02668578  1.69543891  1.43767406  2.92703291  1.90834614  2.73060705
+ [7]  3.35871311  3.25160534  2.80952381  1.89143238  4.53993968  4.12637763
+[13]  2.93070107  0.69957067  0.30442847 -0.26986936 -1.35025937 -1.72544354
+[19] -1.31934086 -2.53161781 -2.17209745 -0.63832369 -0.34461294 -1.13688044
+[25] -2.58551089 -1.24550950 -2.03329902 -2.54733605 -2.39231802 -2.45211124
+[31] -1.32883929 -1.21971984 -2.47686809 -1.49599398 -2.12757172 -0.52417055
+[37] -0.28555002 -0.08249298 -0.14911944 -2.12008618 -2.76265308 -4.69377435
+[43] -3.46503138 -2.41113913 -2.61544238 -1.95864620 -2.10922700 -4.56082348
+[49] -3.84402464 -4.13551034 -3.04930291 -1.46853961 -1.68439819 -1.06127529
+[55] -2.48557023 -3.49004290 -2.53821511 -1.45470203 -1.35969134 -1.05172806</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Pobranie wektora czasów</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>y<span class="sc">$</span><span class="fu">getTimes</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -335,17 +335,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Pobranie szeregu czasowgo (klasa xts)</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(y<span class="sc">$</span><span class="fu">getTimeSeries</span>(),<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                [,1]
-Jan 2009 -0.65383425
-Feb 2009 -0.43970906
-Mar 2009 -1.20885372
-Apr 2009  0.04957082
-May 2009 -0.02709532
-Jun 2009  1.54070163
-Jul 2009  1.99477401
-Aug 2009  2.62881929
-Sep 2009  2.73619171
-Oct 2009  0.43292454</code></pre>
+<pre><code>             [,1]
+Jan 2009 2.026686
+Feb 2009 1.695439
+Mar 2009 1.437674
+Apr 2009 2.927033
+May 2009 1.908346
+Jun 2009 2.730607
+Jul 2009 3.358713
+Aug 2009 3.251605
+Sep 2009 2.809524
+Oct 2009 1.891432</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Stworzenie przykładowego wykresu</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
